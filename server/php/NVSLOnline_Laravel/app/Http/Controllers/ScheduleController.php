@@ -1,0 +1,60 @@
+<?php
+
+namespace NVSLOnline\Http\Controllers;
+
+use Illuminate\Http\Request;
+use NVSLOnline\Schedule;
+
+use DB;
+
+class ScheduleController extends Controller
+{
+    public function index(){
+			
+		$schedules = Schedule::with('Season','Division','Venue','HomeTeam','AwayTeam')
+		->where('IsHidden','=','false')
+		->get();
+
+				return response()->json([
+					"msg" => "Success",
+					"schedules" => $schedules->toArray()
+					],200
+				);
+    }
+
+	public function store(Request $request){
+		if($request){
+			$objSchedule = new Schedule; 
+			$objSchedule -> Status = $request->Status;
+			$objSchedule -> DateTime = $request->DateTime;
+			$objSchedule -> Score = $request->Score;
+			$objSchedule -> IsHidden = 0;
+			$objSchedule -> AwayTeamId = $request->AwayTeamId;
+			$objSchedule -> DivisionId = $request->DivisionId;
+			$objSchedule -> HomeTeamId = $request->HomeTeamId;
+			$objSchedule -> SeasonId = $request->SeasonId;
+			$objSchedule -> VenueId = $request->VenueId;
+			
+			//$objDivision -> IsHidden = $request->IsHidden;
+			$objSchedule -> save();
+			return response()->json([
+						"msg" => "Success",
+						"id" => $objSchedule->Id
+						],200
+					);
+		}
+	}
+
+	public function editScheduleScore(Request $request,$id){
+		//$objDivision = Division::find($request->Id);
+		$objSchedule = Schedule::find($id);
+		$objSchedule -> GoalsHomeTeam = $request->GoalsHomeTeam;
+		$objSchedule -> GoalsAwayTeam = $request->GoalsAwayTeam;
+		$objSchedule -> save();
+		return response()->json([
+					"msg" => "Success",
+					"id" => $objSchedule->Id
+					],200
+				);
+	}
+}
