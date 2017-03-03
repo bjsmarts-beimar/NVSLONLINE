@@ -1,4 +1,4 @@
-
+'use strict';
 angular.module('nvslonlineAppApp').value("webUrl", "http://pc-sp20131/nvslonlineApi/")
 
 angular.module('nvslonlineAppApp').value("debug", true)
