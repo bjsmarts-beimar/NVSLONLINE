@@ -15,11 +15,7 @@ class SeasonController extends Controller
 				->where('IsHidden','=','false')
 				->get();
 		
-				return response()->json([
-					"msg" => "Success",
-					"season" => $seasons
-					],200
-				);
+				return response()->json($seasons);
 	}
 
 	public function inactiveSeason(){

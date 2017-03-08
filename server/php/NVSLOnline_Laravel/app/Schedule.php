@@ -10,8 +10,11 @@ use NVSLOnline\Team;
 
 class Schedule extends Model
 {
-    protected $table = 'Schedules';
+	//con esta line evitamos en cambio a camel case
+	public static $snakeAttributes = false;
 
+    protected $table = 'Schedules';
+	
 	protected $primaryKey = 'Id';
 	
 	public $timestamps = false;

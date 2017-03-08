@@ -41,8 +41,14 @@
 
             <ul class="nav navbar-nav">
               <li ui-sref-active="active"><a ui-sref="main">Home</a></li>
+              <li ui-sref-active="active"><a ui-sref="team">Teams</a></li>
+              <li ui-sref-active="active"><a ui-sref="schedule">Schedule</a></li>
+              <li ui-sref-active="active"><a ui-sref="standing">Standing</a></li>
+              <li ui-sref-active="active"><a ui-sref="history">History</a></li>
               <li ui-sref-active="active"><a ui-sref="register">Register</a></li>
+              <li ui-sref-active="active"><a ui-sref="about">About NVSL</a></li>
               <li ui-sref-active="active"><a ui-sref="division">Divisions</a></li>
+              
             </ul>
           </div>
         </div>
@@ -88,7 +94,20 @@
         <script src="scripts/app.config.js"></script>
         <script src="scripts/services/datacontext.js"></script>
         <script src="scripts/controllers/register.js"></script>
-        <script src="scripts/controllers/division.js"></script>        
+        <script src="scripts/controllers/division.js"></script>  
+        <script src="scripts/controllers/team.js"></script> 
+        <script src="scripts/controllers/schedule.js"></script>   
+        <script src="scripts/controllers/standing.js"></script> 
+             
+        <script src="scripts/services/common.js"></script>
+        <script src="scripts/controllers/login.js"></script>
+        <script src="scripts/services/authentication.js"></script>
+        <script src="scripts/controllers/adivision.js"></script>
+        <script src="scripts/controllers/a_division.js"></script>
+        <script src="scripts/controllers/a_schedule.js"></script>
+        <script src="scripts/controllers/a_season.js"></script>
+        <script src="scripts/controllers/a_team.js"></script>
         <!-- endbuild -->
+         <script src="bower_components/angular-filter/dist/angular-filter.min.js"></script>
 </body>
 </html>

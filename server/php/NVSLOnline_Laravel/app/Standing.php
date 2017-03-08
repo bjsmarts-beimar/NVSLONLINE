@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Standing extends Model
 {
+	//con esta line evitamos en cambio a camel case
+	public static $snakeAttributes = false;
+	
     protected $table = 'Standings';
 
 	protected $primaryKey = 'Id';

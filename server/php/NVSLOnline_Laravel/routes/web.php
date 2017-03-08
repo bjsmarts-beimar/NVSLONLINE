@@ -15,33 +15,50 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get("division", "DivisionController@index");
-Route::get("division/{id}", "DivisionController@show");
-Route::post("division", "DivisionController@store");
-Route::put("division/{id}", "DivisionController@update");
-Route::delete("division/{id}", "DivisionController@updateDelete");
-Route::delete("division/destroy/{id}", "DivisionController@destroy");
+/*Route::head("/api/divisions", function(){
+    $r = Response::make("hello");
+    $r
+    ->header("Access-Control-Allow-Origin", "*")
+    //->("Access-Control-Allow-Credentials", "true")
+    ->("Access-Control-Request-Method", "GET");
+});*/
+Route::group([
+    'middleware'=>'cors',
+    //'namespace'=>$this->namespace,
+    'prefix'=>'api',
+],function($router){
 
-Route::get("team", "TeamController@index");
-Route::get("team/{id}", "TeamController@show");
-Route::post("team", "TeamController@store");
-Route::put("team/{id}", "TeamController@update");
-Route::delete("team/{id}", "TeamController@updateDelete");
-Route::delete("team/destroy/{id}", "TeamController@destroy");
+Route::get("divisions", "DivisionController@index");
+Route::get("divisions/{id}", "DivisionController@show");
+Route::post("divisions", "DivisionController@store");
+Route::put("divisions/{id}", "DivisionController@update");
+Route::delete("divisions/{id}", "DivisionController@updateDelete");
+Route::delete("divisions/destroy/{id}", "DivisionController@destroy");
 
-Route::get("season", "SeasonController@index");
-Route::get("season/inactive", "SeasonController@inactiveSeason");
-Route::get("season/{id}", "SeasonController@show");
-Route::post("season", "SeasonController@store");
-Route::put("season/{id}", "SeasonController@update");
-Route::delete("season/{id}", "SeasonController@destroy");
+Route::get("teams", "TeamController@index");
+Route::get("teams/{id}", "TeamController@show");
+Route::post("teams", "TeamController@store");
+Route::put("teams/{id}", "TeamController@update");
+Route::delete("teams/{id}", "TeamController@updateDelete");
+Route::delete("teams/destroy/{id}", "TeamController@destroy");
 
-Route::get("venue", "VenueController@index");
-Route::get("venue/{id}", "VenueController@show");
-Route::post("venue", "VenueController@store");
-Route::put("venue/{id}", "VenueController@update");
-Route::delete("venue/{id}", "VenueController@destroy");
+Route::get("seasons", "SeasonController@index");
+Route::get("seasons/inactive", "SeasonController@inactiveSeason");
+Route::get("seasons/{id}", "SeasonController@show");
+Route::post("seasons", "SeasonController@store");
+Route::put("seasons/{id}", "SeasonController@update");
+Route::delete("seasons/{id}", "SeasonController@destroy");
 
-Route::get("standings", "StandingController@index");
+Route::get("venues", "VenueController@index");
+Route::get("venues/{id}", "VenueController@show");
+Route::post("venues", "VenueController@store");
+Route::put("venues/{id}", "VenueController@update");
+Route::delete("venues/{id}", "VenueController@destroy");
+
+//Route::get("standings", "StandingController@index");
 
 Route::get("schedules", "ScheduleController@index");
+
+});
+
+//Route::get("/api/divisions", "DivisionController@index");

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTeamsTable extends Migration
+class CreatePlayersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateTeamsTable extends Migration
      */
     public function up()
     {
-        Schema::create('Teams', function (Blueprint $table) {
+         Schema::create('Players', function (Blueprint $table) {
             $table->increments('Id');
-            $table->string('TeamName');
+            $table->string('FirstName');
+            $table->string('LastName');
             $table->boolean('IsHidden')->default(false);
-            $table->integer('DivisionId')->unsigned();
-            $table->foreign('DivisionId')->references('Id')->on('Divisions');
-            $table->integer('SeasonId')->unsigned();
-            $table->foreign('SeasonId')->references('Id')->on('Seasons');
+            $table->integer('TeamId')->unsigned();
+            $table->foreign('TeamId')->references('Id')->on('Teams');
+          
             //$table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ class CreateTeamsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('Teams');
+        Schema::drop('Players');
     }
 }

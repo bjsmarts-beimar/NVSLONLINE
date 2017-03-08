@@ -12,14 +12,29 @@ class ScheduleController extends Controller
     public function index(){
 			
 		$schedules = Schedule::with('Season','Division','Venue','HomeTeam','AwayTeam')
-		->where('IsHidden','=','false')
+		//->where('IsHidden','=','false')
+		//->select('*')
 		->get();
 
-				return response()->json([
-					"msg" => "Success",
-					"schedules" => $schedules->toArray()
-					],200
-				);
+		/*$tes = $schedules::where('IsHidden','=','false')
+		->select('Id','season')
+		->get();*/
+
+		/*$schedules = Schedule::with(['Season' =>function($query){
+			$query->select('Id');
+		}])->get();*/
+		//$schedules = Schedule::all();
+		
+		/*$schedules = Schedule::select('*')
+		->with(['HomeTeam'=>function($query){
+			$query->addSelect('*');
+		}]
+
+		)
+		->get()
+		->toArray();*/
+//print_r($schedules);
+				return response()->json($schedules);
     }
 
 	public function store(Request $request){

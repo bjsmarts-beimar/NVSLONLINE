@@ -4,22 +4,21 @@ namespace NVSLOnline;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Season extends Model
+class Player extends Model
 {
 	//con esta line evitamos en cambio a camel case
 	public static $snakeAttributes = false;
 	
-    protected $table = 'Seasons';
+    protected $table = 'Players';
 
 	protected $primaryKey = 'Id';
 
 	public $timestamps = false;
 
 	protected $fillable =[
-		'SeasonName',
-		'Active',
+		'FirstName',
+        'LastName',
 		'IsHidden',
-		'SeasonStart',
-		'SeasonEnd'
+        'TeamId'
 	];
 }

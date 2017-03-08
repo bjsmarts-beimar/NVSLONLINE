@@ -20,6 +20,19 @@ class DivisionTableSeeder extends Seeder
             [
                 'DivisionName' => 'Second',
                 'IsHidden' => false
+            ],
+            [
+                'DivisionName' => 'NVSL 40',
+                'IsHidden' => false
+            ],
+            [
+                'DivisionName' => 'Masters A',
+                'IsHidden' => false
+            ]
+            ,
+            [
+                'DivisionName' => 'Masters B',
+                'IsHidden' => false
             ]
         ];
 

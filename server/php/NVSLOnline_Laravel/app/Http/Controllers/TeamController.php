@@ -10,20 +10,11 @@ use DB;
 class TeamController extends Controller
 {
     public function index(){
-			/*$teams = DB::table('Teams')
-				//->where('DivisionName','LIKE', '%'.query.'%')
-				->where('IsHidden','=','false')
-				->get();*/
-//$teams = Team::get();
 		$teams = Team::with('Division')
 		->where('IsHidden','=','false')
 		->get();
 
-				return response()->json([
-					"msg" => "Success",
-					"teams" => $teams->toArray()
-					],200
-				);
+				return response()->json($teams->toArray());
 	}
 	
 	public function show($id){

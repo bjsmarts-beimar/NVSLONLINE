@@ -10,39 +10,14 @@ use DB;
 
 class DivisionController extends Controller{
 
-	
 	public function index(){
 				$divisions = DB::table('Divisions')
-				//->where('DivisionName','LIKE', '%'.query.'%')
 				->where('IsHidden','=','false')
 				->get();
 
-				return response()->json([
-					"msg" => "Success",
-					"divisions" => $divisions
-					],200
-				);
-
-				//$divisions = \NVSLOnline\Division::get();
-				/*$divisions = DB::table('Divisions')
-				->where('IsHidden','=','0')
-				->get();*/
-
-				/*return response()->json([
-					"msg" => "Success",
-					"videos" => $divisions ->toArray()
-					],200
-				);*/
+		return response()->json($divisions);		
 	}
-	/*public function index(Request $request)	{
-			if($request){
-				$query=trim($request>get('searchText'));
-				$Divisions = DB::table('Divisions')
-				->where('DivisionName','LIKE', '%'.query.'%')
-				->where('IsHidden','=','1');
-				return view('nvslOnline.Division.index',["Divisions"=>$Divisions, "searchText"=>$query]);
-			}
-	}*/
+	
 	public function show($id){
 		$division = Division::find($id);
 		return response()->json([
@@ -53,6 +28,7 @@ class DivisionController extends Controller{
 	}
 
 	public function store(Request $request){
+		
 		if($request){
 			$objDivision = new Division; 
 			$objDivision -> DivisionName = $request->DivisionName;

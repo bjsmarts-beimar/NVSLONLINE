@@ -1,9 +1,8 @@
-<section class="mainbar" >
+<section class="mainbar">
     <section class="matter">
         <div class="container">
-            <h2> <a href ng-click="openNewDivision()" class="btn btn-default">New Division</a>
+            <h2> <a href ng-click="vm.openNewDivision()" class="btn btn-default">New Division </a>
             </h2>
-
             <div class="row">
                 <div class="col-md-6">
                     <div class="widget wviolet">
@@ -12,7 +11,8 @@
                             <table class="table table-condensed table-striped">
                                 <thead>
                                 <tr>
-                                    <th></th>                                    
+                                    <th> </th>
+                                    
                                     <th>Division Name</th>
                                 </tr>
                                 </thead>
@@ -39,8 +39,7 @@
             </div>
         </div>
     </section>
-</section>
-<script type="text/ng-template" id="division.html">
+    <script type="text/ng-template" id="division.html">
     <div class="modal-content" >
         <div class="modal-header">
             <button type="button" class="close" data-ng-click="cancel()" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -64,3 +63,37 @@
         </div>
     </div><!-- /.modal-content -->
     </script>
+
+    <script type="text/ng-template" id="delete.html">
+            
+        <div id="divPrincipalModal">   
+         <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">×</button>
+                <h4 class="modal-title"> Confirm Delete this Division </h4>
+              </div>
+             <div class="modal-body">
+
+                 <div class="form-group">
+                     <label class="control-label">Division Name:</label>
+                     <div style="padding-left: 10px">{{divisionName}}</div>
+                 </div>
+             
+             </div>
+              <!--<div class="modal-footer">
+                  
+                  <input type="submit" id="submit"  class="btn btn-primary" ng-click="submit()" value="Delete"/>
+                  <input type="button" id="cancel" class="btn btn-default" ng-click="cancel()" value="Close" data-dismiss="modal"/>
+              </div>-->
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" data-ng-click="cancel()">Close</button>
+            <button type="button" class="btn btn-primary" data-ng-click="ok()">Delete</button>
+        </div>
+            </div>
+
+        </div>
+   
+        
+    </script>
+</section>
+
