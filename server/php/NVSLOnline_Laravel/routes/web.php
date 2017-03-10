@@ -60,5 +60,3 @@ Route::delete("venues/{id}", "VenueController@destroy");
 Route::get("schedules", "ScheduleController@index");
 
 });
-
-//Route::get("/api/divisions", "DivisionController@index");

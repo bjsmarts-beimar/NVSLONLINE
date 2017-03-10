@@ -41,9 +41,15 @@ angular.module('nvslonlineAppApp').config(function($urlRouterProvider, $statePro
     /********************* ADMIN USER ******************/
 
     .state('adminDivision', {
-        url: '/ADivision',
+        url: '/ADivisions',
         templateUrl: '/views/a_division.html',
         controller: 'ADivisionCtrl as vm'
+    })
+
+    .state('adminTeam', {
+        url: '/ATeams',
+        templateUrl: '/views/a_team.html',
+        controller: 'ATeamCtrl as vm'
     })
 
 

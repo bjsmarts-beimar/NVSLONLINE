@@ -9,4 +9,10 @@
  * Main module of the application.
  */
 angular
-  .module('nvslonlineAppApp', ['ui.router', 'toastr', 'ui.bootstrap','angular.filter']);
+  .module('nvslonlineAppApp', [
+    //Angula modules
+    'ui.router', //routing 
+    'toastr',// 
+    'ui.bootstrap',//ui-bootstrap(ex:carousel,pagination,dialog)
+    'angular.filter'//filter permite hacer filtros en htmlPage
+    ]);

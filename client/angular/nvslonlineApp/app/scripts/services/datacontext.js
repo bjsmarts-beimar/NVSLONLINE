@@ -22,23 +22,42 @@ angular.module('nvslonlineAppApp')
     };
 
  this.addDivision = function (webUrl, objDivision) {
-     console.log(JSON.stringify(objDivision));
+    console.log($.param(objDivision));
         return $http({
             method: 'POST',
             url: webUrl +  'api/divisions',
-            data: {DivisionName:"awewr",IsHidden:0},
+            data: $.param(objDivision),
             //withCredentials: true,
             headers:{"Content-Type":"application/x-www-form-urlencoded; charset=utf-8"}
         });
     };
 
-    this.editDivision = function (webUrl) {
+    /*this.editDivision = function (webUrl,objDivision) {
+        console.log($.param(objDivision));
         return $http({
-            method: 'GET',
+            method: 'PUT',
+            url: webUrl +  'api/divisions',
             //withCredentials: true,
-            data: 'json',
-            url: webUrl +  'api/divisions'
+            data: $.param(objDivision),
+            headers:{"Content-Type":"application/x-www-form-urlencoded; charset=utf-8"}
         });
+    };*/
+this.editDivision = function (webUrl,objDivision) {
+        console.log($.param(objDivision));
+        return $http({
+            method: 'PUT',
+            url: webUrl +  'api/divisions/3',
+            //withCredentials: true,
+            data: $.param(objDivision),
+            headers:{"Content-Type":"application/x-www-form-urlencoded; charset=utf-8"}
+        });
+    /*this.editDivision = function (webUrl,objDivision) {
+        console.log($.param(objDivision));
+        var TData = objDivision;
+        var uri = webUrl +  'api/divisions';
+        return $http.put(uri,TData);
+
+*/
     };
     /****************** Team *************************/
 

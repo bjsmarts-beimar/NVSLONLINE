@@ -11,11 +11,12 @@ angular.module('nvslonlineAppApp')
   .controller('ADivisionCtrl', ['$scope', '$modal', 'datacontext', 'toastr', 'webUrl', 
   function ($scope, $modal, datacontext, toastr, webUrl) {
     var vm = this; 
+    //vm.divisions = getDivisions;
     vm.openNewDivision = openNewDivision;
     vm.openEditDivision = openEditDivision;
     vm.openDeleteDivision = openDeleteDivision;
 
-    datacontext.getDivisions(webUrl).then(
+   /* datacontext.getDivisions(webUrl).then(
       function (response) {
         console.log(response.data);
         vm.divisions = response.data;
@@ -23,7 +24,19 @@ angular.module('nvslonlineAppApp')
         toastr.error("Error has occurred: " + response.data.Message, "Fatal error", {
           positionClass: 'toast-bottom-full-width'
         })                
-      });
+      });*/
+    getDivision();
+     function getDivision() {
+           datacontext.getDivisions(webUrl).then(
+            function (response) {
+                console.log(response.data);
+                vm.divisions = response.data;
+            }, function(response) {
+                toastr.error("Error has occurred: " + response.data.Message, "Fatal error", {
+                positionClass: 'toast-bottom-full-width'
+                })                
+            });
+     };
 
   function openNewDivision() {   
             var options = {};
@@ -44,9 +57,9 @@ angular.module('nvslonlineAppApp')
 
             modalInstance.result.then(function (data) {
               console.log(data);
-                //getTeams();
-                vm.divisions = data;
-                log('Changes Saved');
+               getDivision();
+                //vm.divisions = data;
+                //log('Changes Saved');
             }, function () {
             });
         }  
@@ -55,10 +68,11 @@ angular.module('nvslonlineAppApp')
             
             var options = {};
             options.division = division;
+            options.webUrl = webUrl;
            
             var modalInstance = $modal.open({
                 templateUrl: 'division.html',
-                controller: modalInstanceEdit,
+                controller: modalInstanceEditDivision,
                 //size: size,
 
                 resolve: {
@@ -68,8 +82,8 @@ angular.module('nvslonlineAppApp')
                 }
             });
             modalInstance.result.then(function (dataUpdated) {
-                vm.divisions = dataUpdated;
-                log('Changes Saved');
+                getDivision();
+                //log('Changes Saved');
 
             }, function () {
             });
@@ -78,9 +92,11 @@ angular.module('nvslonlineAppApp')
       function openDeleteDivision(division) {
             var options = {};
             options.division = division;
+            options.webUrl = webUrl;
+
             var modalInstance = $modal.open({
                 templateUrl: 'delete.html',
-                controller: modalInstanceDelete,
+                controller: modalInstanceDeleteDivision,
                 //size: size,
 
                 resolve: {
@@ -90,8 +106,8 @@ angular.module('nvslonlineAppApp')
                 }
             });
             modalInstance.result.then(function (data) {
-                vm.divisions = data;
-                log('Changes Saved');
+               getDivision();
+                //log('Changes Saved');
             }, function () {
             });
         } 
@@ -115,7 +131,7 @@ angular.module('nvslonlineAppApp')
            $scope.cancel = function () { $modalInstance.dismiss('cancel'); };
        }];
 
-  var modalInstanceEdit = ['$scope', '$modalInstance', 'datacontext', 'options', function ($scope, $modalInstance, datacontext, options) {
+  var modalInstanceEditDivision = ['$scope', '$modalInstance', 'datacontext', 'options', function ($scope, $modalInstance, datacontext, options) {
         
         var objDivision = options.division;
         $scope.divisionName = objDivision.DivisionName;
@@ -124,13 +140,13 @@ angular.module('nvslonlineAppApp')
             
             objDivision.DivisionName = this.divisionName;
 
-            var dataUpdated = datacontext.editDivision(objDivision);
+            var dataUpdated = datacontext.editDivision(options.webUrl,objDivision);
             $modalInstance.close(dataUpdated);
         };
         $scope.cancel = function () { $modalInstance.dismiss('cancel'); };
     }];
 
-  var modalInstanceDelete = ['$scope', '$modalInstance', 'datacontext', 'options', function ($scope, $modalInstance, datacontext, options) {
+  var modalInstanceDeleteDivision = ['$scope', '$modalInstance', 'datacontext', 'options', function ($scope, $modalInstance, datacontext, options) {
     
         var objDivision = options.division;
 
@@ -138,7 +154,7 @@ angular.module('nvslonlineAppApp')
         
         $scope.ok = function () {
             
-            var dataUpdated = datacontext.deleteDivision(objDivision);
+            var dataUpdated = datacontext.deleteDivision(options.webUrl,objDivision);
             //console.log(updated);
             $modalInstance.close(dataUpdated);
         };
