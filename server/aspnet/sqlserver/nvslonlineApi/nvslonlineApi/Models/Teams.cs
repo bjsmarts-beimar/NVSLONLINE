@@ -14,5 +14,8 @@ namespace nvslonlineApi.Models
         [ForeignKey("Division")]
         public int? DivisionId { get; set; }
         public Division Division { get; set; }
+        [ForeignKey("Season")]
+        public int? SeasonId { get; set; }
+        public Season Season { get; set; }
     }
 }
