@@ -52,9 +52,8 @@ angular.module('nvslonlineAppApp')
             });
 
             modalInstance.result.then(function (data) {
-                //getTeams();
-                vm.seasons = data;
-                log('Changes Saved');
+                getSeason();
+                //log('Changes Saved');
             }, function () {
             });
         }
@@ -77,24 +76,25 @@ angular.module('nvslonlineAppApp')
                 }
             });
             modalInstance.result.then(function (dataUpdated) {
-                vm.seasons = dataUpdated;
-                log('Changes Saved');
+                getSeason();
+                //log('Changes Saved');
 
             }, function () {
             });
         }
   }]);
 
-  var modalInstanceNewSeason = ['$scope', '$modalInstance', 'options', 'datacontext',
-        function($scope, $modalInstance, options, datacontext) {
+  var modalInstanceNewSeason = ['$scope', '$modalInstance', 'options', 'datacontext','$filter',
+        function($scope, $modalInstance, options, datacontext,$filter) {
             $scope.ok = function () {
                 var seasonValues = {};
                 seasonValues.SeasonName = this.seasonName;
                 seasonValues.Active = false;
                 seasonValues.IsHidden = false;
-                seasonValues.SeasonStart = this.seasonStart;
-                seasonValues.SeasonEnd = this.seasonEnd;
-
+                seasonValues.SeasonStart = $filter('date')(this.seasonStart, 'yyyy-MM-dd');
+                seasonValues.SeasonEnd = $filter('date')(this.seasonEnd,'yyyy-MM-dd');
+                console.log(seasonValues);
+                
                 var dataUpdated = datacontext.addSeason(options.webUrl,seasonValues);
 
                 $modalInstance.close(dataUpdated);
@@ -102,20 +102,20 @@ angular.module('nvslonlineAppApp')
             $scope.cancel = function () { $modalInstance.dismiss('cancel'); };
         }];
 
-    var modalInstanceEditSeason = ['$scope', '$modalInstance', 'datacontext', 'options', 
-        function ($scope, $modalInstance, datacontext, options) {
+    var modalInstanceEditSeason = ['$scope', '$modalInstance', 'datacontext', 'options','$filter', 
+        function ($scope, $modalInstance, datacontext, options, $filter) {
 
         var objSeason = options.season;
-       
+       console.log(objSeason);
         $scope.seasonName = objSeason.SeasonName;
-        $scope.seasonStart = objSeason.SeasonStart;
-        $scope.seasonEnd = objSeason.SeasonEnd;
+        $scope.seasonStart = new Date(objSeason.SeasonStart);
+        $scope.seasonEnd = new Date(objSeason.SeasonEnd);
        
         $scope.ok = function () {
            
             objSeason.SeasonName = this.seasonName;
-            objSeason.SeasonStart = this.seasonStart;
-            objSeason.SeasonEnd = this.seasonEnd;
+            objSeason.SeasonStart = $filter('date')(this.seasonStart, 'yyyy-MM-dd');
+            objSeason.SeasonEnd = $filter('date')(this.seasonEnd,'yyyy-MM-dd');
 
             var dataUpdated = datacontext.editSeason(objSeason);
             $modalInstance.close(dataUpdated);

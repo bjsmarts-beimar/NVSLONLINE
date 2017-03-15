@@ -199,11 +199,30 @@ angular.module('nvslonlineAppApp')
 */
 
            $scope.ok = function () {
-console.log($scope.body);
+
+            var seasons = options.dataSeason;
+            var teams = options.dataTeams;
 
                
-               var objSeason = $linq.Enumerable().From(options.dataSeason).Where("p => p.Id ==" + this.season).Select().FirstOrDefault();
-               console.log(objSeason);
+               var objSeason = $linq.Enumerable().From(seasons).Where("p => p.Id ==" + this.season).Select().FirstOrDefault();
+
+               var lstDivision = $linq.Enumerable().From(teams).Where("p => p.SeasonId ==" + this.season).Select().ToArray();
+
+               var seasonStart = new Date(objSeason.SeasonStart);
+               var seasonEnd = new Date(objSeason.SeasonEnd);
+
+               var countFourTeamForDivision = 0;
+               for (var l = 0; l < lstDivision.length; l++) {
+                        var teamsDivision  = Enumerable.From(teams)
+                            .Where("p => p.DivisionId ==" + lstDivision[l].Id)
+                            .ToArray();
+
+
+
+
+               }
+
+               
 /*
                var seasonStart = new Date(objSeason.SeasonStart);
                var seasonEnd = new Date(objSeason.SeasonEnd);

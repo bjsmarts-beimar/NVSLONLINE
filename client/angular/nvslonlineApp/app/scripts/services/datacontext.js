@@ -84,6 +84,10 @@ this.editDivision = function (webUrl,objDivision) {
             url: webUrl +  'api/seasons',
             data: objSeason,
             //withCredentials: true,
+        }).then(function successCallback(response){
+            console.log(response);
+        },function errorCallback(response){
+            console.log(response);
         });
     };
 

@@ -3,7 +3,7 @@
 namespace NVSLOnline\Http\Controllers;
 
 use Illuminate\Http\Request;
-use NVSLOnline\Standing;
+use NVSLOnline\Season;
 use DB;
 
 class SeasonController extends Controller
@@ -34,7 +34,7 @@ class SeasonController extends Controller
 
 	}
 	public function store(Request $request){
-		$objSeason = Season(); 
+		$objSeason = New Season(); 
 		$objSeason -> SeasonName = $request->SeasonName;
 		$objSeason -> Active = $request->Active;
 		$objSeason -> IsHidden = 0;

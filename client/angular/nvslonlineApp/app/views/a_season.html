@@ -24,8 +24,8 @@
                                         <a id="Delete" href ng-click="vm.openDeleteSeason(p)">Delete </a>
                                         </td>
                                         <td style="text-align: left">{{p.SeasonName}}</td>
-                                        <td style="text-align: left"><span data-ng-bind="vm.convertToDate(p.SeasonStart) | date:'dd/MM/yyyy'"></span></td>
-                                        <td style="text-align: left"><span data-ng-bind="vm.convertToDate(p.SeasonEnd) | date:'dd/MM/yyyy'"></span></td>
+                                        <td style="text-align: left"><span data-ng-bind="vm.convertToDate(p.SeasonStart) | date:'dd/MM/yyyy'"></span>{{p.SeasonStart}}</td>
+                                        <td style="text-align: left"><span data-ng-bind="vm.convertToDate(p.SeasonEnd) | date:'dd/MM/yyyy'"></span>{{p.SeasonEnd}}</td>
                                     </tr>
                                 </tbody>
                             </table>
