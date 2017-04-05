@@ -17,7 +17,7 @@ angular.module('nvslonlineAppApp')
             method: 'GET',
             //withCredentials: true,
             data: 'json',
-            url: webUrl +  'api/divisions'
+            url: webUrl +  'api/divisions/?format=json'
         });
     };
 
