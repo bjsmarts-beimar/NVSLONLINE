@@ -1,5 +1,6 @@
 from NVSLOnline.models import Divisions,Seasons,Venues,Teams,Schedules
 from rest_framework.serializers import ModelSerializer
+from rest_framework import serializers
 
 class DivisionSerializer(ModelSerializer):
     class Meta:
@@ -20,12 +21,22 @@ class VenueSerializer(ModelSerializer):
         #read_only_fields = ('Id')
 
 class TeamSerializer(ModelSerializer):
+    DivisionId = DivisionSerializer(many=False, read_only=True)
+    SeasonId = SeasonSerializer(many=False, read_only=True)
+    #DivisionId = serializers.PrimaryKeyRelatedField(many=False,read_only=True)
+    #SeasonId = serializers.PrimaryKeyRelatedField(many=False,read_only=True)
     class Meta:
         model = Teams
-        fields = ('Id','TeamName','IsHidden','DivisionId','SeasonId')
-        #read_only_fields = ('Id')
+        fields = ('Id','TeamName','IsHidden','DivisionId','SeasonId') 
+
 
 class ScheduleSerializer(ModelSerializer):
+    DivisionId = DivisionSerializer(many=False, read_only=True)
+    SeasonId = SeasonSerializer(many=False, read_only=True)
+    VenueId = VenueSerializer(many=False, read_only=True)
+    HomeTeamId = TeamSerializer(many=False, read_only=True)
+    AwayTeamId = TeamSerializer(many=False, read_only=True)
+
     class Meta:
         model = Schedules
         fields = ('Id','SeasonId','DivisionId','VenueId','Status','DateTime','HomeTeamId','GoalsHomeTeam','AwayTeamId','GoalsAwayTeam','IsHidden')

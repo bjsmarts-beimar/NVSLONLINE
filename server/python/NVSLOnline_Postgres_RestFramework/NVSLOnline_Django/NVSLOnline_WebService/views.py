@@ -1,16 +1,12 @@
 #from django.shortcuts import render
 from NVSLOnline.models import Divisions,Seasons,Venues,Teams,Schedules
 from django.shortcuts import get_object_or_404
+from rest_framework import viewsets
 from  rest_framework.response import Response
 from rest_framework.views import APIView
 from NVSLOnline_WebService.serializers import DivisionSerializer,SeasonSerializer,VenueSerializer,TeamSerializer,ScheduleSerializer
 
 # Create your views here.
-class HolaMundo(APIView):
-    def get(self, request, format=None):
-        return Response({'mensaje':'holamundo django rest_framework'})
-
-#hola_mundo = HolaMundo.as_view()
 
 class Division(APIView):
     serializer_class = DivisionSerializer
@@ -65,8 +61,31 @@ class Season(APIView):
            return Response(serializer.errors)
 
 class Venue(APIView):
-    def get(self, request, format=None):
-        return Response({'mensaje':'holamundo django rest_framework'})
+    serializer_class = VenueSerializer
+    def get(self, request, id=None, format=None):
+        if id!=None:
+            venues = get_object_or_404(Venues, pk=id)
+            many = False
+        else:
+            venues = Venues.objects.filter(IsHidden = False)
+            many = True
+        response = self.serializer_class(venues,many=many)
+        return Response(response.data)
+
+    def post(self, request, format=None):
+        serializer = self.serializer_class(data=request.data)# request.POST y request.GET, request.FILES
+        if serializer.is_valid():
+            venue = Venues(
+                VenueName = serializer.data['VenueName'],
+                IsHidden = False
+            )
+            venue.save()
+            resp = self.serializer_class(venue,many=False)
+            return Response(resp.data)
+            
+        else:
+           return Response(serializer.errors)
+
 
 class Team(APIView):
     serializer_class = TeamSerializer
@@ -85,18 +104,74 @@ class Team(APIView):
         if serializer.is_valid():
             team = Teams(
                 TeamName = serializer.data['TeamName'],
-                #Division = 
-                Division = serializer.data['Division'],
-                Season = serializer.data['Season'],
+                DivisionId = Divisions.objects.get(Id = request.data['DivisionId']),
+                SeasonId = Seasons.objects.get(Id = request.data['SeasonId']),
                 IsHidden = False
             )
             team.save()
             resp = self.serializer_class(team,many=False)
-            #return Response(resp.data)
             return Response(resp.data)
         else:
            return Response(serializer.errors)
 
+class DivisionViewset(viewsets.ModelViewSet):
+    serializer_class = DivisionSerializer
+    queryset = Divisions.objects.filter(IsHidden = False)
+    lookup_field = 'Id'
+
+class TeamViewset(viewsets.ModelViewSet):
+    serializer_class = TeamSerializer
+    queryset = Teams.objects.filter(IsHidden = False)
+    lookup_field = 'Id'
+
+    #def list(self,request,*args,**kwargs):
+    #    return super(TeamViewset,self).list(request,*args,**kwargs)
+
+   # def create(self,request,*args, **kwargs):
+   #     serializer = self.get_serializer(data = request.data)
+
+
 class Schedule(APIView):
-    def get(self, request, format=None):
-        return Response({'mensaje':'holamundo django rest_framework'})
+    serializer_class = ScheduleSerializer
+    def get(self, request, id=None, format=None):
+        if id!=None:
+            schedules = get_object_or_404(Schedules, pk=id)
+            many = False
+        else:
+            schedules = Schedules.objects.filter(IsHidden = False)
+            many = True
+        response = self.serializer_class(schedules,many=many)
+        return Response(response.data)
+
+    def post(self, request, format=None):
+        serializer = self.serializer_class(data=request.data)# request.POST y request.GET, request.FILES
+        if serializer.is_valid():
+            schedule = Schedules(
+                SeasonId = Seasons.objects.get(Id = request.data['SeasonId']),
+                DivisionId = Divisions.objects.get(Id = request.data['DivisionId']),
+                VenueId = Venues.objects.get(Id = request.data['VenueId']),
+                Status = serializer.data['Status'],
+                #DateTime = serializer.data['DateTime'],
+                HomeTeamId = Teams.objects.get(Id = request.data['HomeTeamId']),
+                GoalsHomeTeam = serializer.data['GoalsHomeTeam'],
+                AwayTeamId = Teams.objects.get(Id = request.data['AwayTeamId']),
+                GoalsAwayTeam = serializer.data['GoalsAwayTeam'],
+                IsHidden = False
+            )
+            schedule.save()
+            resp = self.serializer_class(schedule,many=False)
+            return Response(resp.data)
+        else:
+           return Response(serializer.errors)
+
+class Standing(APIView):
+    serializer_class = DivisionSerializer
+    def get(self, request, id=None, format=None):
+        if id!=None:
+            divisions = get_object_or_404(Divisions, pk=id)
+            many = False
+        else:
+            divisions = Divisions.objects.filter(IsHidden = False)
+            many = True
+        response = self.serializer_class(divisions,many=many)
+        return Response(response.data)

@@ -9,8 +9,8 @@ class Divisions(models.Model):
     DivisionName = models.TextField()
     IsHidden = models.BooleanField(default=False)
     
-    #def __unicode__(self):
-    #    return u'{0} - {1}'.format(self.Divisions)
+    def __unicode__(self):
+       return u'{0} - {1}'.format(self.DivisionName, self.Id)
 
 class Seasons(models.Model):
     #Id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
@@ -21,10 +21,16 @@ class Seasons(models.Model):
     SeasonStart = models.DateTimeField(auto_now_add=True)
     SeasonEnd = models.DateTimeField(auto_now_add=True)
 
+    def __unicode__(self):
+       return u'{0} - {1}'.format(self.SeasonName, self.Id)
+
 class Venues(models.Model):
     Id = models.AutoField(primary_key=True)
     VenueName = models.TextField()
     IsHidden = models.BooleanField(default=False)
+
+    def __unicode__(self):
+       return u'{0} - {1}'.format(self.VenueName, self.Id)
 
 class Teams(models.Model):
     Id = models.AutoField(primary_key=True)
@@ -32,6 +38,9 @@ class Teams(models.Model):
     IsHidden = models.BooleanField(default=False)
     DivisionId = models.ForeignKey(Divisions)
     SeasonId = models.ForeignKey(Seasons)
+
+    def __unicode__(self):
+       return u'{0} - {1}'.format(self.TeamName, self.Id)
 
 class Schedules(models.Model):
     Id = models.AutoField(primary_key=True)
@@ -45,3 +54,6 @@ class Schedules(models.Model):
     AwayTeamId = models.ForeignKey(Teams)
     GoalsAwayTeam = models.IntegerField()
     IsHidden = models.BooleanField(default=False)
+
+    def __unicode__(self):
+       return u'{0} - {1}'.format(self.Status, self.Id )

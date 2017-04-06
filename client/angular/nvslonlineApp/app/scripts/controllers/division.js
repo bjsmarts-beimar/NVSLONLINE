@@ -13,14 +13,14 @@ angular.module('nvslonlineAppApp')
 
     datacontext.getDivisions(webUrl).then(
       function (response) {
-          console.log(response);
-        //console.log(response.data);
-        //vm.divisions = response.data;
+        
+        console.log(response.data);
+        vm.divisions = response.data;
       }, function(response) {
           console.log(response);
-        /*toastr.error("Error has occurred: " + response.data.Message, "Fatal error", {
+          toastr.error("Error has occurred: " + response.data.Message, "Fatal error", {
           positionClass: 'toast-bottom-full-width'
-        }) */               
+        })               
       });
 
 
