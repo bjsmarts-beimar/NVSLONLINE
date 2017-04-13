@@ -52,6 +52,7 @@ Route::get("seasons/inactive", "SeasonController@inactiveSeason");
 Route::get("seasons/{id}", "SeasonController@show");
 Route::post("seasons", "SeasonController@store");
 Route::put("seasons/{id}", "SeasonController@update");
+Route::put("seasons/seasonActive/{id}", "SeasonController@editSeasonActive");
 Route::delete("seasons/{id}", "SeasonController@destroy");
 
 Route::get("venues", "VenueController@index");
@@ -60,8 +61,8 @@ Route::post("venues", "VenueController@store");
 Route::put("venues/{id}", "VenueController@update");
 Route::delete("venues/{id}", "VenueController@destroy");
 
-Route::get("standings", "StandingController@index");
-
 Route::get("schedules", "ScheduleController@index");
+Route::put("seasons/scheduleScore/{id}", "SeasonController@editScheduleScore");
 
+Route::get("standings", "StandingController@index");
 });

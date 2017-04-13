@@ -1,4 +1,4 @@
-from NVSLOnline.models import Divisions,Seasons,Venues,Teams,Schedules
+from NVSLOnline.models import Divisions,Seasons,Venues,Teams,Schedules,Players,Roles,TopNavigation
 from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
 
@@ -21,23 +21,41 @@ class VenueSerializer(ModelSerializer):
         #read_only_fields = ('Id')
 
 class TeamSerializer(ModelSerializer):
-    DivisionId = DivisionSerializer(many=False, read_only=True)
-    SeasonId = SeasonSerializer(many=False, read_only=True)
-    #DivisionId = serializers.PrimaryKeyRelatedField(many=False,read_only=True)
-    #SeasonId = serializers.PrimaryKeyRelatedField(many=False,read_only=True)
+    
+    Division = DivisionSerializer(source='DivisionId',read_only=True)
+    Season = SeasonSerializer(source='SeasonId',read_only=True)
     class Meta:
         model = Teams
-        fields = ('Id','TeamName','IsHidden','DivisionId','SeasonId') 
+        fields = ('Id','TeamName','IsHidden','DivisionId','Division','SeasonId','Season') 
 
+class PlayerSerializer(ModelSerializer):
+    
+    Team = TeamSerializer(source='TeamId',read_only=True)
+    class Meta:
+        model = Players
+        fields = ('Id','FirstName','LastName','IsHidden','TeamId','Team') 
 
 class ScheduleSerializer(ModelSerializer):
-    DivisionId = DivisionSerializer(many=False, read_only=True)
-    SeasonId = SeasonSerializer(many=False, read_only=True)
-    VenueId = VenueSerializer(many=False, read_only=True)
-    HomeTeamId = TeamSerializer(many=False, read_only=True)
-    AwayTeamId = TeamSerializer(many=False, read_only=True)
+    Division = DivisionSerializer(source='DivisionId',read_only=True)
+    Season = SeasonSerializer(source='SeasonId',read_only=True)
+    Venue = VenueSerializer(source='VenueId',read_only=True)
+    HomeTeam = TeamSerializer(source='HomeTeamId',read_only=True)
+    AwayTeam = TeamSerializer(source='AwayTeamId',read_only=True)
 
     class Meta:
         model = Schedules
-        fields = ('Id','SeasonId','DivisionId','VenueId','Status','DateTime','HomeTeamId','GoalsHomeTeam','AwayTeamId','GoalsAwayTeam','IsHidden')
+        fields = ('Id', 'SeasonId', 'Season','DivisionId', 'Division' ,'VenueId','Venue','Status','DateTime','HomeTeamId','HomeTeam','GoalsHomeTeam','AwayTeamId','AwayTeam','GoalsAwayTeam','IsHidden')
         #read_only_fields = ('Id')
+
+######################################## CONFIGURATION #############################################
+
+class RoleSerializer(ModelSerializer):
+    class Meta:
+        model = Roles
+        fields = ('Id','RoleName','LoweredRoleName','Description','IsHidden')
+
+class TopNavigationSerializer(ModelSerializer):
+    Role = RoleSerializer(source='RoleId',read_only=True)    
+    class Meta:
+        model = TopNavigation
+        fields = ('Id','TopMenu','TopMenuDescription','TopMenuLink','TopMenuOrder','TopParentId','TopMenuExternal','IsHidden','RoleId','Role')

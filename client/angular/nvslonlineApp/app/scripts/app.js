@@ -15,5 +15,5 @@ angular
     'toastr',// 
     'ui.bootstrap',//ui-bootstrap(ex:carousel,pagination,dialog)
     'angular.filter',//filter permite hacer filtros en htmlPage
-    'angular-linq'
+    'angular-linq'    //$linq.Enumerable()
     ]);

@@ -24,7 +24,7 @@
     <!-- Add your site or application content here -->
     <div class="header">
       <div class="navbar navbar-default" role="navigation">
-        <div class="container">
+        <div class="container" ng-controller="TopnavigationCtrl as vm">
           <div class="navbar-header">
 
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
@@ -40,7 +40,7 @@
           <div class="collapse navbar-collapse" id="js-navbar-collapse">
 
             <ul class="nav navbar-nav">
-              <li ui-sref-active="active"><a ui-sref="main">Home</a></li>
+              <li ui-sref-active="active"><a ui-sref="main">Home{{test}}</a></li>
               <li ui-sref-active="active"><a ui-sref="team">Teams</a></li>
               <li ui-sref-active="active"><a ui-sref="schedule">Schedule</a></li>
               <li ui-sref-active="active"><a ui-sref="standing">Standing</a></li>
@@ -109,8 +109,7 @@
         <script src="scripts/controllers/a_team.js"></script>
         <script src="scripts/controllers/c_schedule.js"></script>
         <script src="scripts/services/common.js"></script>
+        <script src="scripts/controllers/topnavigation.js"></script>
         <!-- endbuild -->
-         <script src="bower_components/angular-filter/dist/angular-filter.min.js"></script>
-         <script src="bower_components/angular-linq/angular-linq.min.js"></script>
 </body>
 </html>

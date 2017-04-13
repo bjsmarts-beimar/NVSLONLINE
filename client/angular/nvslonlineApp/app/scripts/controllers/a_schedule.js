@@ -119,8 +119,8 @@ angular.module('nvslonlineAppApp')
 
   }]);
 
-   var modalInstanceNewSchedule = ['$scope', '$modalInstance', 'options', 'datacontext','$q','$linq',
-       function ($scope, $modalInstance, options, datacontext, $q, $linq) {
+   var modalInstanceNewSchedule = ['$scope', '$modalInstance', 'options', 'datacontext','common','$q','$linq',
+       function ($scope, $modalInstance, options, datacontext, common, $q, $linq) {
            $scope.Seasons = options.dataSeason;
            $scope.Teams = options.dataTeams;
            var teams = options.dataTeams;
@@ -213,9 +213,81 @@ angular.module('nvslonlineAppApp')
 
                var countFourTeamForDivision = 0;
                for (var l = 0; l < lstDivision.length; l++) {
-                        var teamsDivision  = Enumerable.From(teams)
+                        var teamsDivision  = $linq.Enumerable().From(teams)
                             .Where("p => p.DivisionId ==" + lstDivision[l].Id)
                             .ToArray();
+
+                            if (teamsDivision.length >= 4) {
+                                countFourTeamForDivision += 1;
+                                console.log(teamsDivision);
+                                var ranVenues = common.shuffle(venues);
+
+                                var indexVenues = 0;
+                                var countPartidos = 0;
+
+                       for (var j = 0; j < teamsDivision.length; j++) {
+                           for (var k = j; k < teamsDivision.length; k++) {
+                               if (teamsDivision[j].Id !== teamsDivision[k].Id) {
+
+                                   countPartidos += 1;
+                                   var scheduleValues = {};
+
+                                   var ranTeams = Math.floor((Math.random() * 2) + 1);
+
+                                   if (ranTeams === 1) {
+                                       scheduleValues.HomeTeamId = teamsDivision[j].Id;
+                                       scheduleValues.AwayTeamId = teamsDivision[k].Id;
+                                   } else {
+                                       scheduleValues.HomeTeamId = teamsDivision[k].Id;
+                                       scheduleValues.AwayTeamId = teamsDivision[j].Id;
+                                   }
+
+                                   if (ranVenues[indexVenues] == undefined) {
+                                       indexVenues = 0;
+                                       scheduleValues.VenueId = ranVenues[indexVenues].Id;
+                                   } else {
+                                       scheduleValues.VenueId = ranVenues[indexVenues].Id;
+                                       indexVenues += 1;
+                                   }
+
+                                   scheduleValues.Status = "Scheduled";
+
+                                   ///scheduleValues.DivisionId = $scope.divisionTeams[l].Id;
+                                   scheduleValues.SeasonId = this.season;
+
+                                   scheduleValues.GoalsHomeTeam = null;
+                                   scheduleValues.GoalsAwayTeam = null;
+                                   scheduleValues.IsHidden = false;
+
+                                   var encontrado = false;
+                                   while (encontrado === false) {
+                                       var ranFecha = common.randomDate(seasonStart, seasonEnd);
+
+                                       if (ranFecha.getDay() === 0) {
+                                           if (countPartidos % 2 === 0) {
+                                               ranFecha.setHours(14, 0, 0);
+                                               scheduleValues.DateTime = ranFecha;
+                                               encontrado = true;
+
+                                           } else {
+                                               ranFecha.setHours(10, 0, 0);
+                                               scheduleValues.DateTime = ranFecha;
+                                               encontrado = true;
+                                           }
+                                       }
+                                   }
+
+                                    //datacontext.addSchedule(scheduleValues);
+                                    console.log(scheduleValues)
+
+                               }
+
+                           }
+                       }
+
+
+
+                            }
 
 
 

@@ -56,9 +56,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
+APPEND_SLASH=False
 CORS_ORIGIN_ALLOW_ALL = True
 
+#ROOT_URLCONF = 'NVSLOnline_WebService.urls'
 ROOT_URLCONF = 'NVSLOnline_Django.urls'
 
 TEMPLATES = [
