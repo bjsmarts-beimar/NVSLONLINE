@@ -14,8 +14,9 @@ class Seasons(models.Model):
     SeasonName = models.TextField()
     Active = models.BooleanField(default=False)
     IsHidden = models.BooleanField(default=False)
-    SeasonStart = models.DateTimeField(auto_now_add=True)
-    SeasonEnd = models.DateTimeField(auto_now_add=True)
+    SeasonStart = models.DateField(blank=True, null=True)
+    SeasonEnd = models.DateField(blank=True, null=True)
+    #SeasonEnd = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
        return u'{0} - {1}'.format(self.SeasonName, self.Id)
@@ -79,15 +80,18 @@ class Roles(models.Model):
     def __unicode__(self):
            return u'{0} - {1}'.format(self.RoleName, self.Id)
 
-class TopNavigation(models.Model):
+
+
+class TopNavigations(models.Model):
     Id = models.AutoField(primary_key=True)
     TopMenu = models.TextField(max_length = 300)
-    TopMenuDescription = models.TextField(max_length = 500)
     TopMenuLink = models.TextField(max_length = 500)
+    TopMenuDescription = models.TextField(max_length = 500)
     TopMenuOrder = models.IntegerField()
     TopParentId = models.TextField(max_length = 400)
-    TopMenuExternal = models.IntegerField()
+    TopMenuExternal = models.BooleanField(default=False)
     IsHidden = models.BooleanField(default=False)
+    
     RoleId = models.ForeignKey(Roles, db_column = 'RoleId', null=True)
 
     def __unicode__(self):

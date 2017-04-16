@@ -52,6 +52,12 @@ angular.module('nvslonlineAppApp').config(function($urlRouterProvider, $statePro
         controller: 'ASeasonCtrl as vm'
     })
 
+    .state('adminVenue', {
+        url: '/AVenues',
+        templateUrl: '/views/a_venue.html',
+        controller: 'AVenueCtrl as vm'
+    })
+
     .state('adminTeam', {
         url: '/ATeams',
         templateUrl: '/views/a_team.html',
@@ -72,6 +78,15 @@ angular.module('nvslonlineAppApp').config(function($urlRouterProvider, $statePro
         url: '/CSchedules',
         templateUrl: '/views/c_schedule.html',
         controller: 'CScheduleCtrl as vm'
+    })
+
+
+    /***************** CONFIGURATION ***************/
+
+    .state('topNavigation', {
+        url: '/Navigation',
+        templateUrl: '/views/top_navigation_setting.html',
+        controller: 'TopNavigationSettingCtrl as vm'
     })
 
     /***************** USERS ***************/

@@ -28,7 +28,7 @@ angular.module('nvslonlineAppApp')
 
    this.convertToDate = function(stringDate) {
       var dateOut = new Date(stringDate);
-      dateOut.setDate(dateOut.getDate());
+      dateOut.setDate(dateOut.getDate()+1);
       return dateOut;
     };
 

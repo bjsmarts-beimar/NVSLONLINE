@@ -61,6 +61,7 @@ angular.module('nvslonlineAppApp')
         function openEditSeason(season) {
             
             var options = {};
+            options.webUrl = webUrl;
             options.season = season;
             //options.dataDivision = dataDivision;
 
@@ -93,6 +94,8 @@ angular.module('nvslonlineAppApp')
                 seasonValues.IsHidden = false;
                 seasonValues.SeasonStart = $filter('date')(this.seasonStart, 'yyyy-MM-dd');
                 seasonValues.SeasonEnd = $filter('date')(this.seasonEnd,'yyyy-MM-dd');
+                //seasonValues.SeasonStart = this.seasonStart;
+                //seasonValues.SeasonEnd = this.seasonEnd;
                 console.log(seasonValues);
                 
                 var dataUpdated = datacontext.addSeason(options.webUrl,seasonValues);
@@ -102,14 +105,15 @@ angular.module('nvslonlineAppApp')
             $scope.cancel = function () { $modalInstance.dismiss('cancel'); };
         }];
 
-    var modalInstanceEditSeason = ['$scope', '$modalInstance', 'datacontext', 'options','$filter', 
-        function ($scope, $modalInstance, datacontext, options, $filter) {
+    var modalInstanceEditSeason = ['$scope', '$modalInstance', 'datacontext','common', 'options','$filter', 
+        function ($scope, $modalInstance, datacontext,common, options, $filter) {
 
         var objSeason = options.season;
        console.log(objSeason);
+        
         $scope.seasonName = objSeason.SeasonName;
-        $scope.seasonStart = new Date(objSeason.SeasonStart);
-        $scope.seasonEnd = new Date(objSeason.SeasonEnd);
+        $scope.seasonStart = common.convertToDate(objSeason.SeasonStart);
+        $scope.seasonEnd = common.convertToDate(objSeason.SeasonEnd);
        
         $scope.ok = function () {
            
@@ -117,7 +121,7 @@ angular.module('nvslonlineAppApp')
             objSeason.SeasonStart = $filter('date')(this.seasonStart, 'yyyy-MM-dd');
             objSeason.SeasonEnd = $filter('date')(this.seasonEnd,'yyyy-MM-dd');
 
-            var dataUpdated = datacontext.editSeason(objSeason);
+            var dataUpdated = datacontext.editSeason(options.webUrl,objSeason);
             $modalInstance.close(dataUpdated);
         };
         $scope.cancel = function () { $modalInstance.dismiss('cancel'); };

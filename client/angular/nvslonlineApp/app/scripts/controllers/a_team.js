@@ -114,30 +114,36 @@ angular.module('nvslonlineAppApp')
                 }
             });
             modalInstance.result.then(function (dataUpdated) {
-                vm.allTeams = data;
-                vm.teams = dataUpdated;
-                log('Changes Saved');
+                //vm.allTeams = data;
+                //vm.teams = dataUpdated;
+                getTeams();
+                //log('Changes Saved');
 
             }, function () {
             });
         }
 
         function openDeleteTeam(team) {
+            var options = {};
+            options.team = vm.team;
+            options.webUrl = webUrl;
+
             var modalInstance = $modal.open({
                 templateUrl: 'delete.html',
                 controller: modalInstanceDelete,
                 //size: size,
 
                 resolve: {
-                    objTeam: function () { //esta es la info enviada al modal si se cargo correctamente. tb se puede info en el scope que abre el modal
-                        return team;
+                    options: function () { //esta es la info enviada al modal si se cargo correctamente. tb se puede info en el scope que abre el modal
+                        return options;
                     }
                 }
             });
             modalInstance.result.then(function (data) {
-                vm.allTeams = data;
-                vm.teams = data;
-                log('Changes Saved');
+                //vm.allTeams = data;
+                //vm.teams = data;
+                getTeams();
+                //log('Changes Saved');
             }, function () {
             });
         }
@@ -175,20 +181,22 @@ angular.module('nvslonlineAppApp')
 
         $scope.teamName = objTeam.TeamName;
         $scope.division = objTeam.DivisionId;
+        $scope.season = objTeam.SeasonId;
         
         $scope.ok = function () {
                objTeam.TeamName = this.teamName;
                objTeam.DivisionId = this.division;
                objTeam.SeasonId = this.season;
 
-               var dataUpdated = datacontext.editTeam(objTeam);
+               var dataUpdated = datacontext.editTeam(options.webUrl,objTeam);
                $modalInstance.close(dataUpdated);
            };
            $scope.cancel = function () { $modalInstance.dismiss('cancel'); };
     }];
 
-    var modalInstanceDelete = ['$scope', '$modalInstance', 'datacontext', 'objTeam', function ($scope, $modalInstance, datacontext, objTeam) {
-        console.log(objTeam);
+    var modalInstanceDelete = ['$scope', '$modalInstance', 'datacontext', 'options', function ($scope, $modalInstance, datacontext, objTeam) {
+        console.log(options);
+        var objTeam = options.team;
         $scope.teamName = objTeam.TeamName;
         $scope.division = objTeam.Division.DivisionName;
 
@@ -196,7 +204,7 @@ angular.module('nvslonlineAppApp')
             //objTeam.TeamName = this.teamName;
             //objTeam.Category = this.category;
 
-            var dataUpdated = datacontext.deleteTeam(objTeam);
+            var dataUpdated = datacontext.deleteTeam(options.webUrl,objTeam);
             //console.log(updated);
             $modalInstance.close(dataUpdated);
         };

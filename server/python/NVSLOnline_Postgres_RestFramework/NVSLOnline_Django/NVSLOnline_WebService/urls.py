@@ -43,4 +43,5 @@ urlpatterns = [
 
     ################################## TopNavigation ##################################
     url(r'^api/topNavigation/?$', NVSLOnline_Views.topNavigation, name='get_topNavigation'),
+    url(r'^api/topNavigation/(?P<id>\d+)/?$', NVSLOnline_Views.topNavigation, name='get_topNavigationId'),
 ]

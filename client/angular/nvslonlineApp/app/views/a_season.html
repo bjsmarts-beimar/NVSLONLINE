@@ -4,7 +4,7 @@
             <h2><a href ng-click="vm.openNewSeason()" class="btn btn-default">New Season </a>
             </h2>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="widget wviolet">
                         <div data-cc-widget-header title="Seasons" allow-collapse="false"></div>
                         <div class="widget-content text-center text-info">
@@ -24,8 +24,8 @@
                                         <a id="Delete" href ng-click="vm.openDeleteSeason(p)">Delete </a>
                                         </td>
                                         <td style="text-align: left">{{p.SeasonName}}</td>
-                                        <td style="text-align: left"><span data-ng-bind="vm.convertToDate(p.SeasonStart) | date:'dd/MM/yyyy'"></span>{{p.SeasonStart}}</td>
-                                        <td style="text-align: left"><span data-ng-bind="vm.convertToDate(p.SeasonEnd) | date:'dd/MM/yyyy'"></span>{{p.SeasonEnd}}</td>
+                                        <td style="text-align: left"><span data-ng-bind="vm.convertToDate(p.SeasonStart) | date:'dd/MM/yyyy'"></span><!--{{p.SeasonStart}}--></td>
+                                        <td style="text-align: left"><span data-ng-bind="vm.convertToDate(p.SeasonEnd) | date:'dd/MM/yyyy'"></span><!--{{p.SeasonEnd}}--></td>
                                     </tr>
                                 </tbody>
                             </table>

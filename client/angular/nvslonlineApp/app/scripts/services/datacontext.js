@@ -38,6 +38,16 @@ this.editDivision = function (webUrl,objDivision) {
         });
 
     };
+
+ this.deleteDivision = function (webUrl,objDivision) {
+        return $http({
+            method: 'DELETE',
+            url: webUrl +  'api/divisions/' + objDivision.Id,
+            //withCredentials: true,
+           data: objDivision
+        });
+
+    };
     /*********************************** Team *********************************/
 
     this.getTeams = function (webUrl) {
@@ -56,6 +66,26 @@ this.editDivision = function (webUrl,objDivision) {
             data: objTeam,
             //withCredentials: true,
         });
+    };
+
+    this.editTeam = function (webUrl,objTeam) {
+        return $http({
+            method: 'PUT',
+            url: webUrl +  'api/teams/' + objTeam.Id,
+            //withCredentials: true,
+           data: objTeam
+        });
+
+    };
+
+    this.deleteTeam = function (webUrl,objTeam) {
+        return $http({
+            method: 'DELETE',
+            url: webUrl +  'api/teams/' + objTeam.Id,
+            //withCredentials: true,
+           data: objTeam
+        });
+
     };
 
 
@@ -91,14 +121,67 @@ this.editDivision = function (webUrl,objDivision) {
         });
     };
 
+    this.editSeason = function (webUrl,objSeason) {
+        return $http({
+            method: 'PUT',
+            url: webUrl +  'api/seasons/' + objSeason.Id,
+            //withCredentials: true,
+           data: objSeason
+        });
+
+    };
+
+    this.deleteSeason = function (webUrl,objSeason) {
+        return $http({
+            method: 'DELETE',
+            url: webUrl +  'api/seasons/' + objSeason.Id,
+            //withCredentials: true,
+           data: objSeason
+        });
+
+    };
+
     /********************************* Venues *******************************/
-    this.getVenues = function (webUrl) {
+    this.getVenue = function (webUrl) {
         return $http({
             method: 'GET',
             //withCredentials: true,
             data: 'json',
             url: webUrl +  'api/venues'
         });
+    };
+
+    this.addVenue = function (webUrl, objVenue) {
+        return $http({
+            method: 'POST',
+            url: webUrl +  'api/venues',
+            data: objVenue,
+            //withCredentials: true,
+        }).then(function successCallback(response){
+            console.log(response);
+        },function errorCallback(response){
+            console.log(response);
+        });
+    };
+
+    this.editVenue = function (webUrl,objVenue) {
+        return $http({
+            method: 'PUT',
+            url: webUrl +  'api/venues/' + objVenue.Id,
+            //withCredentials: true,
+           data: objVenue
+        });
+
+    };
+
+    this.deleteVenue = function (webUrl,objVenue) {
+        return $http({
+            method: 'DELETE',
+            url: webUrl +  'api/venues/' + objVenue.Id,
+            //withCredentials: true,
+           data: objVenue
+        });
+
     };
 
     /********************************* Schedules *******************************/
@@ -123,7 +206,50 @@ this.editDivision = function (webUrl,objDivision) {
         });
     };
 
+    /********************************* Roles *******************************/
     
+    this.getRoles = function (webUrl) {
+        return $http({
+            method: 'GET',
+            //withCredentials: true,
+            data: 'json',
+            url: webUrl +  'api/roles'
+        });
+    };
+
+    /********************************* TopNavigation *******************************/
+    
+    this.getTopNavigation = function (webUrl) {
+        return $http({
+            method: 'GET',
+            //withCredentials: true,
+            data: 'json',
+            url: webUrl +  'api/topNavigation'
+        });
+    };
+
+    this.addTopNavigation = function (webUrl, objTopNavigation) {
+        return $http({
+            method: 'POST',
+            url: webUrl +  'api/topNavigation',
+            data: objTopNavigation,
+            //withCredentials: true,
+        }).then(function successCallback(response){
+            console.log(response);
+        },function errorCallback(response){
+            console.log(response);
+        });
+    };
+
+    this.editTopNavigation = function (webUrl,objTopNavigation) {
+        return $http({
+            method: 'PUT',
+            url: webUrl +  'api/topNavigation/' + objTopNavigation.Id,
+            //withCredentials: true,
+           data: objTopNavigation
+        });
+
+    };
 
   });
 

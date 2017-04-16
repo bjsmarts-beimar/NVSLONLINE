@@ -1,4 +1,4 @@
-from NVSLOnline.models import Divisions,Seasons,Venues,Teams,Schedules,Players,Roles,TopNavigation
+from NVSLOnline.models import Divisions,Seasons,Venues,Teams,Schedules,Players,Roles,TopNavigations
 from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
 
@@ -9,6 +9,10 @@ class DivisionSerializer(ModelSerializer):
         #read_only_fields = ('Id')
 
 class SeasonSerializer(ModelSerializer):
+    SeasonStart = serializers.DateField()
+    #SeasonStart = serializers.DateTimeField()
+    #SeasonEnd = serializers.DateField(input_formats=(['%m/%d/%Y %I:%M %p','iso-8601']))
+    SeasonEnd = serializers.DateField()
     class Meta:
         model = Seasons
         fields = ('Id','SeasonName','Active','IsHidden','SeasonStart','SeasonEnd')
@@ -54,8 +58,10 @@ class RoleSerializer(ModelSerializer):
         model = Roles
         fields = ('Id','RoleName','LoweredRoleName','Description','IsHidden')
 
+
 class TopNavigationSerializer(ModelSerializer):
-    Role = RoleSerializer(source='RoleId',read_only=True)    
+    Role = RoleSerializer(source='RoleId',read_only=True) 
+      
     class Meta:
-        model = TopNavigation
+        model = TopNavigations
         fields = ('Id','TopMenu','TopMenuDescription','TopMenuLink','TopMenuOrder','TopParentId','TopMenuExternal','IsHidden','RoleId','Role')

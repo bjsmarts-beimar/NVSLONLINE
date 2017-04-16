@@ -14,7 +14,7 @@
                 </select>
             </div>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
 
         <div data-cc-widget-header data-ng-repeat="teamsPerDivision in teamsToFilter() | filter: filterDivisions | filter:{DivisionId:vm.division}">
         <b>{{teamsPerDivision.Division.DivisionName}}</b>
@@ -25,7 +25,8 @@
                                 <tr>
                                     <th> </th>
                                     <th> Name</th>
-                                    <th>DivisionName</th>
+                                    <th>Division Name</th>
+                                    <th>Season Name</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -36,6 +37,7 @@
                                     </td>
                                     <td style="text-align: left">{{p.TeamName}}</td>
                                     <td style="text-align: left">{{p.Division.DivisionName}}</td>
+                                    <td style="text-align: left">{{p.Season.SeasonName}}</td>
 
                                 </tr>
                                 </tbody>
