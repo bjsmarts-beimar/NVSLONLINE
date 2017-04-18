@@ -1,0 +1,62 @@
+
+
+ng new NvslOnlineAngular2App
+
+ng g component dashboard
+
+#ng g component season
+ng g module seasons
+ng g component seasons
+ng g component seasons\add
+ng g component seasons\edit
+
+#ng g component division
+ng g module divisions
+ng g component divisions
+ng g component divisions\addDivision
+ng g component divisions\editDivision
+
+#ng g component venue
+ng g module venues
+ng g component venues
+ng g component venues\addVenue
+ng g component venues\editVenue
+
+#ng g component news
+ng g module news
+ng g component news
+ng g component news\addNews
+ng g component news\editNews
+
+#ng g component contact
+ng g module contacts
+ng g component contacts
+ng g component contacts\addContact
+ng g component contacts\editContact
+
+ng g pipe shared\pipes\truncate 
+
+ng g compoment team
+ng g component schedule
+ng g component standing
+ng g component player
+
+ng g interface shared\interfaces\interfaces
+
+ng g class shared\models\season
+ng g class shared\models\division
+ng g class shared\models\team
+ng g class shared\models\schedule
+ng g class shared\models\standing
+ng g class shared\models\player
+ng g class shared\models\venue
+ng g class shared\models\news
+ng g class shared\models\contact
+
+ng g service shared\services\lookup  [season|division|venue|news|contact]
+ng g service shared\services\data
+
+npm install bootswatch --save 
+<link href="node_modules/bootswatch/cerulean/bootstrap.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
