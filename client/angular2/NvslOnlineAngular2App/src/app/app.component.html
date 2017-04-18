@@ -1,0 +1,98 @@
+<script>
+$(function () {
+    $('.navbar-toggle-sidebar').click(function () {
+	$('.navbar-nav').toggleClass('slide-in');
+	$('.side-body').toggleClass('body-slide-in');
+	$('#search').removeClass('in').addClass('collapse').slideUp(200);
+});
+
+$('#search-trigger').click(function () {
+	$('.navbar-nav').removeClass('slide-in');
+	$('.side-body').removeClass('body-slide-in');
+	$('.search-input').focus();
+  	});
+});
+</script>
+
+<div>
+        <nav class='navbar navbar-default'>
+            <div class='container-fluid'>
+                
+                <a class="navbar-brand" href="/">
+                    <img src="images/logo.png" style="display: inline-block; height: 40px; margin-bottom: 10px;">
+                    <span style="display: inline-block;"><h3 style="margin-top: 5px;">{{title}}</h3></span>
+                </a>
+
+                <ul class='nav navbar-nav navbar-right'>
+                    <li *ngIf="!userLogin"><a [routerLink]="['/home']">Home</a></li>                    
+                    <li *ngIf="!userLogin"><a [routerLink]="['/teams']">Teams</a></li>                    
+                    <li *ngIf="!userLogin"><a [routerLink]="['/schedule']">Schedule</a></li>                    
+                    <li *ngIf="!userLogin"><a [routerLink]="['/standings']">Standings</a></li>
+                    <li *ngIf="!userLogin"><a [routerLink]="['/contact']">Contact</a></li>                    
+                    <li *ngIf="!userLogin"><a [routerLink]="['/signup']">Sign Up</a></li>                    
+                    <li *ngIf="!userLogin"><a (click)="LogIn()">Log In</a></li>
+                        <li *ngIf="userLogin" class='dropdown'>
+                            <a class='dropdown-toggle' data-toggle='dropdown'>Beimar Medina <b class='caret'></b></a>
+                            <ul class='dropdown-menu'>
+                                <li><a [routerLink]="['/settings']">Edit Profile</a></li>                                
+                                <li><a [routerLink]="['/settings']">Account Settings</a></li>
+                                <li><a (click)="LogOut()">Sign Out</a></li>
+                            </ul>
+
+                        <!--<li *ngIf="userLogin" class='dropdown'>
+                            <a href='#' class='dropdown-toggle' data-toggle='dropdown'><span class='glyphicon glyphicon-edit'></span></a>
+                            <ul class='dropdown-menu'>
+                                <li><a [routerLink]="['/seasons']">Seasons</a></li>                    
+                            </ul>
+                        </li>                    -->
+                </ul>
+            </div>
+        </nav>
+        <div class='container-fluid main-container'>
+            <!--<p>userLogin: {{userLogin}}</p>-->
+            <div [hidden]="sidebar">
+                <div class="col-md-2 sidebar">
+	 				<div class="row">
+						<!-- uncomment code for absolute positioning tweek see top comment in css -->
+						<div class="absolute-wrapper"> </div>
+							<!-- Menu -->
+							<div class="side-menu">
+								<nav class="navbar navbar-default" role="navigation">
+									<!-- Main Menu -->
+									<div class="side-menu-container">
+										<ul class="nav navbar-nav">
+											<li><a [routerLink]="['/dashboard']"><span class="glyphicon glyphicon-dashboard"></span> Dashboard</a></li>
+											<li><a [routerLink]="['/teams']"><span class="glyphicon glyphicon-picture"></span> Teams</a></li>
+											<li><a [routerLink]="['/schedules']"><span class="glyphicon glyphicon-calendar"></span> Schedule</a></li>
+											<li><a [routerLink]="['/standings']"><span class="glyphicon glyphicon-globe"></span> Standings</a></li>
+											<!-- Dropdown-->
+											<li class="panel panel-default" id="dropdown">
+												<a data-toggle="collapse" href="#dropdown-lvl1">
+													<span class="glyphicon glyphicon-user"></span> Lookup Tables <span class="caret"></span>
+												</a>
+												<!-- Dropdown level 1 -->
+												<div id="dropdown-lvl1" class="panel-collapse collapse">
+													<div class="panel-body">
+														<ul class="nav navbar-nav">
+															<li style="background: #18bc9c;"><a [routerLink]="['/seasons']" style="color: black;">Seasons</a></li>
+															<li style="background: #18bc9c;"><a [routerLink]="['/divisions']" style="color: black;">Divisions</a></li>
+															<li style="background: #18bc9c;"><a [routerLink]="['/venues']" style="color: black;">Fields</a></li>
+															<li style="background: #18bc9c;"><a [routerLink]="['/contacts']" style="color: black;">Contacts</a></li>
+															<li style="background: #18bc9c;"><a [routerLink]="['/news']" style="color: black;">News</a></li>
+														</ul>
+													</div>
+												</div>
+											</li>
+											<li><a href="#"><span class="glyphicon glyphicon-edit"></span> Settings</a></li>
+										</ul>
+									</div><!-- /.navbar-collapse -->
+								</nav>
+							</div>
+						</div>  		
+				</div>
+            </div>   
+            <div class="col-md-10 content">          
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+     </div>

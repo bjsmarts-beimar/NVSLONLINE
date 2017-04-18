@@ -1,0 +1,41 @@
+<main class="panel pt-5">
+    <div class="card mb-5">
+        <div class="card-header">
+            <b>Seasons</b>
+            <div class="pull-right"><a [routerLink]="['/addseason']" class="btn btn-sm btn-primary btn-create">Create New</a></div>            
+        </div>
+        <div class="card-block p-0">
+            <table class="table table-bordered table-sm m-0">
+                <thead class="">
+                    <tr>
+                        <th></th>
+                        <th>Season Name</th>
+                        <th>Season Start</th>
+                        <th>Season End</th>
+                        <!--<th>Created</th>
+                        <th>Created By</th>
+                        <th>Modified</th>
+                        <th>Modified By</th>                        -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor='let season of seasons'>                        
+                        <td>
+                            <a class="btn btn-sm btn-primary btn-create" [routerLink]="['/season', season.Id]" >Edit</a>
+                            <a class="btn btn-sm btn-danger" (click)='remove(season.Id)' >Delete</a>
+                        </td>
+                        <td>{{season.SeasonName}}</td>
+                        <td>{{season.SeasonStart}}</td>
+                        <td>{{season.SeasonEnd}}</td>
+                        <!--<td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>                 -->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer p-0">
+        </div>
+    </div>
+</main>

@@ -1,0 +1,20 @@
+
+
+<div class="col-md-1">
+
+</div>
+<div class="col-md-10">
+    <H1>News From The League</H1>
+    <h3>All News</h3>
+    <div class="panel panel-default" *ngFor="let SingleNews of news">
+    <div class="panel-heading">{{SingleNews.title}}</div>
+    <div class="panel-body">{{trimData(SingleNews.description)}}</div>
+</div>
+</div>
+<div class="col-md-1">
+    
+</div>
+
+
+
+

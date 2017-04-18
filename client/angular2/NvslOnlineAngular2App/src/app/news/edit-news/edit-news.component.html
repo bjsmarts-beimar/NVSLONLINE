@@ -1,0 +1,32 @@
+<div class="main-form main-center">
+<h3>{{pageTitle}}</h3>
+
+<form #form="ngForm" (submit)="submitForm(form)" novalidate>    
+    <!-- NAME -->
+    <div class="form-group" [class.has-error]="name.invalid && !name.pristine" >
+        <label for="title" class="control-label">Name</label>
+        <input type="text" #name="ngModel" name="name" [(ngModel)]="singleNews.title" class="form-control" placeholder="Title" required />
+        <p *ngIf="name.invalid && !name.pristine" class="help-block">Title is required.</p>           
+    </div>
+
+    <!-- DESCRIPTION -->
+    <div class="form-group" [class.has-error]="description.invalid && !description.pristine" >
+        <label for="title" class="control-label">Description</label>
+        <textarea #description="ngModel" name="description" [(ngModel)]="singleNews.description" class="form-control" rows="10" placeholder="Description" required></textarea>
+        <p *ngIf="description.invalid && !description.pristine" class="help-block">Description is required.</p>           
+    </div>
+    
+    <!-- SUBMIT BUTTON -->
+    <div class="form-group">    
+        <input type="submit" class="btn btn-primary" [disabled]="form.invalid" value="Update" /> 
+        <a class='btn btn-primary' (click)='onBack()' style='width:80px'>
+            Back
+        </a>   
+    </div>
+</form>
+</div>
+<!--singleNews {{singleNews|json}}
+<br>
+Angular {{form.value | json}}
+<br>
+for  is valid {{form.valid}}-->

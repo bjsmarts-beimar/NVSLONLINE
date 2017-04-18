@@ -162,8 +162,10 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\ContactsController.cs" />
     <Compile Include="Controllers\DivisionsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\SchedulesController.cs" />
     <Compile Include="Controllers\SeasonsController.cs" />
     <Compile Include="Controllers\StandingsController.cs" />
@@ -181,8 +183,14 @@
     <Compile Include="Migrations\201703152002539_Initial1.Designer.cs">
       <DependentUpon>201703152002539_Initial1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704172157243_New Migration.cs" />
+    <Compile Include="Migrations\201704172157243_New Migration.Designer.cs">
+      <DependentUpon>201704172157243_New Migration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Contacts.cs" />
     <Compile Include="Models\Division.cs" />
+    <Compile Include="Models\News.cs" />
     <Compile Include="Models\NVSLOnlineDataContext.cs" />
     <Compile Include="Models\Schedule.cs" />
     <Compile Include="Models\Season.cs" />
@@ -250,6 +258,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703152002539_Initial1.resx">
       <DependentUpon>201703152002539_Initial1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704172157243_New Migration.resx">
+      <DependentUpon>201704172157243_New Migration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

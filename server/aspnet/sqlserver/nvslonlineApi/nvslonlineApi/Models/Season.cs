@@ -15,8 +15,8 @@ namespace nvslonlineApi.Models
 
         public bool IsHidden { get; set; }
 
-        public DateTime SeasonStart { get; set; }
+        public DateTime? SeasonStart { get; set; }
 
-        public DateTime SeasonEnd { get; set; }
+        public DateTime? SeasonEnd { get; set; }
     }
 }

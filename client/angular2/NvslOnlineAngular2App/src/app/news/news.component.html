@@ -1,0 +1,41 @@
+<main class="panel pt-5">
+    <div class="card mb-5">
+        <div class="card-header">
+            <b>News</b>
+            <div class="pull-right"><a [routerLink]="['/addnews']" class="btn btn-sm btn-primary btn-create">Create New</a></div>            
+        </div>
+        <div class="card-block p-0">
+            <table class="table table-bordered table-sm m-0">
+                <thead class="">
+                    <tr>
+                        <th></th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>created</th>
+                        <!--<th>Created</th>
+                        <th>Created By</th>
+                        <th>Modified</th>
+                        <th>Modified By</th>                        -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor='let singleNews of news'>                        
+                        <td>
+                            <a class="btn btn-sm btn-primary btn-create" [routerLink]="['/news', singleNews.Id]" >Edit</a>
+                            <a class="btn btn-sm btn-danger" (click)='remove(singleNews.Id)' >Delete</a>
+                        </td>
+                        <td>{{singleNews.title | truncate : 35 }}</td>
+                        <td>{{singleNews.description | truncate : 70 }}</td>
+                        <td>{{singleNews.created}}</td>
+                        <!--<td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>                 -->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer p-0">
+        </div>
+    </div>
+</main>

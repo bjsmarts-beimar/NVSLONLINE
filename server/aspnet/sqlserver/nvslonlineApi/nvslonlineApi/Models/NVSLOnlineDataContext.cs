@@ -25,5 +25,9 @@ namespace nvslonlineApi.Models
         public System.Data.Entity.DbSet<nvslonlineApi.Models.Standings> Standings { get; set; }
 
         public System.Data.Entity.DbSet<nvslonlineApi.Models.Schedule> Schedules { get; set; }
+
+        public System.Data.Entity.DbSet<nvslonlineApi.Models.News> News { get; set; }
+
+        public System.Data.Entity.DbSet<nvslonlineApi.Models.Contacts> Contacts { get; set; }
     }
 }

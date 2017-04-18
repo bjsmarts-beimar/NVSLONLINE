@@ -22,12 +22,32 @@ namespace nvslonlineApi
 
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
-            if ((Context.Request.Path.Contains("api/") || Context.Request.Path.Contains("odata/")) && Context.Request.HttpMethod == "OPTIONS")
+            //if ((Context.Request.Path.Contains("api/") || Context.Request.Path.Contains("odata/")) && Context.Request.HttpMethod == "OPTIONS")
+            //{
+            //    Context.Response.AddHeader("Access-Control-Allow-Origin", Context.Request.Headers["Origin"]);
+            //    Context.Response.AddHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+            //    Context.Response.AddHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+            //    Context.Response.AddHeader("Access-Control-Allow-Credentials", "true");
+            //}
+
+            //if ((Context.Request.Path.Contains("api/") || Context.Request.Path.Contains("odata/")) && Context.Request.HttpMethod == "OPTIONS")
+            //{
+            //    Context.Response.AddHeader("Access-Control-Allow-Origin", Context.Request.Headers["Origin"]);
+            //    Context.Response.AddHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+            //    Context.Response.AddHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+            //    Context.Response.AddHeader("Access-Control-Allow-Credentials", "true");
+            //}
+
+            if (Request.Headers.AllKeys.Contains("Origin") && Request.HttpMethod == "OPTIONS")
             {
-                Context.Response.AddHeader("Access-Control-Allow-Origin", Context.Request.Headers["Origin"]);
-                Context.Response.AddHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-                Context.Response.AddHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-                Context.Response.AddHeader("Access-Control-Allow-Credentials", "true");
+                var origin = HttpContext.Current.Request.Headers["Origin"];
+
+                Response.Headers.Add("Access-Control-Allow-Origin", origin);
+                Response.Headers.Add("Access-Control-Allow-Headers", "content-type, withcredentials, Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+                Response.Headers.Add("Access-Control-Allow-Credentials", "true");
+                Response.Headers.Add("Access-Control-Allow-Methods", "GET, HEAD, OPTIONS, POST, PUT, DELETE");
+
+                Response.Flush();
             }
 
         }
