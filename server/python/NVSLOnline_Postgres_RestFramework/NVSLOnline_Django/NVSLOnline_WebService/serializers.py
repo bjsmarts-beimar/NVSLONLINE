@@ -1,4 +1,4 @@
-from NVSLOnline.models import Divisions,Seasons,Venues,Teams,Schedules,Players,Roles,TopNavigations
+from NVSLOnline.models import Divisions,Seasons,Venues,Teams,Schedules,Players,News,Contacts
 from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
 
@@ -52,16 +52,15 @@ class ScheduleSerializer(ModelSerializer):
         #read_only_fields = ('Id')
 
 ######################################## CONFIGURATION #############################################
-
-class RoleSerializer(ModelSerializer):
+class ContactSerializer(ModelSerializer):
+   
     class Meta:
-        model = Roles
-        fields = ('Id','RoleName','LoweredRoleName','Description','IsHidden')
+        model = Contacts
+        fields = ('Id','yourName','email','message','IsHidden','requestSubject','created','modifiedBy','modifiedByfullName','modified')
+        #read_only_fields = ('Id')
 
-
-class TopNavigationSerializer(ModelSerializer):
-    Role = RoleSerializer(source='RoleId',read_only=True) 
-      
+class NewSerializer(ModelSerializer):
     class Meta:
-        model = TopNavigations
-        fields = ('Id','TopMenu','TopMenuDescription','TopMenuLink','TopMenuOrder','TopParentId','TopMenuExternal','IsHidden','RoleId','Role')
+        model = News
+        fields = ('Id','title','description','IsHidden','created','modifiedBy','modifiedByfullName','modified')
+        #read_only_fields = ('Id')

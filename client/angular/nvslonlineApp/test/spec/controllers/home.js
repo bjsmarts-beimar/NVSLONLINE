@@ -1,23 +1,23 @@
 'use strict';
 
-describe('Controller: TopNavigationSettingCtrl', function () {
+describe('Controller: HomeCtrl', function () {
 
   // load the controller's module
   beforeEach(module('nvslonlineAppApp'));
 
-  var TopNavigationSettingCtrl,
+  var HomeCtrl,
     scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    TopNavigationSettingCtrl = $controller('TopNavigationSettingCtrl', {
+    HomeCtrl = $controller('HomeCtrl', {
       $scope: scope
       // place here mocked dependencies
     });
   }));
 
   it('should attach a list of awesomeThings to the scope', function () {
-    expect(TopNavigationSettingCtrl.awesomeThings.length).toBe(3);
+    expect(HomeCtrl.awesomeThings.length).toBe(3);
   });
 });

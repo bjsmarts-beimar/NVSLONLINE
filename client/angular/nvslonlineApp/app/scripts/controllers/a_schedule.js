@@ -8,16 +8,13 @@
  * Controller of the nvslonlineAppApp
  */
 angular.module('nvslonlineAppApp')
-  .controller('AScheduleCtrl', ['$scope', '$modal', 'datacontext', 'toastr', 'webUrl','common','$linq', 
-  function ($scope, $modal, datacontext, toastr, webUrl, common, $linq) {
+  .controller('AScheduleCtrl', ['$scope', '$modal', 'datacontext', 'toastr', 'webUrl','common','$linq','parameters', '$location',
+  function ($scope, $modal, datacontext, toastr, webUrl, common, $linq, parameters,$location) {
     
     var vm = this;
-        //vm.news = {
-        //    title: 'Hot Towel Angular',
-        //    description: 'Hot Towel Angular is a SPA template for Angular developers.'
-        //};
-        //vm.messageCount = 0;
-        //vm.people = [];
+       if (parameters.loginAccess.access === false) {
+        $location.path('/home');
+        }
         vm.title = 'Schedule';
 
         vm.openNewSchedule = openNewSchedule;
@@ -91,9 +88,7 @@ angular.module('nvslonlineAppApp')
 
             modalInstance.result.then(function (data) {
                 options.dataSeason = getSeasonNoActive();
-                vm.schedules = data;
-                //getSchedule();
-                log('Changes Saved');
+                getSchedule();
             }, function () {
             });
         }
@@ -127,77 +122,6 @@ angular.module('nvslonlineAppApp')
            var venues = options.dataVenues;
            var schedules = options.dataSchedules;
 
-           //var teamGroup = Enumerable.From(options.dataTeams)
-           //     //.SelectMany("teams => teams.DivisionId")
-           //     //.GroupBy("DivisionId => DivisionId
-           //    .GroupBy("division => division.DivisionId")
-           //     .ToArray();
-
-          /* var teamGroup = Enumerable.From(options.dataTeams).GroupBy("division => division.DivisionId", null,
-                function (key, g) {
-                    var result = {
-                        divisionId: key,
-                        total: g.Count("teams => teams.Id")
-                    }
-                    return result;
-                }).ToArray();
-
-           var divisionTeams = Enumerable.From(options.dataDivision)
-                            .Join(
-                                teamGroup,
-                                "division => division.Id",
-                                "teamGroup => teamGroup.divisionId",
-                                "(division, teamGroup) => { Id: division.Id, DivisionName: division.DivisionName, CountTeam: teamGroup.total }"
-                            ).ToArray();
-
-           $scope.divisionTeams = divisionTeams;
-           
-           $scope.getTeamsDivisionBySeason = function(seasonId) {
-
-               var schedulesBySeason = getSearchScheduleBySeason(seasonId, schedules);
-
-               var lstScheduleDivision = Enumerable.From(schedulesBySeason)
-                            .Join(
-                                teamGroup,
-                                "division => division.DivisionId",
-                                "teamGroup => teamGroup.divisionId",
-                                "(division, teamGroup) => { Id: division.DivisionId, DivisionName: division.Division.DivisionName, CountTeam: teamGroup.total }"
-                            ).ToArray();
-               console.log(lstScheduleDivision);
-               var arrayDivision = Enumerable.From(lstScheduleDivision).Distinct("p => p.Id").ToArray();
-               console.log(arrayDivision);
-
-               var array1 = divisionTeams;
-               var array2 = arrayDivision;
-               
-               $scope.divisionTeams = Enumerable.From(array1)
-               .Except(array2, "array => [array.Id, array.DivisionName].join(':')")
-               .ToArray();
-              
-               var count = 0;
-               var countFourTeam = 0;
-               for (var i = 0; i < $scope.divisionTeams.length; i++) {
-                   if ($scope.divisionTeams[i].CountTeam >= 4) {
-                       count += 1;
-                   }
-                   if ($scope.divisionTeams[i].CountTeam < 4) {
-                       countFourTeam += 1;
-                   }
-               }
-               
-               $scope.teamsValidate = true;
-               if (count > 0) {
-                   $scope.teamsValidate = false;
-               }
-
-               $scope.teamsMessage = false;
-               if (countFourTeam > 0) {
-                   $scope.teamsMessage = true;
-               }
-               
-           }
-*/
-
            $scope.ok = function () {
 
             var seasons = options.dataSeason;
@@ -206,188 +130,112 @@ angular.module('nvslonlineAppApp')
                
                var objSeason = $linq.Enumerable().From(seasons).Where("p => p.Id ==" + this.season).Select().FirstOrDefault();
 
-               var lstDivision = $linq.Enumerable().From(teams).Where("p => p.SeasonId ==" + this.season).Select().ToArray();
+               var lstDivision = $linq.Enumerable().From(teams)
+               .Where("p => p.SeasonId ==" + this.season)
+               .Select()
+               .ToArray();
+
+                var lstCountDivision = $linq.Enumerable().From(teams)
+               .Where("p => p.SeasonId ==" + this.season)
+               .GroupBy("g => g.DivisionId")
+               .Select()
+               .ToArray();
 
                var seasonStart = new Date(objSeason.SeasonStart);
                var seasonEnd = new Date(objSeason.SeasonEnd);
 
-               var countFourTeamForDivision = 0;
+               var countFourTeamForDivision = 0;// esta variable verifica si se ingresaron 4 equipos por divisions
                for (var l = 0; l < lstDivision.length; l++) {
                         var teamsDivision  = $linq.Enumerable().From(teams)
                             .Where("p => p.DivisionId ==" + lstDivision[l].Id)
                             .ToArray();
 
-                            if (teamsDivision.length >= 4) {
-                                countFourTeamForDivision += 1;
-                                console.log(teamsDivision);
-                                var ranVenues = common.shuffle(venues);
+                   if (teamsDivision.length >= 4) {
+                         countFourTeamForDivision += 1;// si se ingresaron 4 equipos por divisions la temporada quedara completa
+                         console.log(teamsDivision);
+                         var ranVenues = common.shuffle(venues);
 
-                                var indexVenues = 0;
-                                var countPartidos = 0;
+                         var indexVenues = 0;
+                         var countPartidos = 0;
 
-                       for (var j = 0; j < teamsDivision.length; j++) {
-                           for (var k = j; k < teamsDivision.length; k++) {
-                               if (teamsDivision[j].Id !== teamsDivision[k].Id) {
+                            for (var j = 0; j < teamsDivision.length; j++) {
+                                for (var k = j; k < teamsDivision.length; k++) {
+                                    if (teamsDivision[j].Id !== teamsDivision[k].Id) {
 
-                                   countPartidos += 1;
-                                   var scheduleValues = {};
+                                        countPartidos += 1;
+                                        var scheduleValues = {};
 
-                                   var ranTeams = Math.floor((Math.random() * 2) + 1);
+                                        var ranTeams = Math.floor((Math.random() * 2) + 1);
 
-                                   if (ranTeams === 1) {
-                                       scheduleValues.HomeTeamId = teamsDivision[j].Id;
-                                       scheduleValues.AwayTeamId = teamsDivision[k].Id;
-                                   } else {
-                                       scheduleValues.HomeTeamId = teamsDivision[k].Id;
-                                       scheduleValues.AwayTeamId = teamsDivision[j].Id;
-                                   }
+                                        if (ranTeams === 1) {
+                                            scheduleValues.HomeTeamId = teamsDivision[j].Id;
+                                            scheduleValues.AwayTeamId = teamsDivision[k].Id;
+                                        } else {
+                                            scheduleValues.HomeTeamId = teamsDivision[k].Id;
+                                            scheduleValues.AwayTeamId = teamsDivision[j].Id;
+                                        }
 
-                                   if (ranVenues[indexVenues] == undefined) {
-                                       indexVenues = 0;
-                                       scheduleValues.VenueId = ranVenues[indexVenues].Id;
-                                   } else {
-                                       scheduleValues.VenueId = ranVenues[indexVenues].Id;
-                                       indexVenues += 1;
-                                   }
+                                        if (ranVenues[indexVenues] == undefined) {
+                                            indexVenues = 0;
+                                            scheduleValues.VenueId = ranVenues[indexVenues].Id;
+                                        } else {
+                                            scheduleValues.VenueId = ranVenues[indexVenues].Id;
+                                            indexVenues += 1;
+                                        }
 
-                                   scheduleValues.Status = "Scheduled";
+                                        scheduleValues.Status = "Scheduled";
 
-                                   ///scheduleValues.DivisionId = $scope.divisionTeams[l].Id;
-                                   scheduleValues.SeasonId = this.season;
+                                        ///scheduleValues.DivisionId = $scope.divisionTeams[l].Id;
+                                        scheduleValues.SeasonId = this.season;
 
-                                   scheduleValues.GoalsHomeTeam = null;
-                                   scheduleValues.GoalsAwayTeam = null;
-                                   scheduleValues.IsHidden = false;
+                                        scheduleValues.GoalsHomeTeam = null;
+                                        scheduleValues.GoalsAwayTeam = null;
+                                        scheduleValues.IsHidden = false;
 
-                                   var encontrado = false;
-                                   while (encontrado === false) {
-                                       var ranFecha = common.randomDate(seasonStart, seasonEnd);
-
-                                       if (ranFecha.getDay() === 0) {
-                                           if (countPartidos % 2 === 0) {
-                                               ranFecha.setHours(14, 0, 0);
-                                               scheduleValues.DateTime = ranFecha;
-                                               encontrado = true;
-
-                                           } else {
-                                               ranFecha.setHours(10, 0, 0);
-                                               scheduleValues.DateTime = ranFecha;
-                                               encontrado = true;
-                                           }
-                                       }
-                                   }
-
-                                    //datacontext.addSchedule(scheduleValues);
-                                    console.log(scheduleValues)
-
-                               }
-
-                           }
-                       }
+                                        var encontrado = false;
 
 
+                                        while (encontrado === false) {
+                                            var ranFecha = common.randomDate(seasonStart, seasonEnd);
 
+                                            if (ranFecha.getDay() === 0) {
+                                                if (countPartidos % 2 === 0) {
+                                                    ranFecha.setHours(14, 0, 0);
+                                                    scheduleValues.DateTime = ranFecha;
+                                                    encontrado = true;
+
+                                                } else {
+                                                    ranFecha.setHours(10, 0, 0);
+                                                    scheduleValues.DateTime = ranFecha;
+                                                    encontrado = true;
+                                                }
+                                            }
+                                        }
+
+                                            datacontext.addSchedule(scheduleValues);
+                                            
+                                            //console.log(scheduleValues)
+
+                                    }
+                                }
                             }
 
-
+                  }
 
 
                }
 
-               
-/*
-               var seasonStart = new Date(objSeason.SeasonStart);
-               var seasonEnd = new Date(objSeason.SeasonEnd);
 
-               var countFourTeamForDivision = 0;
-               for (var l = 0; l < $scope.divisionTeams.length; l++) {
-                   
-                   var teamsDivision  = Enumerable.From(teams)
-                            .Where("p => p.DivisionId ==" + $scope.divisionTeams[l].Id)
-                            .ToArray();
-                  
-                   if (teamsDivision.length >= 4) {
-                       countFourTeamForDivision += 1;
-                       //console.log(teamsDivision);
-                       // console.log("***********************************************************************************************");
-                       var ranVenues = shuffle(venues);
-
-                       var indexVenues = 0;
-                       var countPartidos = 0;
-                       for (var j = 0; j < teamsDivision.length; j++) {
-                           for (var k = j; k < teamsDivision.length; k++) {
-                               if (teamsDivision[j].Id !== teamsDivision[k].Id) {
-
-                                   countPartidos += 1;
-                                   var scheduleValues = {};
-
-                                   var ranTeams = Math.floor((Math.random() * 2) + 1);
-
-                                   if (ranTeams === 1) {
-                                       scheduleValues.HomeTeamId = teamsDivision[j].Id;
-                                       scheduleValues.AwayTeamId = teamsDivision[k].Id;
-                                   } else {
-                                       scheduleValues.HomeTeamId = teamsDivision[k].Id;
-                                       scheduleValues.AwayTeamId = teamsDivision[j].Id;
-                                   }
-
-                                   if (ranVenues[indexVenues] == undefined) {
-                                       indexVenues = 0;
-                                       scheduleValues.VenueId = ranVenues[indexVenues].Id;
-                                   } else {
-                                       scheduleValues.VenueId = ranVenues[indexVenues].Id;
-                                       indexVenues += 1;
-                                   }
-
-                                   scheduleValues.Status = "Scheduled";
-
-                                   scheduleValues.DivisionId = $scope.divisionTeams[l].Id;
-                                   scheduleValues.SeasonId = this.season;
-
-                                   scheduleValues.GoalsHomeTeam = null;
-                                   scheduleValues.GoalsAwayTeam = null;
-                                   scheduleValues.IsHidden = false;
-
-                                   var encontrado = false;
-                                   while (encontrado === false) {
-                                       var ranFecha = randomDate(seasonStart, seasonEnd);
-
-                                       if (ranFecha.getDay() === 0) {
-                                           if (countPartidos % 2 === 0) {
-                                               ranFecha.setHours(14, 0, 0);
-                                               scheduleValues.DateTime = ranFecha;
-                                               encontrado = true;
-
-                                           } else {
-                                               ranFecha.setHours(10, 0, 0);
-                                               scheduleValues.DateTime = ranFecha;
-                                               encontrado = true;
-                                           }
-                                       }
-                                   }
-
-                                    datacontext.addSchedule(scheduleValues);
-
-                               }
-
-                           }
-                       }
-                   }
+               if (lstCountDivision.length === countFourTeamForDivision) {
+                   console.log("completado");
+                   var objSeasonActive = {};
+                   objSeasonActive.Id = this.season;
+                   objSeasonActive.Active = true;
+                   datacontext.editSeasonActive(objSeasonActive);
                    
                }
-               //if ($scope.divisionTeams.length === countFourTeamForDivision) {
-               //    var objSeasonActive = {};
-               //    objSeasonActive.Id = this.season;
-               //    objSeasonActive.Active = true;
-               //    datacontext.editSeasonActive(objSeasonActive);
-                   
-               //}
-               datacontext.getSchedule().then(function (data) {
-                   //console.log(data);
-                   //vm.schedules = data;
-                   $modalInstance.close(data);
-               });
-*/
+              
+                $modalInstance.close();
            };
 
            $scope.cancel = function () { $modalInstance.dismiss('cancel'); };

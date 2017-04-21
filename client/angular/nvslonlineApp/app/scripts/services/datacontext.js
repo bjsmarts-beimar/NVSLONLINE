@@ -142,7 +142,7 @@ this.editDivision = function (webUrl,objDivision) {
     };
 
     /********************************* Venues *******************************/
-    this.getVenue = function (webUrl) {
+    this.getVenues = function (webUrl) {
         return $http({
             method: 'GET',
             //withCredentials: true,
@@ -192,6 +192,49 @@ this.editDivision = function (webUrl,objDivision) {
             //withCredentials: true,
             data: 'json',
             url: webUrl +  'api/schedules'
+        }).then(function successCallback(response){
+            console.log(response);
+        },function errorCallback(response){
+            console.log(response);
+        });
+    };
+
+    this.addSchedule = function (webUrl, objSchedule) {
+        return $http({
+            method: 'POST',
+            url: webUrl +  'api/schedules',
+            data: objSchedule,
+            //withCredentials: true,
+        }).then(function successCallback(response){
+            console.log(response);
+        },function errorCallback(response){
+            console.log(response);
+        });
+    };
+
+    this.editScore = function (webUrl,objSchedule) {
+        return $http({
+            method: 'PUT',
+            url: webUrl +  'api/schedules/' + objSchedule.Id,
+            //withCredentials: true,
+           data: objSchedule
+        }).then(function successCallback(response){
+            console.log(response);
+        },function errorCallback(response){
+            console.log(response);
+        });
+    };
+
+    this.deleteVenue = function (webUrl,objVenue) {
+        return $http({
+            method: 'DELETE',
+            url: webUrl +  'api/venues/' + objVenue.Id,
+            //withCredentials: true,
+           data: objVenue
+        }).then(function successCallback(response){
+            console.log(response);
+        },function errorCallback(response){
+            console.log(response);
         });
     };
 
@@ -206,33 +249,22 @@ this.editDivision = function (webUrl,objDivision) {
         });
     };
 
-    /********************************* Roles *******************************/
-    
-    this.getRoles = function (webUrl) {
+    /*********************************** News **********************************/
+
+    this.getNews = function (webUrl) {
         return $http({
             method: 'GET',
             //withCredentials: true,
             data: 'json',
-            url: webUrl +  'api/roles'
+            url: webUrl +  'api/news'
         });
     };
 
-    /********************************* TopNavigation *******************************/
-    
-    this.getTopNavigation = function (webUrl) {
-        return $http({
-            method: 'GET',
-            //withCredentials: true,
-            data: 'json',
-            url: webUrl +  'api/topNavigation'
-        });
-    };
-
-    this.addTopNavigation = function (webUrl, objTopNavigation) {
+    this.addNew = function (webUrl, objNew) {
         return $http({
             method: 'POST',
-            url: webUrl +  'api/topNavigation',
-            data: objTopNavigation,
+            url: webUrl +  'api/news',
+            data: objNew,
             //withCredentials: true,
         }).then(function successCallback(response){
             console.log(response);
@@ -241,15 +273,72 @@ this.editDivision = function (webUrl,objDivision) {
         });
     };
 
-    this.editTopNavigation = function (webUrl,objTopNavigation) {
+    this.editNew = function (webUrl,objNew) {
         return $http({
             method: 'PUT',
-            url: webUrl +  'api/topNavigation/' + objTopNavigation.Id,
+            url: webUrl +  'api/news/' + objNew.Id,
             //withCredentials: true,
-           data: objTopNavigation
+           data: objNew
         });
 
     };
+
+    this.deleteNew = function (webUrl,objNew) {
+        return $http({
+            method: 'DELETE',
+            url: webUrl +  'api/news/' + objNew.Id,
+            //withCredentials: true,
+           data: objNew
+        });
+
+    };
+
+    /*********************************** Players **********************************/
+
+    this.getPlayers = function (webUrl) {
+        return $http({
+            method: 'GET',
+            //withCredentials: true,
+            data: 'json',
+            url: webUrl +  'api/players'
+        });
+    };
+
+    this.addPlayer = function (webUrl, objPlayer) {
+        return $http({
+            method: 'POST',
+            url: webUrl +  'api/players',
+            data: objPlayer,
+            //withCredentials: true,
+        }).then(function successCallback(response){
+            console.log(response);
+        },function errorCallback(response){
+            console.log(response);
+        });
+    };
+
+    this.editPlayer = function (webUrl,objPlayer) {
+        return $http({
+            method: 'PUT',
+            url: webUrl +  'api/players/' + objPlayer.Id,
+            //withCredentials: true,
+           data: objPlayer
+        });
+
+    };
+
+    this.deletePlayer = function (webUrl,objPlayer) {
+        return $http({
+            method: 'DELETE',
+            url: webUrl +  'api/players/' + objPlayer.Id,
+            //withCredentials: true,
+           data: objPlayer
+        });
+
+    };
+
+
+
 
   });
 

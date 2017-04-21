@@ -8,10 +8,13 @@
  * Controller of the nvslonlineAppApp
  */
 angular.module('nvslonlineAppApp')
-  .controller('ADivisionCtrl', ['$scope', '$modal', 'datacontext', 'toastr', 'webUrl', 
-  function ($scope, $modal, datacontext, toastr, webUrl) {
+  .controller('ADivisionCtrl', ['$scope', '$modal', 'datacontext', 'toastr', 'webUrl', 'parameters','$location',
+  function ($scope, $modal, datacontext, toastr, webUrl, parameters, $location) {
     var vm = this; 
-    //vm.divisions = getDivisions;
+    if (parameters.loginAccess.access === false) {
+        $location.path('/home');
+    }
+
     vm.openNewDivision = openNewDivision;
     vm.openEditDivision = openEditDivision;
     vm.openDeleteDivision = openDeleteDivision;

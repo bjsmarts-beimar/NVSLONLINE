@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
   </head>
-  <body ng-app="nvslonlineAppApp">
+  <body ng-app="nvslonlineAppApp" ng-controller="MainCtrl as vm">
     <!--[if lte IE 8]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -24,7 +24,7 @@
     <!-- Add your site or application content here -->
     <div class="header">
       <div class="navbar navbar-default" role="navigation">
-        <div class="container" ng-controller="TopNavigationCtrl as vm">
+        <div class="container-fluid">
           <div class="navbar-header">
 
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
@@ -35,46 +35,87 @@
             </button>
 
           </div>
-          <div class="row">
-        <div class="col-sm-8" >
-          <a class="navbar-brand" href="#/">nvslonlineApp</a>
-        </div>
-        <div class="col-sm-4" >
-           <select id="roles" class="form-control" name="roles" data-ng-model="vm.role" 
-            ng-options="role.Id as role.RoleName for role in vm.roles"
-           >
-                    <!--<option value="">--Choose--</option>
-                    <option ng-repeat="role in vm.roles" value="{{role.Id}}">{{role.RoleName}}</option>-->
-            </select>
-        </div>
-         </div>
+          <a class="navbar-brand" href="/">
+                    <img src="images/logo.png" style="display: inline-block; height: 35px; margin-bottom: 20px;">
+                    <span style="display: inline-block;"><h3 style="margin-top: 5px;">{{vm.title}}</h3></span>
+          </a>
+
           <div class="collapse navbar-collapse" id="js-navbar-collapse">
 
-            <ul class="nav navbar-nav">
- 
-              <li ui-sref-active="active" data-ng-repeat="navigation in vm.topNavigation | filter:{RoleId:vm.role}">
-                <a ui-sref="{{navigation.TopMenuLink}}">{{navigation.TopMenu}}</a>
-              </li>
-              
-              <li ui-sref-active="active"><a ui-sref="a_teams">Home</a></li>
-              <!--<li ui-sref-active="active"><a ui-sref="team">Teams</a></li>
-              <li ui-sref-active="active"><a ui-sref="schedule">Schedule</a></li>
-              <li ui-sref-active="active"><a ui-sref="standing">Standing</a></li>
-              <li ui-sref-active="active"><a ui-sref="history">History</a></li>
-              <li ui-sref-active="active"><a ui-sref="register">Register</a></li>
-              <li ui-sref-active="active"><a ui-sref="about">About NVSL</a></li>
-              <li ui-sref-active="active"><a ui-sref="division">Divisions</a></li>
-              -->
-              
+            <ul class="nav navbar-nav navbar-right" ng-init="vm.access=false">
+               
+              <li ui-sref-active="active" ng-show="!vm.access"><a ui-sref="home">Home</a></li>
+              <li ui-sref-active="active" ng-show="!vm.access"><a ui-sref="team">Teams</a></li>
+              <li ui-sref-active="active" ng-show="!vm.access"><a ui-sref="schedule">Schedule</a></li>
+              <li ui-sref-active="active" ng-show="!vm.access"><a ui-sref="standing">Standing</a></li>
+              <li ui-sref-active="active" ng-show="!vm.access"><a ui-sref="contact">Contact</a></li>
+              <li ui-sref-active="active" ng-show="!vm.access"><a ui-sref="signUp">Sign Up</a></li>
+              <li ui-sref-active="active" ng-show="!vm.access" style="cursor:pointer"><a ng-click="vm.login()">Log In</a></li>
+                <li ng-hide="!vm.access" class='dropdown' style="cursor:pointer">
+                            <a class='dropdown-toggle' data-toggle='dropdown'>Beimar Medina <b class='caret'></b></a>
+                            <ul class='dropdown-menu'>
+                                <li><a ui-sref="settings">Edit Profile</a></li>                                
+                                <li><a ui-sref="settings">Account Settings</a></li>
+                                <li><a ng-click="vm.logOut()">Sign Out</a></li>
+                            </ul>
+                </li> 
             </ul>
           </div>
         </div>
       </div>
     </div>
+    
 
-    <div class="container">
-      <div ui-view></div>
-    </div>
+  
+    <div class="container-fluid">
+      <div class="row">
+       <div ng-show="vm.access">
+                <div class="col-md-2 sidebar">
+	 				<div class="row">
+						<!-- uncomment code for absolute positioning tweek see top comment in css -->
+						<div class="absolute-wrapper"> </div>
+							<!-- Menu -->
+							<div class="side-menu">
+								<nav class="navbar navbar-default" role="navigation">
+									<!-- Main Menu -->
+									<div class="side-menu-container">
+										<ul class="nav navbar-nav">
+											<li><a ui-sref="dashboard"><span class="glyphicon glyphicon-dashboard"></span> Dashboard</a></li>
+											<li><a ui-sref="adminTeam"><span class="glyphicon glyphicon-picture"></span> Teams</a></li>
+                      <li><a ui-sref="adminPlayer"><span class="glyphicon glyphicon-picture"></span> Players</a></li>
+											<li><a ui-sref="adminSchedule"><span class="glyphicon glyphicon-calendar"></span> Schedule</a></li>
+											<li><a ui-sref="standing"><span class="glyphicon glyphicon-globe"></span> Standings</a></li>
+											<!-- Dropdown-->
+											<li id="dropdown">
+												<a data-toggle="collapse" href="#dropdown-lvl1">
+													<span class="glyphicon glyphicon-user"></span> Lookup Tables <span class="caret"></span>
+												</a>
+												<!-- Dropdown level 1 -->
+												<div id="dropdown-lvl1" class="panel-collapse collapse">
+													<div class="panel-body">
+														<ul class="nav navbar-nav">
+															<li><a ui-sref="adminSeason" >Seasons</a></li>
+															<li><a ui-sref="adminDivision" >Divisions</a></li>
+															<li><a ui-sref="adminFields" >Fields</a></li>
+															<li ><a ui-sref="adminContact" >Contacts</a></li>
+															<li ><a ui-sref="adminNew" >News</a></li>
+														</ul>
+													</div>
+												</div>
+											</li>
+											<li><a href="#"><span class="glyphicon glyphicon-edit"></span> Settings</a></li>
+										</ul>
+									</div><!-- /.navbar-collapse -->
+								</nav>
+							</div>
+						</div>  		
+				</div>
+            </div> 
+        
+        <div class="col-md-10" ui-view></div>
+      </div>
+    
+  </div>
 
     <div class="footer">
       <div class="container">
@@ -126,11 +167,13 @@
         <script src="scripts/controllers/a_team.js"></script>
         <script src="scripts/controllers/c_schedule.js"></script>
         <script src="scripts/services/common.js"></script>
-        <script src="scripts/controllers/top_navigation.js"></script>
-        <script src="scripts/controllers/top_navigation_setting.js"></script>
         <script src="scripts/controllers/a_venue.js"></script>
         <script src="scripts/controllers/a_player.js"></script>
         <script src="scripts/controllers/player.js"></script>
+        <script src="scripts/services/parameters.js"></script>
+        <script src="scripts/controllers/home.js"></script>
+        <script src="scripts/controllers/a_new.js"></script>
         <!-- endbuild -->
+        <!--<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" /-->
 </body>
 </html>

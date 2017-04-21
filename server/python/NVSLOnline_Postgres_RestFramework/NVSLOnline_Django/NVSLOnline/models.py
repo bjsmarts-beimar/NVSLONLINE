@@ -67,32 +67,25 @@ class Schedules(models.Model):
 
 ######################################### CONFIGURACION #############################################
 
-class Roles(models.Model):
+class News(models.Model):
     Id = models.AutoField(primary_key=True)
-    RoleName = models.TextField(max_length = 200)
-    LoweredRoleName = models.TextField(null = True)
-    Description = models.TextField(max_length = 400)
+    title = models.TextField()
+    description = models.TextField()
     IsHidden = models.BooleanField(default=False)
+    created = models.DateTimeField(auto_now_add=True)
+    modifiedBy = models.TextField()
+    modifiedByfullName = models.TextField()
+    modified = models.DateTimeField(auto_now_add=True)
 
-    #UserId = models.IntegerField()
-    #UserId = models.ForeignKey(Users, db_column = 'UserId', null=True)
-
-    def __unicode__(self):
-           return u'{0} - {1}'.format(self.RoleName, self.Id)
-
-
-
-class TopNavigations(models.Model):
+class Contacts(models.Model):
     Id = models.AutoField(primary_key=True)
-    TopMenu = models.TextField(max_length = 300)
-    TopMenuLink = models.TextField(max_length = 500)
-    TopMenuDescription = models.TextField(max_length = 500)
-    TopMenuOrder = models.IntegerField()
-    TopParentId = models.TextField(max_length = 400)
-    TopMenuExternal = models.BooleanField(default=False)
-    IsHidden = models.BooleanField(default=False)
+    yourName = models.TextField()
+    email = models.TextField()
+    message = models.TextField()
     
-    RoleId = models.ForeignKey(Roles, db_column = 'RoleId', null=True)
-
-    def __unicode__(self):
-           return u'{0} - {1}'.format(self.RoleName, self.Id)
+    IsHidden = models.BooleanField(default=False)
+    requestSubject = models.IntegerField()
+    created = models.DateTimeField(auto_now_add=True)
+    modifiedBy = models.TextField()
+    modifiedByfullName = models.TextField()
+    modified = models.DateTimeField(auto_now_add=True)

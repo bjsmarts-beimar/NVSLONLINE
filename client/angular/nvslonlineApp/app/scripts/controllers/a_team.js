@@ -8,16 +8,13 @@
  * Controller of the nvslonlineAppApp
  */
 angular.module('nvslonlineAppApp')
-  .controller('ATeamCtrl', ['$scope', '$modal', 'datacontext', 'toastr', 'webUrl', 
-  function ($scope, $modal, datacontext, toastr, webUrl) {
+  .controller('ATeamCtrl', ['$scope', '$modal', 'datacontext', 'toastr', 'webUrl','parameters','$location',
+  function ($scope, $modal, datacontext, toastr, webUrl, parameters, $location) {
     
         var vm = this;
-        //vm.news = {
-        //    title: 'Hot Towel Angular',
-        //    description: 'Hot Towel Angular is a SPA template for Angular developers.'
-        //};
-        //vm.messageCount = 0;
-        //vm.people = [];
+        if (parameters.loginAccess.access === false) {
+        $location.path('/home');
+        }        
         vm.title = 'Teams';
         vm.openNewTeam = openNewTeam;
         vm.openEditTeam = openEditTeam;
@@ -76,7 +73,7 @@ angular.module('nvslonlineAppApp')
 
             var modalInstance = $modal.open({
                 templateUrl: 'team.html',
-                controller: modalInstanceNew,
+                controller: modalInstanceNewTeam,
                 //size: size,
 
                 resolve: {
@@ -114,18 +111,14 @@ angular.module('nvslonlineAppApp')
                 }
             });
             modalInstance.result.then(function (dataUpdated) {
-                //vm.allTeams = data;
-                //vm.teams = dataUpdated;
                 getTeams();
-                //log('Changes Saved');
-
             }, function () {
             });
         }
 
         function openDeleteTeam(team) {
             var options = {};
-            options.team = vm.team;
+            options.team = team;
             options.webUrl = webUrl;
 
             var modalInstance = $modal.open({
@@ -153,7 +146,7 @@ angular.module('nvslonlineAppApp')
         }
   }]);
 
-   var modalInstanceNew = ['$scope', '$modalInstance', 'options', 'datacontext',
+   var modalInstanceNewTeam = ['$scope', '$modalInstance', 'options', 'datacontext',
        function ($scope, $modalInstance, options, datacontext) {
            
            $scope.Divisions = options.dataDivision;
@@ -173,7 +166,8 @@ angular.module('nvslonlineAppApp')
            $scope.cancel = function () { $modalInstance.dismiss('cancel'); };
        }];
 
-    var modalInstanceEdit = ['$scope', '$modalInstance', 'datacontext', 'options', function ($scope, $modalInstance, datacontext, options) {
+    var modalInstanceEdit = ['$scope', '$modalInstance', 'datacontext', 'options', 
+    function ($scope, $modalInstance, datacontext, options) {
          
         var objTeam = options.team;
         $scope.Divisions = options.dataDivision;
@@ -194,7 +188,8 @@ angular.module('nvslonlineAppApp')
            $scope.cancel = function () { $modalInstance.dismiss('cancel'); };
     }];
 
-    var modalInstanceDelete = ['$scope', '$modalInstance', 'datacontext', 'options', function ($scope, $modalInstance, datacontext, objTeam) {
+    var modalInstanceDelete = ['$scope', '$modalInstance', 'datacontext', 'options',
+    function ($scope, $modalInstance, datacontext, options) {
         console.log(options);
         var objTeam = options.team;
         $scope.teamName = objTeam.TeamName;
