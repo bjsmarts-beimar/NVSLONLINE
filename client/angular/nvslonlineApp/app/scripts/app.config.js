@@ -18,11 +18,11 @@ angular.module('nvslonlineAppApp').config(function($urlRouterProvider, $statePro
         templateUrl: '/views/main.html'
     })*/
     
-    .state('main', {
+    /*.state('main', {
         url: '/',
         templateUrl: '/views/home.html',
         controller: 'HomeCtrl as vm'
-    })
+    })*/
 
     .state('team', {
         url: '/team',
@@ -50,6 +50,35 @@ angular.module('nvslonlineAppApp').config(function($urlRouterProvider, $statePro
         templateUrl: '/views/login.html',
         controller: 'LoginCtrl as vm'
     })
+
+    .state('contact', {
+        url: '/contact',
+        templateUrl: '/views/contact.html',
+        controller: 'ContactCtrl as vm'
+    })
+
+    /*.state('player', {
+        url: '/player/:id',
+        param:{
+            playerId:null,
+        },
+        templateUrl: '/views/player.html',
+        controller: 'PlayerCtrl as vm',
+        resolve:{
+            resolveId:function($stateParams){
+                return $stateParams.id;
+            }
+        }*/
+        .state('player', {
+        url: '/player',
+        params:{
+            teamId:null,
+        },
+        templateUrl: '/views/player.html',
+        controller: 'PlayerCtrl as vm'
+        
+    })
+
 
     /********************* ADMIN USER ******************/
 
@@ -95,6 +124,11 @@ angular.module('nvslonlineAppApp').config(function($urlRouterProvider, $statePro
         controller: 'APlayerCtrl as vm'
     })
 
+    .state('adminContact', {
+        url: '/AContact',
+        templateUrl: '/views/a_contact.html',
+        controller: 'AContactCtrl as vm'
+    })
 
     /***************** CONTRIBUIDOR USER ***************/
     

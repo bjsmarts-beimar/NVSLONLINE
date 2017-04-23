@@ -27,7 +27,7 @@
                 <a href ng-click="vm.getScheduleBySeasonDivision(vm.season,vm.division)" class="btn btn-default">View Games </a>
             </h2>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="widget wviolet" ng-repeat="(key, value) in vm.schedules | groupBy: 'SeasonId'">
                         Season: {{ vm.getSeasonName(key, value) }}
 

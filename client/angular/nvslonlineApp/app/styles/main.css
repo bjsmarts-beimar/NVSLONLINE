@@ -112,3 +112,14 @@ body {
 	font-size: 11px;
 	text-align: center;
 }
+
+
+/*************** custom styles ***************/
+
+.error{
+  border-color:red;
+}
+
+.errorText{
+  color:red;
+}

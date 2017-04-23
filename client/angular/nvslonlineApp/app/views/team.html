@@ -5,7 +5,7 @@
         <div>
             <h2>Teams</h2>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-10">
                     <div class="widget wviolet">
                         <div data-cc-widget-header title="Teams"
                              allow-collapse="true"></div>
@@ -33,7 +33,7 @@
                                 </thead>
                                 <tbody>
                                     <tr data-ng-repeat="p in teamsDivision | filter:{SeasonId:vm.season}" >
-                                        <td>{{p.TeamName}}</td>
+                                        <td><a ui-sref="player({teamId:p.Id})">{{p.TeamName}}</a></td>
 
                                     </tr>
                                 </tbody>

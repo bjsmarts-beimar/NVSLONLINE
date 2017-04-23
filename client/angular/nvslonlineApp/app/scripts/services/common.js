@@ -20,6 +20,10 @@ angular.module('nvslonlineAppApp')
       return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
     };
 
+    this.randomNumber = function(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) + min);
+    };
+
     this.convertToTime = function(stringDate) {
       var d = new Date(stringDate),
           h = (d.getHours() < 10 ? '0' : '') + d.getHours(),

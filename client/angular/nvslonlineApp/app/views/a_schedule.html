@@ -4,7 +4,7 @@
             <h2> <a href ng-click="vm.openNewSchedule()" class="btn btn-default">New Schedule </a>
             </h2>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="widget wviolet" ng-repeat="(key, value) in vm.schedules | groupBy: 'SeasonId'">
                         Season:  {{ vm.getSeasonName(key, value) }}
                       

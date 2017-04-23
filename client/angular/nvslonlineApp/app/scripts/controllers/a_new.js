@@ -101,7 +101,6 @@ angular.module('nvslonlineAppApp')
             });
             modalInstance.result.then(function (data) {
                getNews();
-                //log('Changes Saved');
             }, function () {
             });
         } 

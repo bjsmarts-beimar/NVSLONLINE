@@ -17,8 +17,16 @@ angular.module('nvslonlineAppApp')
       access:false
     };
 
+    var requestSubject = [
+      {Id: 1,subject:"General Inquiry"},
+      {Id: 2,subject:"Advertise on NVSL, either on the site or via email"},
+      {Id: 3,subject:"Player suspension review"},
+      {Id: 4,subject:"Website Ideas and Suggestions"}
+   ];
+
     // Public API here
     return {
-      loginAccess: loginAccess
+      loginAccess: loginAccess,
+      requestSubject: requestSubject
     };
   });

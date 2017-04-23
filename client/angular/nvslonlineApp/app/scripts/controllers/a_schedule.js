@@ -68,6 +68,7 @@ angular.module('nvslonlineAppApp')
         function openNewSchedule() {
 
             var options = {};
+            options.webUrl = webUrl;
             options.dataDivision = vm.divisions;
             options.dataSeason = vm.seasonNoActive;
             options.dataVenues = vm.venues;
@@ -138,7 +139,7 @@ angular.module('nvslonlineAppApp')
                 var lstCountDivision = $linq.Enumerable().From(teams)
                .Where("p => p.SeasonId ==" + this.season)
                .GroupBy("g => g.DivisionId")
-               .Select()
+               .Select("Group => Group.FirstOrDefault()")
                .ToArray();
 
                var seasonStart = new Date(objSeason.SeasonStart);
@@ -185,7 +186,7 @@ angular.module('nvslonlineAppApp')
 
                                         scheduleValues.Status = "Scheduled";
 
-                                        ///scheduleValues.DivisionId = $scope.divisionTeams[l].Id;
+                                        scheduleValues.DivisionId = lstDivision[l].Id;
                                         scheduleValues.SeasonId = this.season;
 
                                         scheduleValues.GoalsHomeTeam = null;
@@ -212,10 +213,8 @@ angular.module('nvslonlineAppApp')
                                             }
                                         }
 
-                                            datacontext.addSchedule(scheduleValues);
+                                            datacontext.addSchedule(options.webUrl,scheduleValues);
                                             
-                                            //console.log(scheduleValues)
-
                                     }
                                 }
                             }
@@ -225,14 +224,12 @@ angular.module('nvslonlineAppApp')
 
                }
 
-
-               if (lstCountDivision.length === countFourTeamForDivision) {
-                   console.log("completado");
+               if (lstCountDivision.length!=0 && lstCountDivision.length === countFourTeamForDivision) {
+                  
                    var objSeasonActive = {};
                    objSeasonActive.Id = this.season;
                    objSeasonActive.Active = true;
-                   datacontext.editSeasonActive(objSeasonActive);
-                   
+                   datacontext.editSeasonActive(options.webUrl,objSeasonActive);
                }
               
                 $modalInstance.close();

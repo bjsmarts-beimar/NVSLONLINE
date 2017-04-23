@@ -59,6 +59,15 @@ this.editDivision = function (webUrl,objDivision) {
         });
     };
 
+    this.getTeamById = function (webUrl,Id) {
+        return $http({
+            method: 'GET',
+            //withCredentials: true,
+            data: 'json',
+            url: webUrl +  'api/teams/' + Id
+        });
+    };
+
     this.addTeam = function (webUrl, objTeam) {
         return $http({
             method: 'POST',
@@ -131,6 +140,16 @@ this.editDivision = function (webUrl,objDivision) {
 
     };
 
+    this.editSeasonActive = function (webUrl,objSeason) {
+        return $http({
+            method: 'PUT',
+            url: webUrl +  'api/seasons/seasonActive/' + objSeason.Id,
+            //withCredentials: true,
+           data: objSeason
+        });
+
+    };
+
     this.deleteSeason = function (webUrl,objSeason) {
         return $http({
             method: 'DELETE',
@@ -192,10 +211,6 @@ this.editDivision = function (webUrl,objDivision) {
             //withCredentials: true,
             data: 'json',
             url: webUrl +  'api/schedules'
-        }).then(function successCallback(response){
-            console.log(response);
-        },function errorCallback(response){
-            console.log(response);
         });
     };
 
@@ -293,6 +308,39 @@ this.editDivision = function (webUrl,objDivision) {
 
     };
 
+    /*********************************** Contacts **********************************/
+
+    this.getContacts = function (webUrl) {
+        return $http({
+            method: 'GET',
+            //withCredentials: true,
+            data: 'json',
+            url: webUrl +  'api/contacts'
+        });
+    };
+
+    this.addContact = function (webUrl, objContact) {
+        return $http({
+            method: 'POST',
+            url: webUrl +  'api/contacts',
+            data: objContact,
+            //withCredentials: true,
+        }).then(function successCallback(response){
+            console.log(response);
+        },function errorCallback(response){
+            console.log(response);
+        });
+    };
+
+    this.deleteContact = function (webUrl,objContact) {
+        return $http({
+            method: 'DELETE',
+            url: webUrl +  'api/contacts/' + objContact.Id,
+            //withCredentials: true,
+           data: objContact
+        });
+    };
+    
     /*********************************** Players **********************************/
 
     this.getPlayers = function (webUrl) {
@@ -301,6 +349,15 @@ this.editDivision = function (webUrl,objDivision) {
             //withCredentials: true,
             data: 'json',
             url: webUrl +  'api/players'
+        });
+    };
+
+    this.getPlayersByTeamId = function (webUrl,teamId) {
+        return $http({
+            method: 'GET',
+            //withCredentials: true,
+            data: 'json',
+            url: webUrl +  'api/playersByTeam/' + teamId
         });
     };
 

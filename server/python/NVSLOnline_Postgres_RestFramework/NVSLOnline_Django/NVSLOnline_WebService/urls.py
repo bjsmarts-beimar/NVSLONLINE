@@ -29,6 +29,7 @@ urlpatterns = [
     ################################## PLAYERS ##################################
     url(r'^api/players/?$', NVSLOnline_Views.player, name='get_player'),
     url(r'^api/players/(?P<id>\d+)/?$', NVSLOnline_Views.player, name='getPlayerId'),
+    url(r'^api/playersByTeam/(?P<id>\d+)/?$', NVSLOnline_Views.getPlayersByTeamId, name='getPlayerId'),
 
     ################################## SCHEDULES ##################################
     url(r'^api/schedules/?$', NVSLOnline_Views.schedule, name='get_schedule'),

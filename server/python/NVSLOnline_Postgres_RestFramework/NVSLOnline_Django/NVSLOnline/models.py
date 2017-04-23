@@ -57,9 +57,9 @@ class Schedules(models.Model):
     Status = models.TextField()
     DateTime = models.DateTimeField(auto_now_add=True)
     HomeTeamId = models.ForeignKey(Teams, related_name='HomeTeam',db_column = 'HomeTeamId', null=True)
-    GoalsHomeTeam = models.IntegerField()
+    GoalsHomeTeam = models.IntegerField(blank=True, null=True)
     AwayTeamId = models.ForeignKey(Teams, related_name='AwayTeam',db_column = 'AwayTeamId', null=True)
-    GoalsAwayTeam = models.IntegerField()
+    GoalsAwayTeam = models.IntegerField(blank=True, null=True)
     IsHidden = models.BooleanField(default=False)
 
     def __unicode__(self):

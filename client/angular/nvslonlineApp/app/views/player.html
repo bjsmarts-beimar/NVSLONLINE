@@ -1,1 +1,38 @@
-<p>This is the player view.</p>
+<div class="col-md-1"></div>
+<div class="col-md-10">
+
+    <div class="container">
+	<div class="row">
+		<h2>{{vm.team.TeamName}}</h2>
+		
+		
+		 <div data-cc-widget-header >
+                <b>Season: {{SeasonName}}</b>
+                    <div data-cc-widget-header >
+                    <b> {{DivisionName}}</b>
+                        <div class="widget-content text-center text-info">
+                            <table class="table table-condensed table-striped">
+                                <thead>
+                                    <tr>
+                                        <th> Name</th>
+                                       
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr data-ng-repeat="p in teamsDivision | filter:{SeasonId:vm.season}" >
+                                        <td><a ui-sref="player({teamId:p.Id})">{{p.TeamName}}</a></td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                            <div class="widget-foot">
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+		
+	</div>
+</div>
+
+</div>

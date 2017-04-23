@@ -278,7 +278,15 @@ class Player(APIView):
    
 player = Player.as_view()
 
+class PlayerViewSet(viewsets.ViewSet):
+    serializer_class = PlayerSerializer
+    def getPlayersByTeamId(self, request, id=None, format=None):
+        #players = get_object_or_404(Players, TeamId=id)
+        players = Players.objects.filter(TeamId=id,IsHidden = False)
+        response = self.serializer_class(players,many=True)
+        return Response(response.data)        
 
+getPlayersByTeamId = PlayerViewSet.as_view({'get':'getPlayersByTeamId'})
 """class DivisionViewset(viewsets.ModelViewSet):
     serializer_class = DivisionSerializer
     queryset = Divisions.objects.filter(IsHidden = False)
@@ -472,7 +480,7 @@ class Contact(APIView):
             contacts = get_object_or_404(Contacts, pk=id)
             many = False
         else:
-            contacts = News.objects.filter(IsHidden = False)
+            contacts = Contacts.objects.filter(IsHidden = False)
             many = True
         response = self.serializer_class(contacts,many=many)
         return Response(response.data)

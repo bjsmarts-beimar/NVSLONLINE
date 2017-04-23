@@ -49,16 +49,22 @@
         </div>
         <div class="modal-body">
 
-            <form role="form">
+            <form name="form" >
 
                 <div class="form-group">
                     <label for="seasonName">Season Name</label>
-                    <input type="text" class="form-control" id="seasonName" data-ng-model="seasonName" placeholder="Enter Season Name"/>
+                    <input type="text" name="seasonName" class="form-control" id="seasonName" data-ng-model="seasonName" placeholder="Enter Season Name" required
+                    data-ng-class="{error:form.seasonName.$invalid && !form.$pristine}"/>
+                    <span class="errorText" ng-show="!form.$pristine && form.seasonName.$error.required">Season Name is required</span>
                 </div>
         
                 <div class="form-group">
                     <label for="seasonStart">Season start date</label>
-                    <input type="date" id="seasonStart" name="seasonStart" data-ng-model="seasonStart" placeholder="yyyy-MM-dd"><br><br>
+                    <input type="date" id="seasonStart" name="seasonStart" data-ng-model="seasonStart" placeholder="yyyy-MM-dd"required
+                    data-ng-class="{error:form.seasonStart.$invalid && !form.$pristine}"/>
+                    <span class="errorText" ng-show="!form.$pristine && form.seasonStart.$error.required">Start Date is required</span>
+                    <span class="errorText" ng-show="!form.$pristine && form.seasonStart.$error.date">Start Date is invalid</span>
+                    <br>
                 </div>
         
                 <div class="form-group">
@@ -70,7 +76,8 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal" data-ng-click="cancel()">Close</button>
-            <button type="button" class="btn btn-primary" data-ng-click="ok()">Save changes</button>
+            
+            <input type="submit" class="btn btn-primary" data-ng-click="ok()" value="Ok" data-ng-disabled="!form.$valid"/>
         </div>
     </div><!-- /.modal-content -->
     </script>
