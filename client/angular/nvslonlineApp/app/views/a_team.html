@@ -35,7 +35,7 @@
                                         <a id="Edit" href ng-click="vm.openEditTeam(p)">Edit </a>|
                                         <a id="Delete" href ng-click="vm.openDeleteTeam(p)">Delete </a>
                                     </td>
-                                    <td style="text-align: left">{{p.TeamName}}</td>
+                                    <td style="text-align: left"><a ui-sref="player({teamId:p.Id})">{{p.TeamName}}</a></td>
                                     <td style="text-align: left">{{p.Division.DivisionName}}</td>
                                     <td style="text-align: left">{{p.Season.SeasonName}}</td>
 

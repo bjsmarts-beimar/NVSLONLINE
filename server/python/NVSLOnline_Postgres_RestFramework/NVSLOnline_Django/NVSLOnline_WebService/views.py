@@ -16,7 +16,7 @@ class Division(APIView):
             divisions = get_object_or_404(Divisions, pk=id)
             many = False
         else:
-            divisions = Divisions.objects.filter(IsHidden = False)
+            divisions = Divisions.objects.filter(IsHidden = False).order_by('Id')
             many = True
         response = self.serializer_class(divisions,many=many)
         return Response(response.data)
@@ -50,28 +50,6 @@ class Division(APIView):
         serializer = self.serializer_class(division,many=False)
         return Response(serializer.data)
 
-        """serializer = self.serializer_class(division,many=False)
-        if serializer.is_valid():
-            serializer.IsHidden = True
-            serializer.save()
-            return Response(serializer.data)"""
-        """division = Divisions(
-                DivisionName = serializer.data['DivisionName'],
-                IsHidden = True
-            )"""
-           
-        #resp = self.serializer_class(division,many=False)
-        """if serializer.is_valid():
-            #serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors)"""
-            
-
-    """def delete(self, request, id=None, format=None):
-        division = get_object_or_404(Divisions, pk=id)
-        division.delete()
-        return Response(status = status.HTTP_204_NO_CONTENT)"""
-
 
 division = Division.as_view()
             
@@ -82,7 +60,7 @@ class Season(APIView):
             seasons = get_object_or_404(Seasons, pk=id)
             many = False
         else:
-            seasons = Seasons.objects.filter(IsHidden = False)
+            seasons = Seasons.objects.filter(IsHidden = False).order_by('Id')
             many = True
         response = self.serializer_class(seasons,many=many)
         return Response(response.data)
@@ -146,7 +124,7 @@ class Venue(APIView):
             venues = get_object_or_404(Venues, pk=id)
             many = False
         else:
-            venues = Venues.objects.filter(IsHidden = False)
+            venues = Venues.objects.filter(IsHidden = False).order_by('Id')
             many = True
         response = self.serializer_class(venues,many=many)
         return Response(response.data)
@@ -189,7 +167,7 @@ class Team(APIView):
             teams = get_object_or_404(Teams, pk=id)
             many = False
         else:
-            teams = Teams.objects.filter(IsHidden = False)
+            teams = Teams.objects.filter(IsHidden = False).order_by('Id')
             many = True
         response = self.serializer_class(teams,many=many)
         return Response(response.data)
@@ -237,7 +215,7 @@ class Player(APIView):
             players = get_object_or_404(Players, pk=id)
             many = False
         else:
-            players = Players.objects.filter(IsHidden = False)
+            players = Players.objects.filter(IsHidden = False).order_by('Id')
             many = True
         response = self.serializer_class(players,many=many)
         return Response(response.data)
@@ -312,7 +290,7 @@ class Schedule(APIView):
             schedules = get_object_or_404(Schedules, pk=id)
             many = False
         else:
-            schedules = Schedules.objects.filter(IsHidden = False)
+            schedules = Schedules.objects.filter(IsHidden = False).order_by('Id')
             many = True
         response = self.serializer_class(schedules,many=many)
         return Response(response.data)
@@ -480,7 +458,7 @@ class Contact(APIView):
             contacts = get_object_or_404(Contacts, pk=id)
             many = False
         else:
-            contacts = Contacts.objects.filter(IsHidden = False)
+            contacts = Contacts.objects.filter(IsHidden = False).order_by('Id')
             many = True
         response = self.serializer_class(contacts,many=many)
         return Response(response.data)

@@ -56,10 +56,10 @@
                                                 <td style="text-align: left">{{p.Status}}</td>
                                                 <td style="text-align: left"><span data-ng-bind="vm.convertToDate(p.DateTime) | date:'dd/MM/yyyy'"></span></td>
                                                 <td style="text-align: left"><span data-ng-bind="vm.convertToTime(p.DateTime)"></span></td>
-                                                <td style="text-align: left">{{p.HomeTeam.TeamName}}</td>
+                                                <td style="text-align: left"><a ui-sref="player({teamId:p.HomeTeamId})">{{p.HomeTeam.TeamName}}</a></td>
                                                 <td>{{p.GoalsHomeTeam}} - {{p.GoalsAwayTeam}}</td>
                                                 <!--<td style="text-align: left">{{p.Division.DivisionName}}</td>-->
-                                                <td style="text-align: left">{{p.AwayTeam.TeamName}}</td>
+                                                <td style="text-align: left"><a ui-sref="player({teamId:p.AwayTeamId})">{{p.AwayTeam.TeamName}}</a></td>
                                                 <td style="text-align: left">{{p.Venue.VenueName}}</td>
                                             </tr>
                                         </tbody>

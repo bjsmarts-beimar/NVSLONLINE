@@ -8,13 +8,8 @@
  * Service in the nvslonlineAppApp.
  */
 angular.module('nvslonlineAppApp')
-  .service('common', function () {
+  .service('common', function (parameters,$location) {
     // AngularJS will instantiate a singleton by calling "new" on this function
-
-/*function randomDate(start, end) {
-    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-}*/
-   
 
     this.randomDate = function(start, end){
       return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
@@ -36,6 +31,20 @@ angular.module('nvslonlineAppApp')
       dateOut.setDate(dateOut.getDate()+1);
       return dateOut;
     };
+
+    this.length_message = function(array,message) {
+      if (array.length === 0) {
+          return message;
+      }
+    };
+
+    this.accessLogin = function() {
+       if (parameters.getLoginAccess().access !== true ) {
+        $location.path('/home');
+      }
+    };
+
+   
 
     this.shuffle = function(array){
       var currentIndex = array.length,temporaryValue,randomIndex;

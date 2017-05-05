@@ -8,26 +8,31 @@
  * Controller of the nvslonlineAppApp
  */
 angular.module('nvslonlineAppApp')
-  .controller('MainCtrl', function ($scope,$location,parameters) {
+  .controller('MainCtrl', function ($rootScope,$scope,$location,parameters) {
     var vm = this;
     vm.title = "Northern Virginia Soccer League"
     vm.login = login;
     vm.logOut = logOut;
 
-    var loginAccess = parameters.loginAccess.access
-    vm.access =  loginAccess;
-    console.log(parameters.loginAccess);
+    
+    $rootScope.$on("update", function(){
+      var objLoginAccess =  parameters.getLoginAccess();
+      vm.access = objLoginAccess.access;
+      vm.user = objLoginAccess.user;
+    });
 
     function login() {
-      parameters.loginAccess.access = true;
+      /*parameters.loginAccess.access = true;
       vm.access = true;
-      
-      $location.path('/dashboard')
+      $location.path('/dashboard');
+      */
+      $location.path('/login')
     } 
 
     function logOut() {
-      parameters.loginAccess.access = false;
-      vm.access = false;
+      parameters.setLoginAccess("",false)
+      /*parameters.loginAccess.access = false;
+      vm.access = false;*/
       $location.path('/home')
     } 
     

@@ -8,11 +8,10 @@
  * Controller of the nvslonlineAppApp
  */
 angular.module('nvslonlineAppApp')
-  .controller('AContactCtrl', function (toastr,datacontext,webUrl, parameters,$modal,$location) {
+  .controller('AContactCtrl', function (toastr,datacontext,webUrl, parameters,$modal,$location,common) {
    var vm = this;
-   if (parameters.loginAccess.access === false) {
-        $location.path('/home');
-    }
+   common.accessLogin();
+
    getMessages();
    function getMessages(){
       datacontext.getContacts(webUrl).then(

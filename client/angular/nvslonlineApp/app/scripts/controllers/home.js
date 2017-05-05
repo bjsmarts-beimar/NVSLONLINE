@@ -18,12 +18,14 @@ angular.module('nvslonlineAppApp')
      function getNews() {
            datacontext.getNews(webUrl).then(
             function (response) {
-                console.log(response.data);
-                vm.news = response.data;
                 
-                vm.selectTitle = vm.news[0].title;
-                vm.selectDescription = vm.news[0].description;
-                vm.selectModified = vm.news[0].modified;
+                vm.news = response.data;
+                if (vm.news.length>0) {
+                    vm.selectTitle = vm.news[0].title;
+                    vm.selectDescription = vm.news[0].description;
+                    vm.selectModified = vm.news[0].modified;
+                }
+                
             }, function(response) {
                 toastr.error("Error has occurred: " + response.data.Message, "Fatal error", {
                 positionClass: 'toast-bottom-full-width'

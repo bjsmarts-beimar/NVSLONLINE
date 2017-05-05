@@ -11,9 +11,7 @@ angular.module('nvslonlineAppApp')
   .controller('ASeasonCtrl', ['$scope', '$modal', 'datacontext', 'toastr', 'webUrl','common','parameters','$location',
   function ($scope, $modal, datacontext, toastr, webUrl, common, parameters, $location) {
     var vm = this;
-    if (parameters.loginAccess.access === false) {
-        $location.path('/home');
-    }
+    common.accessLogin();
     vm.convertToTime = common.convertToTime;
     vm.convertToDate = common.convertToDate;
         

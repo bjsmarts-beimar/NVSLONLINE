@@ -52,7 +52,7 @@
               <li ui-sref-active="active" ng-show="!vm.access"><a ui-sref="signUp">Sign Up</a></li>
               <li ui-sref-active="active" ng-show="!vm.access" style="cursor:pointer"><a ng-click="vm.login()">Log In</a></li>
                 <li ng-hide="!vm.access" class='dropdown' style="cursor:pointer">
-                            <a class='dropdown-toggle' data-toggle='dropdown'>Beimar Medina <b class='caret'></b></a>
+                            <a class='dropdown-toggle' data-toggle='dropdown'>{{vm.user}}<b class='caret'></b></a>
                             <ul class='dropdown-menu'>
                                 <li><a ui-sref="settings">Edit Profile</a></li>                                
                                 <li><a ui-sref="settings">Account Settings</a></li>
@@ -90,13 +90,14 @@
 												<a data-toggle="collapse" href="#dropdown-lvl1">
 													<span class="glyphicon glyphicon-user"></span> Lookup Tables <span class="caret"></span>
 												</a>
+                        <!--<a style="cursor:pointer" onClick="$('#loginbox').hide(); $('#signupbox').show()">
 												<!-- Dropdown level 1 -->
 												<div id="dropdown-lvl1" class="panel-collapse collapse">
 													<div class="panel-body">
 														<ul class="nav navbar-nav">
 															<li><a ui-sref="adminSeason" >Seasons</a></li>
 															<li><a ui-sref="adminDivision" >Divisions</a></li>
-															<li><a ui-sref="adminFields" >Fields</a></li>
+															<li><a ui-sref="adminVenue" >Venues</a></li>
 															<li ><a ui-sref="adminContact" >Contacts</a></li>
 															<li ><a ui-sref="adminNew" >News</a></li>
 														</ul>
@@ -176,6 +177,6 @@
         <script src="scripts/controllers/contact.js"></script>
         <script src="scripts/controllers/a_contact.js"></script>
         <!-- endbuild -->
-        <!--<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" /-->
+       <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" >
 </body>
 </html>

@@ -8,13 +8,11 @@
  * Controller of the nvslonlineAppApp
  */
 angular.module('nvslonlineAppApp')
-  .controller('ATeamCtrl', ['$scope', '$modal', 'datacontext', 'toastr', 'webUrl','parameters','$location',
-  function ($scope, $modal, datacontext, toastr, webUrl, parameters, $location) {
+  .controller('ATeamCtrl', ['$scope', '$modal', 'datacontext', 'toastr', 'webUrl','parameters','$location','common',
+  function ($scope, $modal, datacontext, toastr, webUrl, parameters, $location, common) {
     
         var vm = this;
-        if (parameters.loginAccess.access === false) {
-        $location.path('/home');
-        }        
+        common.accessLogin();       
         vm.title = 'Teams';
         vm.openNewTeam = openNewTeam;
         vm.openEditTeam = openEditTeam;

@@ -11,9 +11,7 @@ angular.module('nvslonlineAppApp')
   .controller('AVenueCtrl', ['$scope', '$modal', 'datacontext', 'toastr', 'webUrl','common','parameters','$location',
   function ($scope, $modal, datacontext, toastr, webUrl, common, parameters, $location) {
     var vm = this;
-        if (parameters.loginAccess.access === false) {
-        $location.path('/home');
-        }
+        common.accessLogin();
         vm.title = 'Venues';
         vm.openNewVenue = openNewVenue;
         vm.openEditVenue = openEditVenue;

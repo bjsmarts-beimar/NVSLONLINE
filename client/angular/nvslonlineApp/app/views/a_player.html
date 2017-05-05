@@ -6,7 +6,7 @@
             </h2>
 
             <div class="form-group">
-                <label for="team">Search By Team</label>
+                <label for="team">Search Player</label>
 
                 <input type="text" class="form-control" id="team" data-ng-model="team" placeholder="Search Player"/>
                 
@@ -58,7 +58,8 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr data-ng-repeat="p in vm.players | filter:vm.search">
+                                <tr data-ng-repeat="p in vm.displayPlayers
+                                = (vm.players | filter:vm.search) | limitTo:vm.itemsPerPage:vm.itemsPerPage*(vm.currentPage-1)">
                                     <td style="text-align: left">
                                         <a id="Edit" href ng-click="vm.openEditPlayer(p)">Edit </a>|
                                         <a id="Delete" href ng-click="vm.openDeletePlayer(p)">Delete </a>
@@ -70,7 +71,15 @@
                                 </tr>
                                 </tbody>
                             </table>
-
+                    </div>
+                    <div class="clearfix" ng-show="vm.displayPlayers.length > vm.itemsPerPage">
+                        <pagination 
+                                    ng-model="vm.currentPage"
+                                    total-items="vm.displayPlayers.length"
+                                    items-per-page="vm.itemsPerPage"
+                                    max-size="vm.maxSize"  
+                                    boundary-links="true">
+                        </pagination>
                     </div>
                 </div>
 

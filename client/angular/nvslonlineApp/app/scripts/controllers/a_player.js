@@ -8,12 +8,10 @@
  * Controller of the nvslonlineAppApp
  */
 angular.module('nvslonlineAppApp')
-  .controller('APlayerCtrl', ['$scope', '$modal', 'datacontext', 'toastr', 'webUrl','parameters','$location', 
-  function ($scope, $modal, datacontext, toastr, webUrl, parameters, $location) {
+  .controller('APlayerCtrl', ['$scope', '$modal', 'datacontext', 'toastr', 'webUrl','parameters','$location','common',
+  function ($scope, $modal, datacontext, toastr, webUrl, parameters, $location, common) {
    var vm = this; 
-    if (parameters.loginAccess.access === false) {
-        $location.path('/home');
-    }
+    common.accessLogin();
     vm.openNewPlayer = openNewPlayer;
     vm.openEditPlayer = openEditPlayer;
     vm.openDeletePlayer = openDeletePlayer;
@@ -31,17 +29,26 @@ angular.module('nvslonlineAppApp')
                 return vm.teams =  response.data;
             });
         }
+
+
+     vm.currentPage = parameters.pagination.currentPage; //pagina actual
+     vm.itemsPerPage = parameters.pagination.itemsPerPage;//cantidad de records por pagina
+     vm.maxSize = parameters.pagination.maxSize;//cantidad maxima de botones de paginacion
      function getPlayers() {
            datacontext.getPlayers(webUrl).then(
             function (response) {
-                console.log(response.data);
                 vm.players = response.data;
+
+                vm.displayPlayers = vm.players.slice(((vm.currentPage-1)*vm.itemsPerPage),((vm.currentPage)*vm.itemsPerPage)); 
+                console.log(vm.displayPlayers);
             }, function(response) {
                 toastr.error("Error has occurred: " + response.data.Message, "Fatal error", {
                 positionClass: 'toast-bottom-full-width'
                 })                
             });
      };
+
+     
 
      var indexedTeams = [];
      function playersToFilter(){
@@ -57,6 +64,7 @@ angular.module('nvslonlineAppApp')
     }
 
     function search (row) {
+        
      return !!((row.FirstName.indexOf($scope.team || '') !== -1 || row.LastName.indexOf($scope.team || '') !== -1));
 };
 

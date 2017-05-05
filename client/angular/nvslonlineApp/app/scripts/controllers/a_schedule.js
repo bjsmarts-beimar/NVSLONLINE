@@ -8,19 +8,19 @@
  * Controller of the nvslonlineAppApp
  */
 angular.module('nvslonlineAppApp')
-  .controller('AScheduleCtrl', ['$scope', '$modal', 'datacontext', 'toastr', 'webUrl','common','$linq','parameters', '$location',
-  function ($scope, $modal, datacontext, toastr, webUrl, common, $linq, parameters,$location) {
+  .controller('AScheduleCtrl', ['$scope', '$modal', 'datacontext', 'toastr', 'webUrl','common','$linq','parameters', '$location','$timeout',
+  function ($scope, $modal, datacontext, toastr, webUrl, common, $linq, parameters,$location,$timeout) {
     
     var vm = this;
-       if (parameters.loginAccess.access === false) {
-        $location.path('/home');
-        }
+   // common.accessLogin();
+       
         vm.title = 'Schedule';
 
         vm.openNewSchedule = openNewSchedule;
         vm.openDeleteSchedule = openDeleteSchedule;
         vm.convertToDate = common.convertToDate;
         vm.convertToTime = common.convertToTime;
+        vm.openEditScore = openEditScore;
 
        // vm.getDivisionName = getDivisionName;
         //vm.getSeasonName = getSeasonName;
@@ -94,6 +94,28 @@ angular.module('nvslonlineAppApp')
             });
         }
 
+        function openEditScore(schedule) {
+            
+            var options = {};
+            options.schedule = schedule;
+            options.webUrl = webUrl;
+
+            var modalInstance = $modal.open({
+                templateUrl: 'score.html',
+                controller: modalInstanceEditScore,
+                
+                resolve: {
+                    options: function () { //esta es la info enviada al modal si se cargo correctamente. tb se puede info en el scope que abre el modal
+                        return options;
+                    }
+                }
+            });
+            modalInstance.result.then(function () {
+                getSchedule();
+            }, function () {
+            });
+        }
+
         function openDeleteSchedule(schedule) {
             var modalInstance = $modal.open({
                 templateUrl: 'delete.html',
@@ -115,32 +137,84 @@ angular.module('nvslonlineAppApp')
 
   }]);
 
-   var modalInstanceNewSchedule = ['$scope', '$modalInstance', 'options', 'datacontext','common','$q','$linq',
-       function ($scope, $modalInstance, options, datacontext, common, $q, $linq) {
+   var modalInstanceNewSchedule = ['$scope', '$modalInstance', 'options', 'datacontext','common','$q','$linq','parameters','$timeout',
+       function ($scope, $modalInstance, options, datacontext, common, $q, $linq,parameters,$timeout) {
            $scope.Seasons = options.dataSeason;
            $scope.Teams = options.dataTeams;
            var teams = options.dataTeams;
            var venues = options.dataVenues;
            var schedules = options.dataSchedules;
 
-           $scope.ok = function () {
-
-            var seasons = options.dataSeason;
-            var teams = options.dataTeams;
-
-               
-               var objSeason = $linq.Enumerable().From(seasons).Where("p => p.Id ==" + this.season).Select().FirstOrDefault();
-
-               var lstDivision = $linq.Enumerable().From(teams)
+           $scope.seasonFilter = function(){
+            console.log(this.season);
+            //console.log($scope.Teams);
+            var lstDivisionComplete1 = $linq.Enumerable().From(teams)
                .Where("p => p.SeasonId ==" + this.season)
                .Select()
                .ToArray();
+               //console.log(lstDivisionComplete1);
 
-                var lstCountDivision = $linq.Enumerable().From(teams)
+               var lstDivisionExcept1 = $linq.Enumerable().From(schedules)
                .Where("p => p.SeasonId ==" + this.season)
+               .Select("s => s.DivisionId")
+               .ToArray();
+               console.log(lstDivisionExcept1);
+
+               var lstDivision1 = $linq.Enumerable()
+               .From(lstDivisionComplete1)
+               .Where(function(p){
+                  //return p.DivisionId != lstDivisionExcept1
+                  return !$linq.Enumerable().From(lstDivisionExcept1).Contains(p.DivisionId)
+
+               })
+               //.Except(lstDivisionExcept1.DivisionId)
+               .ToArray();
+               console.log(lstDivision1);
+           }
+
+           
+
+           $scope.ok = function () {
+            season = this.season;
+
+            var $d = $q.defer();
+            var promesas = [];
+
+            var seasons = options.dataSeason;
+            var teams = options.dataTeams;
+            
+               
+               var objSeason = $linq.Enumerable().From(seasons).Where("p => p.Id ==" + season).Select().FirstOrDefault();
+
+               /*var lstDivision = $linq.Enumerable().From(teams)
+               .Where("p => p.SeasonId ==" + season)
+               .Select()
+               .ToArray();*/
+
+                
+               var lstDivisionComplete = $linq.Enumerable().From(teams)
+               .Where("p => p.SeasonId ==" + season)
+               .Select("s => s.DivisionId")
+               .ToArray();
+               console.log(lstDivisionComplete);
+
+               var lstDivisionExcept = $linq.Enumerable().From(schedules)
+               .Where("p => p.SeasonId ==" + season)
+               .Select("s => s.DivisionId")
+               .ToArray();
+               console.log(lstDivisionExcept);
+
+               var lstDivision = $linq.Enumerable().From(lstDivisionComplete).Except(lstDivisionExcept).ToArray();
+               console.log(lstDivision);
+
+
+                /*var lstCountDivision = $linq.Enumerable().From(teams)
+               .Where("p => p.SeasonId ==" + season)
                .GroupBy("g => g.DivisionId")
                .Select("Group => Group.FirstOrDefault()")
                .ToArray();
+
+               console.log(lstCountDivision);*/
 
                var seasonStart = new Date(objSeason.SeasonStart);
                var seasonEnd = new Date(objSeason.SeasonEnd);
@@ -148,13 +222,19 @@ angular.module('nvslonlineAppApp')
                var countFourTeamForDivision = 0;// esta variable verifica si se ingresaron 4 equipos por divisions
                for (var l = 0; l < lstDivision.length; l++) {
                         var teamsDivision  = $linq.Enumerable().From(teams)
-                            .Where("p => p.DivisionId ==" + lstDivision[l].Id)
+                            .Where("p => p.DivisionId ==" + lstDivision[l])
                             .ToArray();
 
                    if (teamsDivision.length >= 4) {
                          countFourTeamForDivision += 1;// si se ingresaron 4 equipos por divisions la temporada quedara completa
-                         console.log(teamsDivision);
+                        
                          var ranVenues = common.shuffle(venues);
+                        
+                         if (ranVenues.length === 0) {
+                             $scope.error_message = parameters.error_message.noVenuesFound;
+                             return;
+                         }
+                         
 
                          var indexVenues = 0;
                          var countPartidos = 0;
@@ -186,8 +266,8 @@ angular.module('nvslonlineAppApp')
 
                                         scheduleValues.Status = "Scheduled";
 
-                                        scheduleValues.DivisionId = lstDivision[l].Id;
-                                        scheduleValues.SeasonId = this.season;
+                                        scheduleValues.DivisionId = lstDivision[l];
+                                        scheduleValues.SeasonId = season;
 
                                         scheduleValues.GoalsHomeTeam = null;
                                         scheduleValues.GoalsAwayTeam = null;
@@ -213,32 +293,58 @@ angular.module('nvslonlineAppApp')
                                             }
                                         }
 
-                                            datacontext.addSchedule(options.webUrl,scheduleValues);
-                                            
+                                          var promesa =  datacontext.addSchedule(options.webUrl,scheduleValues);
+                                            promesas.push(promesa);
                                     }
                                 }
                             }
 
                   }
-
-
                }
 
-               if (lstCountDivision.length!=0 && lstCountDivision.length === countFourTeamForDivision) {
+               if (lstDivision.length!=0 && lstDivision.length === countFourTeamForDivision) {
                   
                    var objSeasonActive = {};
-                   objSeasonActive.Id = this.season;
+                   objSeasonActive.Id = season;
                    objSeasonActive.Active = true;
                    datacontext.editSeasonActive(options.webUrl,objSeasonActive);
-               }
-              
-                $modalInstance.close();
+               }  
+               $q.all(promesas).then(function(promesasRes){
+                      $d.resolve(promesasRes);
+                      //console.log("terminado");
+                      $modalInstance.close();
+                  }) 
            };
+                      
+
+
 
            $scope.cancel = function () { $modalInstance.dismiss('cancel'); };
        }];
 
-    var modalInstanceDeleteSchedule = ['$scope', '$modalInstance', 'datacontext', 'options', function ($scope, $modalInstance, datacontext, options) {
+   var modalInstanceEditScore = ['$scope', '$modalInstance', 'datacontext', 'options', 
+       function ($scope, $modalInstance, datacontext, options) {
+
+        var objSchedule = options.schedule;
+        $scope.objSchedule = objSchedule;
+        $scope.goalsHomeTeam = objSchedule.GoalsHomeTeam;
+        $scope.goalsAwayTeam = objSchedule.GoalsAwayTeam;
+
+        $scope.ok = function () {
+            objSchedule.GoalsHomeTeam = this.goalsHomeTeam;
+            objSchedule.GoalsAwayTeam = this.goalsAwayTeam;
+            
+            return datacontext.editScore(options.webUrl, objSchedule).then(function (response) {
+               $modalInstance.close();
+            });
+            //datacontext.editScore(options.webUrl, objSchedule);
+            //$modalInstance.close();
+        };
+        $scope.cancel = function () { $modalInstance.dismiss('cancel'); };
+    }];
+
+    var modalInstanceDeleteSchedule = ['$scope', '$modalInstance', 'datacontext', 'options', 
+    function ($scope, $modalInstance, datacontext, options) {
         console.log(options);
         //$scope.teamName = objTeam.TeamName;
         //$scope.division = objTeam.Division.DivisionName;

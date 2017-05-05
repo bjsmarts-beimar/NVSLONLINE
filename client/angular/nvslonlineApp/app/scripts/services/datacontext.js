@@ -230,7 +230,7 @@ this.editDivision = function (webUrl,objDivision) {
     this.editScore = function (webUrl,objSchedule) {
         return $http({
             method: 'PUT',
-            url: webUrl +  'api/schedules/' + objSchedule.Id,
+            url: webUrl +  'api/schedules/scheduleScore/' + objSchedule.Id,
             //withCredentials: true,
            data: objSchedule
         }).then(function successCallback(response){
@@ -394,8 +394,47 @@ this.editDivision = function (webUrl,objDivision) {
 
     };
 
+    /*********************************** login **********************************/
 
+    this.register = function (webUrl, objUser) {
+        return $http({
+            method: 'POST',
+            url: webUrl +  'api/users/register',
+            data: objUser,
+            //withCredentials: true,
+        }).then(function successCallback(response){
+            return response;
+            console.log(response);
+        },function errorCallback(response){
+            console.log(response);
+        });
+    };
 
+    this.authenticate = function (webUrl, objUser) {
+        return $http({
+            method: 'POST',
+            url: webUrl +  'api/users/authenticate',
+            data: objUser,
+            //withCredentials: true,
+        }).then(function successCallback(response){
+            return response;
+        },function errorCallback(response){
+            console.log(response);
+        });
+    };
+
+    this.changePassword = function (webUrl, objUser) {
+        return $http({
+            method: 'POST',
+            url: webUrl +  'api/users/changepass',
+            data: objUser,
+            //withCredentials: true,
+        }).then(function successCallback(response){
+            console.log(response);
+        },function errorCallback(response){
+            console.log(response);
+        });
+    };
 
   });
 

@@ -8,13 +8,13 @@
  * Factory in the nvslonlineAppApp.
  */
 angular.module('nvslonlineAppApp')
-  .factory('parameters', function () {
+  .factory('parameters', function ($rootScope,$timeout) {
     // Service logic
     // ...
 
     var loginAccess = {
-      user: "Beimar Medina",
-      access:false
+      user:"",
+      access : false
     };
 
     var requestSubject = [
@@ -24,9 +24,42 @@ angular.module('nvslonlineAppApp')
       {Id: 4,subject:"Website Ideas and Suggestions"}
    ];
 
+   var pagination = {
+     currentPage : 1, //pagina inicial
+     itemsPerPage : 10,//cantidad de records por pagina
+     maxSize : 10//cantidad maxima de botones de paginacion
+   }
+
+   var error_message = {
+     noPlayersTeam : "No players for this Team",
+     noVenuesFound : "Game Venues not found",
+     passNoCoinciden : "Passwords do not match",
+     userPassIncorrect : "Username or Password incorrect",
+     errorRegister : "An error has occurred can not be registered",
+   }
+
     // Public API here
-    return {
+    /*return {
       loginAccess: loginAccess,
-      requestSubject: requestSubject
+      requestSubject: requestSubject,
+      pagination: pagination,
+      error_message:error_message
+    };*/
+
+      return {
+      getLoginAccess : function(){
+        return loginAccess;
+      },
+      setLoginAccess : function(user, access){
+        loginAccess.user = user;
+        loginAccess.access = access;
+      $timeout(function(){
+          $rootScope.$broadcast("update");
+        },0)
+      },
+      
+      requestSubject: requestSubject,
+      pagination: pagination,
+      error_message:error_message
     };
   });
