@@ -20,13 +20,28 @@ angular.module('nvslonlineAppApp')
     };
 
     this.convertToTime = function(stringDate) {
+       
       var d = new Date(stringDate),
           h = (d.getHours() < 10 ? '0' : '') + d.getHours(),
           m = (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
+          
       return  h + ':' + m;
     };
 
+    this.convertMomentTime = function(stringDate) {
+       return moment(stringDate).format('LT');
+    };
+
+    this.convertMomentDate = function(stringDate) {
+       return moment(stringDate).format('L');
+    };
+
    this.convertToDate = function(stringDate) {
+      var dateOut = new Date(stringDate);
+      dateOut.setDate(dateOut.getDate()+1);
+      return dateOut;
+    };
+    this.convertToDate2 = function(stringDate) {
       var dateOut = new Date(stringDate);
       dateOut.setDate(dateOut.getDate()+1);
       return dateOut;

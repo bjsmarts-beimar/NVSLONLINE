@@ -21,7 +21,7 @@ angular.module('nvslonlineAppApp')
                
                $timeout(function(){
                    datacontext.authenticate(webUrl,userValues).then(function (response){
-                       
+                    
                        if (response.data == true) {
                            parameters.setLoginAccess(vm.loginusername,true)
                            
@@ -49,7 +49,7 @@ angular.module('nvslonlineAppApp')
                    datacontext.register(webUrl,userValues).then(function (response){
                        var objUser = response.data;//devuleve un objeto con los datos del registro
 
-                       if (objUser.username === vm.username) {
+                       if (objUser.email === vm.email) {
                            parameters.setLoginAccess(vm.username,true);
                            $location.path('/dashboard');
                        }

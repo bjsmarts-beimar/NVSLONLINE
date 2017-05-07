@@ -57,7 +57,7 @@ angular.module('nvslonlineAppApp')
           $rootScope.$broadcast("update");
         },0)
       },
-      
+      loginAccess: loginAccess,
       requestSubject: requestSubject,
       pagination: pagination,
       error_message:error_message

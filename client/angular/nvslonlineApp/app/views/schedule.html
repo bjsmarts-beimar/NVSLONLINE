@@ -54,8 +54,8 @@
                                             <tr data-ng-repeat="p in valueDivision | filter:{SeasonId:vm.season, DivisionId:vm.division}">
 
                                                 <td style="text-align: left">{{p.Status}}</td>
-                                                <td style="text-align: left"><span data-ng-bind="vm.convertToDate(p.DateTime) | date:'dd/MM/yyyy'"></span></td>
-                                                <td style="text-align: left"><span data-ng-bind="vm.convertToTime(p.DateTime)"></span></td>
+                                                <td style="text-align: left"><span data-ng-bind="vm.convertMomentDate(p.DateTime) | date:'dd/MM/yyyy'"></span></td>
+                                                <td style="text-align: left"><span data-ng-bind="vm.convertMomentTime(p.DateTime)"></span></td>
                                                 <td style="text-align: left"><a ui-sref="player({teamId:p.HomeTeamId})">{{p.HomeTeam.TeamName}}</a></td>
                                                 <td>{{p.GoalsHomeTeam}} - {{p.GoalsAwayTeam}}</td>
                                                 <!--<td style="text-align: left">{{p.Division.DivisionName}}</td>-->

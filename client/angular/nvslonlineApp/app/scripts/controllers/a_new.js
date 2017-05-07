@@ -106,7 +106,6 @@ angular.module('nvslonlineAppApp')
 
 var modalInstanceNew = ['$scope', '$modalInstance', 'options', 'datacontext','parameters',
        function ($scope, $modalInstance, options, datacontext,parameters) {
-          
            $scope.ok = function () {
                var newValues = {};
                newValues.title = this.title;

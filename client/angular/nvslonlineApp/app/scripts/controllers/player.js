@@ -8,7 +8,7 @@
  * Controller of the nvslonlineAppApp
  */
 angular.module('nvslonlineAppApp')
-  .controller('PlayerCtrl', function ($stateParams,datacontext,webUrl,$location,parameters,common) {
+  .controller('PlayerCtrl', function (toastr,$stateParams,datacontext,webUrl,$location,parameters,common) {
     var vm = this;
     vm.teamId = $stateParams.teamId;
     if (vm.teamId !== null) {

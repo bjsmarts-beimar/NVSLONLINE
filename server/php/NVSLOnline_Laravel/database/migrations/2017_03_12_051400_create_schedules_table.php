@@ -31,12 +31,12 @@ class CreateSchedulesTable extends Migration
             $table->integer('HomeTeamId')->unsigned();
             $table->foreign('HomeTeamId')->references('Id')->on('Teams');
 
-            $table->integer('GoalsHomeTeam');
+            $table->integer('GoalsHomeTeam')->nullable();
 
             $table->integer('AwayTeamId')->unsigned();
             $table->foreign('AwayTeamId')->references('Id')->on('Teams');
 
-            $table->integer('GoalsAwayTeam');
+            $table->integer('GoalsAwayTeam')->nullable();
 
             $table->boolean('IsHidden')->default(false);;
 

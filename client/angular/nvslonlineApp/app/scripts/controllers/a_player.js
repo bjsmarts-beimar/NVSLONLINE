@@ -167,7 +167,6 @@ angular.module('nvslonlineAppApp')
         $scope.firstName = objPlayer.FirstName;
         $scope.lastName = objPlayer.LastName;
         $scope.team = objPlayer.TeamId;
-       
         $scope.ok = function () {
             
             objPlayer.FirstName = this.firstName;

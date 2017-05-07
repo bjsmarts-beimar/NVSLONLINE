@@ -20,6 +20,8 @@ angular.module('nvslonlineAppApp')
         vm.openDeleteSchedule = openDeleteSchedule;
         vm.convertToDate = common.convertToDate;
         vm.convertToTime = common.convertToTime;
+        vm.convertMomentDate = common.convertMomentDate;
+        vm.convertMomentTime = common.convertMomentTime;
         vm.openEditScore = openEditScore;
 
        // vm.getDivisionName = getDivisionName;
@@ -32,7 +34,7 @@ angular.module('nvslonlineAppApp')
         getVenues();
         function getSchedule() {
             return datacontext.getSchedules(webUrl).then(function (response) {
-                //console.log(data);
+                console.log(response.data);
                 return vm.schedules = response.data;
             });
         }
@@ -140,36 +142,31 @@ angular.module('nvslonlineAppApp')
    var modalInstanceNewSchedule = ['$scope', '$modalInstance', 'options', 'datacontext','common','$q','$linq','parameters','$timeout',
        function ($scope, $modalInstance, options, datacontext, common, $q, $linq,parameters,$timeout) {
            $scope.Seasons = options.dataSeason;
-           $scope.Teams = options.dataTeams;
+           //$scope.Teams = options.dataTeams;
            var teams = options.dataTeams;
            var venues = options.dataVenues;
            var schedules = options.dataSchedules;
 
            $scope.seasonFilter = function(){
-            console.log(this.season);
-            //console.log($scope.Teams);
+            
             var lstDivisionComplete1 = $linq.Enumerable().From(teams)
                .Where("p => p.SeasonId ==" + this.season)
                .Select()
                .ToArray();
-               //console.log(lstDivisionComplete1);
-
+               
                var lstDivisionExcept1 = $linq.Enumerable().From(schedules)
                .Where("p => p.SeasonId ==" + this.season)
                .Select("s => s.DivisionId")
                .ToArray();
-               console.log(lstDivisionExcept1);
-
+               
                var lstDivision1 = $linq.Enumerable()
                .From(lstDivisionComplete1)
                .Where(function(p){
-                  //return p.DivisionId != lstDivisionExcept1
                   return !$linq.Enumerable().From(lstDivisionExcept1).Contains(p.DivisionId)
-
                })
-               //.Except(lstDivisionExcept1.DivisionId)
+              
                .ToArray();
-               console.log(lstDivision1);
+               $scope.Teams = lstDivision1;
            }
 
            
@@ -185,14 +182,19 @@ angular.module('nvslonlineAppApp')
             
                
                var objSeason = $linq.Enumerable().From(seasons).Where("p => p.Id ==" + season).Select().FirstOrDefault();
-
+               var lstDivision = $linq.Enumerable().From($scope.Teams)
+               .Where("p => p.SeasonId ==" + season)
+               .GroupBy("g => g.DivisionId")
+               .Select("Group => Group.FirstOrDefault()")
+               //.Select("s => s.DivisionId")
+               .ToArray();
                /*var lstDivision = $linq.Enumerable().From(teams)
                .Where("p => p.SeasonId ==" + season)
                .Select()
                .ToArray();*/
 
                 
-               var lstDivisionComplete = $linq.Enumerable().From(teams)
+               /*var lstDivisionComplete = $linq.Enumerable().From(teams)
                .Where("p => p.SeasonId ==" + season)
                .Select("s => s.DivisionId")
                .ToArray();
@@ -206,7 +208,7 @@ angular.module('nvslonlineAppApp')
 
                var lstDivision = $linq.Enumerable().From(lstDivisionComplete).Except(lstDivisionExcept).ToArray();
                console.log(lstDivision);
-
+*/
 
                 /*var lstCountDivision = $linq.Enumerable().From(teams)
                .Where("p => p.SeasonId ==" + season)
@@ -221,8 +223,8 @@ angular.module('nvslonlineAppApp')
 
                var countFourTeamForDivision = 0;// esta variable verifica si se ingresaron 4 equipos por divisions
                for (var l = 0; l < lstDivision.length; l++) {
-                        var teamsDivision  = $linq.Enumerable().From(teams)
-                            .Where("p => p.DivisionId ==" + lstDivision[l])
+                        var teamsDivision  = $linq.Enumerable().From($scope.Teams)
+                            .Where("p => p.DivisionId ==" + lstDivision[l].DivisionId)
                             .ToArray();
 
                    if (teamsDivision.length >= 4) {
@@ -266,7 +268,7 @@ angular.module('nvslonlineAppApp')
 
                                         scheduleValues.Status = "Scheduled";
 
-                                        scheduleValues.DivisionId = lstDivision[l];
+                                        scheduleValues.DivisionId = lstDivision[l].DivisionId;
                                         scheduleValues.SeasonId = season;
 
                                         scheduleValues.GoalsHomeTeam = null;
@@ -278,23 +280,23 @@ angular.module('nvslonlineAppApp')
 
                                         while (encontrado === false) {
                                             var ranFecha = common.randomDate(seasonStart, seasonEnd);
-
+                                            
                                             if (ranFecha.getDay() === 0) {
                                                 if (countPartidos % 2 === 0) {
                                                     ranFecha.setHours(14, 0, 0);
-                                                    scheduleValues.DateTime = ranFecha;
+                                                    scheduleValues.DateTime = ranFecha.toISOString();
                                                     encontrado = true;
 
                                                 } else {
                                                     ranFecha.setHours(10, 0, 0);
-                                                    scheduleValues.DateTime = ranFecha;
+                                                    scheduleValues.DateTime = ranFecha.toISOString();
                                                     encontrado = true;
                                                 }
                                             }
                                         }
-
+                                        
                                           var promesa =  datacontext.addSchedule(options.webUrl,scheduleValues);
-                                            promesas.push(promesa);
+                                          promesas.push(promesa);
                                     }
                                 }
                             }

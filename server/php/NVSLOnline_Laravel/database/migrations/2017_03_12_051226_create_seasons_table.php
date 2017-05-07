@@ -18,8 +18,8 @@ class CreateSeasonsTable extends Migration
             $table->string('SeasonName');
             $table->boolean('Active')->default(false);;
             $table->boolean('IsHidden')->default(false);;
-            $table->dateTime('SeasonStart');
-            $table->dateTime('SeasonEnd');
+            $table->date('SeasonStart');
+            $table->date('SeasonEnd');
             //$table->timestamps();
         });
     }

@@ -15,6 +15,8 @@ angular.module('nvslonlineAppApp')
     //vm.getScheduleBySeasonDivision = getScheduleBySeasonDivision;
     vm.convertToTime = common.convertToTime;
     vm.convertToDate = common.convertToDate;
+    vm.convertMomentDate = common.convertMomentDate;
+    vm.convertMomentTime = common.convertMomentTime;
       
 
     datacontext.getSeasons(webUrl).then(

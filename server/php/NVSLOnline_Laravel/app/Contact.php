@@ -4,25 +4,26 @@ namespace NVSLOnline;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Player extends Model
+class Contact extends Model
 {
     //con esta line evitamos en cambio a camel case
 	public static $snakeAttributes = false;
-	
-    protected $table = 'Players';
+
+	protected $table = 'Contacts';
 
 	protected $primaryKey = 'Id';
 
 	public $timestamps = false;
-
+	
 	protected $fillable =[
-		'FirstName',
-        'LastName',
-		'IsHidden',
-        'TeamId'
+		'yourName',
+		'email',
+        'message',
+        'requestSubject',
+        'IsHidden',
+        'created',
+        'modifiedBy',
+        'modifiedByfullName',
+        'modified'
 	];
-
-	public function Team(){
-		 return $this->hasOne(Team::class,'Id','TeamId');
-	 }
 }

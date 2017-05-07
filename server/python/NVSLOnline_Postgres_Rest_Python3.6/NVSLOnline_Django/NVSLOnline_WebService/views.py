@@ -15,6 +15,8 @@ from NVSLOnline_WebService import serializers as NVSLOnline_serializer
 
 from django.core import serializers
 import datetime,json
+
+from django.utils import formats
 # Create your views here.
 
 class Division(APIView):
@@ -294,6 +296,7 @@ class Schedule(APIView):
                 VenueId = Venues.objects.get(Id = request.data['VenueId']),
                 Status = serializer.data['Status'],
                 #DateTime = serializer.data['DateTime'],
+                #DateTime = formats.date_format(serializer.data['DateTime'],"SHORT_DATETIME_FORMAT"),
                 HomeTeamId = Teams.objects.get(Id = request.data['HomeTeamId']),
                 GoalsHomeTeam = serializer.data['GoalsHomeTeam'],
                 AwayTeamId = Teams.objects.get(Id = request.data['AwayTeamId']),
@@ -306,6 +309,13 @@ class Schedule(APIView):
         else:
            return Response(serializer.errors)
 
+    def delete(self, request, id=None, format=None):
+        schedule = get_object_or_404(Schedules, pk=id)
+        schedule.IsHidden =True
+        schedule.save()
+        serializer = self.serializer_class(schedule,many=False)
+        return Response(serializer.data)
+
 schedule = Schedule.as_view()
 
 class ScheduleViewSet(viewsets.ViewSet):
@@ -314,6 +324,7 @@ class ScheduleViewSet(viewsets.ViewSet):
         schedule = get_object_or_404(Schedules, pk=id)
         schedule.GoalsHomeTeam = request.data.get("GoalsHomeTeam")
         schedule.GoalsAwayTeam = request.data.get("GoalsAwayTeam")
+        schedule.Status = "Played"
         schedule.save()
         serializer = self.serializer_class(schedule,many=False)
         return Response(serializer.data)

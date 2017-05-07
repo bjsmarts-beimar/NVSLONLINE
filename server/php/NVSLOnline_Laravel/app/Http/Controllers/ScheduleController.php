@@ -5,57 +5,42 @@ namespace NVSLOnline\Http\Controllers;
 use Illuminate\Http\Request;
 use NVSLOnline\Schedule;
 use DB;
+use Carbon\Carbon;
 
 class ScheduleController extends Controller
 {
     public function index(){
 			
 		$schedules = Schedule::with('Season','Division','Venue','HomeTeam','AwayTeam')
-		//->where('IsHidden','=','false')
+		->where('IsHidden','=','false')
 		//->select('*')
 		->get();
 
-		/*$tes = $schedules::where('IsHidden','=','false')
-		->select('Id','season')
-		->get();*/
-
-		/*$schedules = Schedule::with(['Season' =>function($query){
-			$query->select('Id');
-		}])->get();*/
-		//$schedules = Schedule::all();
-		
-		/*$schedules = Schedule::select('*')
-		->with(['HomeTeam'=>function($query){
-			$query->addSelect('*');
-		}]
-
-		)
-		->get()
-		->toArray();*/
-//print_r($schedules);
-				return response()->json($schedules);
+		return response()->json($schedules);
     }
 
 	public function store(Request $request){
 		if($request){
+
+		 $DateTimeGame = Carbon::parse($request->DateTime);
 			$objSchedule = new Schedule; 
 			$objSchedule -> Status = $request->Status;
-			$objSchedule -> DateTime = $request->DateTime;
-			$objSchedule -> Score = $request->Score;
+			$objSchedule -> DateTime = $DateTimeGame;
+			//$objSchedule -> Score = $request->Score;
+			
 			$objSchedule -> IsHidden = 0;
-			$objSchedule -> AwayTeamId = $request->AwayTeamId;
 			$objSchedule -> DivisionId = $request->DivisionId;
 			$objSchedule -> HomeTeamId = $request->HomeTeamId;
+			$objSchedule -> GoalsHomeTeam = $request->GoalsHomeTeam;
+			$objSchedule -> AwayTeamId = $request->AwayTeamId;
+			$objSchedule -> GoalsAwayTeam = $request->GoalsAwayTeam;
 			$objSchedule -> SeasonId = $request->SeasonId;
 			$objSchedule -> VenueId = $request->VenueId;
 			
 			//$objDivision -> IsHidden = $request->IsHidden;
 			$objSchedule -> save();
-			return response()->json([
-						"msg" => "Success",
-						"id" => $objSchedule->Id
-						],200
-					);
+			return response()->json($objSchedule);
+			
 		}
 	}
 
@@ -64,11 +49,16 @@ class ScheduleController extends Controller
 		$objSchedule = Schedule::find($id);
 		$objSchedule -> GoalsHomeTeam = $request->GoalsHomeTeam;
 		$objSchedule -> GoalsAwayTeam = $request->GoalsAwayTeam;
+		$objSchedule -> Status = "Played";
 		$objSchedule -> save();
-		return response()->json([
-					"msg" => "Success",
-					"id" => $objSchedule->Id
-					],200
-				);
+		
+		return response()->json($objSchedule);
+	}
+
+	public function updateDelete($id){
+		$objSchedule = Schedule::find($id);
+		$objSchedule -> IsHidden = 1;
+		$objSchedule -> save();
+		return response()->json($objSchedule);
 	}
 }

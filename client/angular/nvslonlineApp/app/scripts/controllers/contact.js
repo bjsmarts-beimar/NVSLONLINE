@@ -43,10 +43,7 @@ angular.module('nvslonlineAppApp')
                 contactValues.modifiedBy = parameters.loginAccess.user;
                 contactValues.modifiedByfullName = parameters.loginAccess.user;
                
-                console.log(contactValues);
-                
                 var dataUpdated = datacontext.addContact(webUrl,contactValues);
-
 
       }else{
         vm.messageCaptcha = "Invalid response";
