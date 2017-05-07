@@ -86,6 +86,6 @@ class Contacts(models.Model):
     IsHidden = models.BooleanField(default=False)
     requestSubject = models.IntegerField()
     created = models.DateTimeField(auto_now_add=True)
-    modifiedBy = models.TextField()
-    modifiedByfullName = models.TextField()
+    modifiedBy = models.TextField(blank=True, null=True)
+    modifiedByfullName = models.TextField(blank=True, null=True)
     modified = models.DateTimeField(auto_now_add=True)

@@ -12,7 +12,7 @@ angular.module('nvslonlineAppApp')
   function ($scope, $modal, datacontext, toastr, webUrl, common, $linq, parameters,$location,$timeout) {
     
     var vm = this;
-   // common.accessLogin();
+    common.accessLogin();
        
         vm.title = 'Schedule';
 

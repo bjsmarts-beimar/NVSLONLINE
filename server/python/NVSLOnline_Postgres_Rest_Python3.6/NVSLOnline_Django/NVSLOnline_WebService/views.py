@@ -15,6 +15,7 @@ from NVSLOnline_WebService import serializers as NVSLOnline_serializer
 
 from django.core import serializers
 import datetime,json
+from time import gmtime
 
 from django.utils import formats
 # Create your views here.
@@ -296,6 +297,7 @@ class Schedule(APIView):
                 VenueId = Venues.objects.get(Id = request.data['VenueId']),
                 Status = serializer.data['Status'],
                 #DateTime = serializer.data['DateTime'],
+                DateTime = datetime.datetime.strptime(request.data['DateTime'],'%Y-%m-%dT%H:%M:%S.%fZ').date(),
                 #DateTime = formats.date_format(serializer.data['DateTime'],"SHORT_DATETIME_FORMAT"),
                 HomeTeamId = Teams.objects.get(Id = request.data['HomeTeamId']),
                 GoalsHomeTeam = serializer.data['GoalsHomeTeam'],
@@ -304,6 +306,7 @@ class Schedule(APIView):
                 IsHidden = False
             )
             schedule.save()
+            
             resp = self.serializer_class(schedule,many=False)
             return Response(resp.data)
         else:
@@ -461,9 +464,18 @@ class Contact(APIView):
     def post(self, request, format=None):
         serializer = self.serializer_class(data=request.data)# request.POST y request.GET, request.FILES
         if serializer.is_valid():
+            contact = Contacts(
+                yourName = serializer.data['yourName'],
+                email = serializer.data['email'],
+                message = serializer.data['message'],
+                IsHidden = False,
+                requestSubject = serializer.data['requestSubject'],
+                modifiedBy = serializer.data['modifiedBy'],
+                modifiedByfullName = serializer.data['modifiedByfullName']
+            )
             
-            serializer.save()
-            resp = self.serializer_class(serializer,many=False)
+            contact.save()
+            resp = self.serializer_class(contact,many=False)
             return Response(resp.data)
             
         else:

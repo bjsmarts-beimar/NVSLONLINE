@@ -42,8 +42,23 @@ angular.module('nvslonlineAppApp')
                 contactValues.requestSubject = vm.requestSubject;
                 contactValues.modifiedBy = parameters.loginAccess.user;
                 contactValues.modifiedByfullName = parameters.loginAccess.user;
-               
-                var dataUpdated = datacontext.addContact(webUrl,contactValues);
+               console.log(contactValues);
+                var dataUpdated = datacontext.addContact(webUrl,contactValues).then(function (response) {
+                  console.log(response);
+                  if (response == undefined) {
+                       vm.success = true;
+                       vm.error = false;
+                      vm.name = null;
+                      vm.email = null;
+                      vm.message = null;
+                      vm.captchaValue = null;
+                      vm.refresh();
+                    }else{
+                      vm.error = true;
+                      vm.success = false;
+                    }
+                     
+                  });
 
       }else{
         vm.messageCaptcha = "Invalid response";
