@@ -2,9 +2,14 @@
 <section class="mainbar">
     <section class="matter">
         <div class="container">
-            <h2> <a href ng-click="vm.openNewPlayer()" class="btn btn-default">New Player </a>
-            </h2>
-
+            <div class="row">
+                    <div class="col-md-6 text-left">
+                        <h2>{{vm.team.TeamName}}</h2>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <a href ng-click="vm.openNewPlayer()" class="btn btn-default">New Player </a>
+                    </div>
+            </div>
             <div class="form-group">
                 <label for="team">Search Player</label>
 
@@ -26,19 +31,19 @@
                                     <th> </th>
                                     <th> First Name</th>
                                     <th>Last Name</th>
-                                    <th>Team</th>
+                                   <!-- <th>Team</th>-->
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr data-ng-repeat="p in vm.displayPlayers
-                                = (vm.players | filter:vm.search) | limitTo:vm.itemsPerPage:vm.itemsPerPage*(vm.currentPage-1)">
+                                = (vm.players | filter:vm.search | filter:{TeamId:vm.teamId}) | limitTo:vm.itemsPerPage:vm.itemsPerPage*(vm.currentPage-1)">
                                     <td style="text-align: left">
                                         <a id="Edit" href ng-click="vm.openEditPlayer(p)">Edit </a>|
                                         <a id="Delete" href ng-click="vm.openDeletePlayer(p)">Delete </a>
                                     </td>
                                     <td style="text-align: left">{{p.FirstName}}</td>
                                     <td style="text-align: left">{{p.LastName}}</td>
-                                    <td style="text-align: left">{{p.Team.TeamName}}</td>
+                                    <!--<td style="text-align: left">{{p.Team.TeamName}}</td>-->
 
                                 </tr>
                                 </tbody>
@@ -77,13 +82,12 @@
                     <label for="lastName">Last Name</label>
                     <input type="text" class="form-control" id="lastName" data-ng-model="lastName" placeholder="Enter Last Name"/>
                 </div>
-                <div class="form-group">
+                <!--<div class="form-group">
                     <label for="team">Team</label>
-                    <!--<input type="text" class="form-control" id="category" data-ng-model="category" placeholder="Enter Category"/>-->
                     <select id="team" class="form-control" name="team" data-ng-model="team" data-ng-options="Team.Id as Team.TeamName for Team in teams">
                         <option value='0'>--choose Team--</option>
                     </select>
-                </div>
+                </div>-->
                 
             </form>
         </div>

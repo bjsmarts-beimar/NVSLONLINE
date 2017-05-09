@@ -18,11 +18,11 @@ angular.module('nvslonlineAppApp').config(function($urlRouterProvider, $statePro
         templateUrl: '/views/main.html'
     })*/
     
-    /*.state('main', {
+    .state('main', {
         url: '/',
         templateUrl: '/views/home.html',
         controller: 'HomeCtrl as vm'
-    })*/
+    })
 
     .state('team', {
         url: '/team',
@@ -120,6 +120,9 @@ angular.module('nvslonlineAppApp').config(function($urlRouterProvider, $statePro
 
     .state('adminPlayer', {
         url: '/APlayers',
+        params:{
+            teamId:null,
+        },
         templateUrl: '/views/a_player.html',
         controller: 'APlayerCtrl as vm'
     })
@@ -152,7 +155,7 @@ angular.module('nvslonlineAppApp').config(function($urlRouterProvider, $statePro
     .state('signUp', {
         url: '/signUp',
         templateUrl: '/views/register.html',
-        controller: 'RegisterCtrl'
+        controller: 'LoginCtrl as vm'
     });
 
 })

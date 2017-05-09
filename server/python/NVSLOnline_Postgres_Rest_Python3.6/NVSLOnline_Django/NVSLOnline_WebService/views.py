@@ -71,7 +71,7 @@ class Season(APIView):
             seasons = get_object_or_404(Seasons, pk=id)
             many = False
         else:
-            seasons = Seasons.objects.filter(IsHidden = False).order_by('Id')
+            seasons = Seasons.objects.filter(IsHidden = False).order_by('Id').reverse()
             many = True
         response = self.serializer_class(seasons,many=many)
         return Response(response.data)
@@ -178,7 +178,7 @@ class Team(APIView):
             teams = get_object_or_404(Teams, pk=id)
             many = False
         else:
-            teams = Teams.objects.filter(IsHidden = False).order_by('Id')
+            teams = Teams.objects.filter(IsHidden = False).order_by('Id').reverse()
             many = True
         response = self.serializer_class(teams,many=many)
         return Response(response.data)

@@ -3,6 +3,22 @@
         <div class="container">
             <h2> <a href ng-click="vm.openNewSchedule()" class="btn btn-default">New Schedule </a>
             </h2>
+
+             <div class="form-group">
+                        <label for="season">Season</label>
+                        <select id="season" class="form-control" name="season" data-ng-model="vm.season" >
+                            <option value="">--Choose Season--</option>
+                            <option ng-repeat="season in vm.teams | unique:'SeasonId'" value="{{season.SeasonId}}">{{season.Season.SeasonName}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="division">Division</label>
+                        <select id="division" class="form-control" name="division" data-ng-model="vm.division" >
+                            <option value="">--Choose Division--</option>
+                            <option ng-repeat="division in vm.teams | unique:'DivisionId'" value="{{division.DivisionId}}">{{division.Division.DivisionName}}</option>
+                        </select>
+                    </div>
+
             <div class="row">
                 <div class="col-md-12">
                     <div class="widget wviolet" ng-repeat="(key, value) in vm.schedules | groupBy: 'SeasonId'">

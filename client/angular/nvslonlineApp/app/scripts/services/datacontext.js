@@ -8,7 +8,7 @@
  * Service in the nvslonlineAppApp.
  */
 angular.module('nvslonlineAppApp')
-  .service('datacontext', function ($http) {
+  .service('datacontext', function ($http,common) {
     
 
     /********************************* Division *******************************/
@@ -327,9 +327,10 @@ this.editDivision = function (webUrl,objDivision) {
             //withCredentials: true,
         }).then(function successCallback(response){
             console.log(response);
+            return common.successResponse(response);
         },function errorCallback(response){
             console.log(response);
-            return response;
+            return common.errorResponse(response);
         });
     };
 

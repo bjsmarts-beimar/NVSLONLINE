@@ -36,6 +36,21 @@ angular.module('nvslonlineAppApp')
        return moment(stringDate).format('L');
     };
 
+    this.successResponse = function(response) {
+        var oResponse = {
+          success:true,
+          response : response
+        };
+       return oResponse;
+    };
+    this.errorResponse = function(response) {
+        var oResponse = {
+         success:false,
+         response : response
+        };
+       return oResponse;
+    };
+
    this.convertToDate = function(stringDate) {
       var dateOut = new Date(stringDate);
       dateOut.setDate(dateOut.getDate()+1);

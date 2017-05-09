@@ -8,10 +8,24 @@
  * Controller of the nvslonlineAppApp
  */
 angular.module('nvslonlineAppApp')
-  .controller('APlayerCtrl', ['$scope', '$modal', 'datacontext', 'toastr', 'webUrl','parameters','$location','common',
-  function ($scope, $modal, datacontext, toastr, webUrl, parameters, $location, common) {
+  .controller('APlayerCtrl', ['$scope', '$modal','$stateParams', 'datacontext', 'toastr', 'webUrl','parameters','$location','common',
+  function ($scope, $modal, $stateParams,datacontext, toastr, webUrl, parameters, $location, common) {
    var vm = this; 
     common.accessLogin();
+
+    vm.teamId = $stateParams.teamId;
+    if (vm.teamId !== null) {
+        datacontext.getTeamById(webUrl,vm.teamId).then(
+            function (response) {
+                vm.team = response.data;
+            }, function(response) {
+                toastr.error("Error has occurred: " + response.data.Message, "Fatal error", {
+                positionClass: 'toast-bottom-full-width'
+                })                
+            });
+    }else{
+        $location.path('/dashboard');
+    }
     vm.openNewPlayer = openNewPlayer;
     vm.openEditPlayer = openEditPlayer;
     vm.openDeletePlayer = openDeletePlayer;
@@ -68,10 +82,11 @@ angular.module('nvslonlineAppApp')
      return !!((row.FirstName.indexOf($scope.team || '') !== -1 || row.LastName.indexOf($scope.team || '') !== -1));
 };
 
-     function openNewPlayer() {   
+    function openNewPlayer() {   
             var options = {};
             options.webUrl = webUrl;
-            options.teams = vm.teams;
+            //options.teams = vm.teams;
+            options.teamId = vm.teamId;
 
             var modalInstance = $modal.open({
                 templateUrl: 'player.html',
@@ -92,7 +107,7 @@ angular.module('nvslonlineAppApp')
             });
         }  
 
-   function openEditPlayer(player) {
+    function openEditPlayer(player) {
             
             var options = {};
             options.player = player;
@@ -145,14 +160,15 @@ angular.module('nvslonlineAppApp')
 
   var modalInstanceNewPlayer = ['$scope', '$modalInstance', 'options', 'datacontext',
        function ($scope, $modalInstance, options, datacontext) {
-          console.log(options);
-           $scope.teams = options.teams;
+          
+           //$scope.teams = options.teams;
            $scope.ok = function () {
                var playerValues = {};
                playerValues.FirstName = this.firstName;
                playerValues.LastName = this.lastName;
                playerValues.IsHidden = false;
-               playerValues.TeamId = this.team;
+               //playerValues.TeamId = this.team;
+               playerValues.TeamId = options.teamId;
                var dataUpdated = datacontext.addPlayer(options.webUrl,playerValues);
 
                $modalInstance.close(dataUpdated);
@@ -166,19 +182,21 @@ angular.module('nvslonlineAppApp')
         var objPlayer = options.player;
         $scope.firstName = objPlayer.FirstName;
         $scope.lastName = objPlayer.LastName;
-        $scope.team = objPlayer.TeamId;
+        //$scope.team = objPlayer.TeamId;
         $scope.ok = function () {
             
             objPlayer.FirstName = this.firstName;
             objPlayer.LastName = this.lastName;
-            objPlayer.TeamId = this.team;
+            //objPlayer.TeamId = this.team;
+            objPlayer.TeamId = objPlayer.TeamId;
             var dataUpdated = datacontext.editPlayer(options.webUrl,objPlayer);
             $modalInstance.close(dataUpdated);
         };
         $scope.cancel = function () { $modalInstance.dismiss('cancel'); };
     }];
 
-  var modalInstanceDeletePlayer = ['$scope', '$modalInstance', 'datacontext', 'options', function ($scope, $modalInstance, datacontext, options) {
+  var modalInstanceDeletePlayer = ['$scope', '$modalInstance', 'datacontext', 'options', 
+  function ($scope, $modalInstance, datacontext, options) {
     
         var objPlayer = options.player;
 
