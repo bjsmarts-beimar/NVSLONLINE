@@ -18,6 +18,7 @@ angular.module('nvslonlineAppApp')
       getStandings();
         function getStandings() {
             return datacontext.getStandings(webUrl).then(function (response) {
+                console.log(response.data);
                 return vm.standings = response.data;
             });
         }

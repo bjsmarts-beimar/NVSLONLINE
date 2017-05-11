@@ -24,8 +24,8 @@ angular.module('nvslonlineAppApp')
         vm.convertMomentTime = common.convertMomentTime;
         vm.openEditScore = openEditScore;
 
-       // vm.getDivisionName = getDivisionName;
-        //vm.getSeasonName = getSeasonName;
+        vm.getSeasonName = common.getSeasonName;
+        vm.getDivisionName = common.getDivisionName;
 
         getSchedule();
         getTeams();
@@ -119,6 +119,10 @@ angular.module('nvslonlineAppApp')
         }
 
         function openDeleteSchedule(schedule) {
+            var options = {};
+            options.webUrl = webUrl;
+            options.schedule = schedule;
+
             var modalInstance = $modal.open({
                 templateUrl: 'delete.html',
                 controller: modalInstanceDeleteSchedule,
@@ -126,13 +130,12 @@ angular.module('nvslonlineAppApp')
 
                 resolve: {
                     options: function () { //esta es la info enviada al modal si se cargo correctamente. tb se puede info en el scope que abre el modal
-                        return schedule;
+                        return options;
                     }
                 }
             });
             modalInstance.result.then(function (data) {
-               // vm.teams = data;
-                log('Changes Saved');
+               getSchedule();
             }, function () {
             });
         }
@@ -188,36 +191,7 @@ angular.module('nvslonlineAppApp')
                .Select("Group => Group.FirstOrDefault()")
                //.Select("s => s.DivisionId")
                .ToArray();
-               /*var lstDivision = $linq.Enumerable().From(teams)
-               .Where("p => p.SeasonId ==" + season)
-               .Select()
-               .ToArray();*/
-
-                
-               /*var lstDivisionComplete = $linq.Enumerable().From(teams)
-               .Where("p => p.SeasonId ==" + season)
-               .Select("s => s.DivisionId")
-               .ToArray();
-               console.log(lstDivisionComplete);
-
-               var lstDivisionExcept = $linq.Enumerable().From(schedules)
-               .Where("p => p.SeasonId ==" + season)
-               .Select("s => s.DivisionId")
-               .ToArray();
-               console.log(lstDivisionExcept);
-
-               var lstDivision = $linq.Enumerable().From(lstDivisionComplete).Except(lstDivisionExcept).ToArray();
-               console.log(lstDivision);
-*/
-
-                /*var lstCountDivision = $linq.Enumerable().From(teams)
-               .Where("p => p.SeasonId ==" + season)
-               .GroupBy("g => g.DivisionId")
-               .Select("Group => Group.FirstOrDefault()")
-               .ToArray();
-
-               console.log(lstCountDivision);*/
-
+ 
                var seasonStart = new Date(objSeason.SeasonStart);
                var seasonEnd = new Date(objSeason.SeasonEnd);
 
@@ -304,13 +278,6 @@ angular.module('nvslonlineAppApp')
                   }
                }
 
-               if (lstDivision.length!=0 && lstDivision.length === countFourTeamForDivision) {
-                  
-                   var objSeasonActive = {};
-                   objSeasonActive.Id = season;
-                   objSeasonActive.Active = true;
-                   datacontext.editSeasonActive(options.webUrl,objSeasonActive);
-               }  
                $q.all(promesas).then(function(promesasRes){
                       $d.resolve(promesasRes);
                       //console.log("terminado");
@@ -345,19 +312,27 @@ angular.module('nvslonlineAppApp')
         $scope.cancel = function () { $modalInstance.dismiss('cancel'); };
     }];
 
-    var modalInstanceDeleteSchedule = ['$scope', '$modalInstance', 'datacontext', 'options', 
-    function ($scope, $modalInstance, datacontext, options) {
+    var modalInstanceDeleteSchedule = ['$scope', '$modalInstance', 'datacontext', 'options', 'common','$q',
+        function ($scope, $modalInstance, datacontext, options,common,$q) {
         console.log(options);
-        //$scope.teamName = objTeam.TeamName;
-        //$scope.division = objTeam.Division.DivisionName;
-
+        $scope.teams = options.schedule;
+        $scope.division = options.schedule[0].Division.DivisionName;
+        $scope.convertMomentDate = common.convertMomentDate;
+        $scope.convertMomentTime = common.convertMomentTime;
+        
         $scope.ok = function () {
-            //objTeam.TeamName = this.teamName;
-            //objTeam.Category = this.category;
+            var $d = $q.defer();
+            var promesas = [];
+            for (var l = 0; l < $scope.teams.length; l++) {
+                var promesa =  datacontext.deleteSchedule(options.webUrl,$scope.teams[l]);
+                promesas.push(promesa);
+            }
+             $q.all(promesas).then(function(promesasRes){
+                      $d.resolve(promesasRes);
+                      //console.log("terminado");
+                      $modalInstance.close();
+                  }) 
 
-            var dataUpdated = datacontext.deleteTeam(objTeam);
-            //console.log(updated);
-            $modalInstance.close(dataUpdated);
         };
         $scope.cancel = function () { $modalInstance.dismiss('cancel'); };
     }];

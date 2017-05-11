@@ -347,7 +347,7 @@ class Standing(APIView):
             objSeason = serializers.serialize("json", Seasons.objects.filter(Id = fieldsTeam['SeasonId']))
             objDivision = serializers.serialize("json", Divisions.objects.filter(Id = fieldsTeam['DivisionId']))
             
-            teamsEnJuego = Schedules.objects.filter(Q(HomeTeamId = team['pk']) | Q(AwayTeamId = team['pk']))
+            teamsEnJuego = Schedules.objects.filter(Q(HomeTeamId = team['pk']) | Q(AwayTeamId = team['pk']), IsHidden = False)
                         
             standing = {}
             standing["SeasonId"] = fieldsTeam['SeasonId']
@@ -363,8 +363,6 @@ class Standing(APIView):
             standing["GoalsFor"] = 0
             standing["GoalsAgainst"] = 0
 
-            
-
             for teamEnJuego in teamsEnJuego:
                 #pprint("test" + str(team['pk']) + ":" + str(teamEnJuego.HomeTeamId.Id))
                 if team['pk'] == teamEnJuego.HomeTeamId.Id:
@@ -379,7 +377,7 @@ class Standing(APIView):
                     if teamEnJuego.GoalsHomeTeam < teamEnJuego.GoalsAwayTeam:
                         standing["Losses"] += 1;
                         
-                    if teamEnJuego.GoalsHomeTeam == teamEnJuego.GoalsAwayTeam and teamEnJuego.GoalsHomeTeam != null:
+                    if teamEnJuego.GoalsHomeTeam == teamEnJuego.GoalsAwayTeam and teamEnJuego.GoalsHomeTeam != "":
                         standing["Ties"] += 1;
                         standing["Points"] += 1;
                 else:
@@ -392,7 +390,7 @@ class Standing(APIView):
                         standing["Points"] += 3;
                     if teamEnJuego.GoalsAwayTeam < teamEnJuego.GoalsHomeTeam:
                         standing["Losses"] += 1;
-                    if teamEnJuego.GoalsAwayTeam == teamEnJuego.GoalsHomeTeam and teamEnJuego.GoalsHomeTeam != null:
+                    if teamEnJuego.GoalsAwayTeam == teamEnJuego.GoalsHomeTeam and teamEnJuego.GoalsHomeTeam != "":
                         standing["Ties"] += 1;
                         standing["Points"] += 1;
                         

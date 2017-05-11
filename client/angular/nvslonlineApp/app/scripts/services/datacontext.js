@@ -240,12 +240,12 @@ this.editDivision = function (webUrl,objDivision) {
         });
     };
 
-    this.deleteVenue = function (webUrl,objVenue) {
+    this.deleteSchedule = function (webUrl,objSchedule) {
         return $http({
             method: 'DELETE',
-            url: webUrl +  'api/venues/' + objVenue.Id,
+            url: webUrl +  'api/schedules/' + objSchedule.Id,
             //withCredentials: true,
-           data: objVenue
+           data: objSchedule
         }).then(function successCallback(response){
             console.log(response);
         },function errorCallback(response){
