@@ -1,0 +1,4 @@
+To install packages run the following commands:
+
+> npm install
+> bower install
