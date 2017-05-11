@@ -52,6 +52,7 @@
               <li ui-sref-active="active" ng-show="!vm.access"><a ui-sref="signUp">Sign Up</a></li>
               <li ui-sref-active="active" ng-show="!vm.access" style="cursor:pointer"><a ng-click="vm.login()">Log In</a></li>
                 <li ng-hide="!vm.access" class='dropdown' style="cursor:pointer">
+                            
                             <a class='dropdown-toggle' data-toggle='dropdown'>{{vm.user}}<b class='caret'></b></a>
                             <ul class='dropdown-menu'>
                                 <li><a ui-sref="settings">Edit Profile</a></li>                                
@@ -79,32 +80,32 @@
 								<nav class="navbar navbar-default" role="navigation">
 									<!-- Main Menu -->
 									<div class="side-menu-container">
+                    
 										<ul class="nav navbar-nav">
-											<li><a ui-sref="dashboard"><span class="glyphicon glyphicon-dashboard"></span> Dashboard</a></li>
-											<li><a ui-sref="adminTeam"><span class="glyphicon glyphicon-picture"></span> Teams</a></li>
-                      <li><a ui-sref="adminPlayer"><span class="glyphicon glyphicon-picture"></span> Players</a></li>
-											<li><a ui-sref="adminSchedule"><span class="glyphicon glyphicon-calendar"></span> Schedule</a></li>
-											<li><a ui-sref="standing"><span class="glyphicon glyphicon-globe"></span> Standings</a></li>
+											<li style="clear:both;"><a ui-sref="dashboard"><span class="glyphicon glyphicon-dashboard"></span> Dashboard</a></li>
+											<li style="clear:both;"><a ui-sref="adminTeam"><span class="glyphicon glyphicon-picture"></span> Teams</a></li>
+                      <!--<li style="clear:both;"><a ui-sref="adminPlayer"><span class="glyphicon glyphicon-picture"></span> Players</a></li>-->
+											<li style="clear:both;"><a ui-sref="adminSchedule"><span class="glyphicon glyphicon-calendar"></span> Schedule</a></li>
+											<li style="clear:both;"><a ui-sref="standing"><span class="glyphicon glyphicon-globe"></span> Standings</a></li>
 											<!-- Dropdown-->
-											<li id="dropdown">
-												<a data-toggle="collapse" href="#dropdown-lvl1">
-													<span class="glyphicon glyphicon-user"></span> Lookup Tables <span class="caret"></span>
-												</a>
-                        <!--<a style="cursor:pointer" onClick="$('#loginbox').hide(); $('#signupbox').show()">
-												<!-- Dropdown level 1 -->
-												<div id="dropdown-lvl1" class="panel-collapse collapse">
+											<li style="clear:both;" id="dropdown" >
+                          <button style="clear:both;text-decoration:none" type="button" class="btn btn-link" data-toggle="collapse" data-target="#dropdown-lvl1">
+                            <span class="glyphicon glyphicon-user"></span> Lookup tables
+                            </button>
+  
+												<div id="dropdown-lvl1" class="collapse">
 													<div class="panel-body">
 														<ul class="nav navbar-nav">
-															<li><a ui-sref="adminSeason" >Seasons</a></li>
-															<li><a ui-sref="adminDivision" >Divisions</a></li>
-															<li><a ui-sref="adminVenue" >Venues</a></li>
-															<li ><a ui-sref="adminContact" >Contacts</a></li>
-															<li ><a ui-sref="adminNew" >News</a></li>
+															<li style="clear:both;"><a ui-sref="adminSeason" >Seasons</a></li>
+															<li style="clear:both;"><a ui-sref="adminDivision" >Divisions</a></li>
+															<li style="clear:both;"><a ui-sref="adminVenue" >Venues</a></li>
+															<li style="clear:both;"><a ui-sref="adminContact" >Contacts</a></li>
+															<li style="clear:both;"><a ui-sref="adminNew" >News</a></li>
 														</ul>
 													</div>
 												</div>
 											</li>
-											<li><a href="#"><span class="glyphicon glyphicon-edit"></span> Settings</a></li>
+											<li style="clear:both;"><a href="#"><span class="glyphicon glyphicon-edit"></span> Settings</a></li>
 										</ul>
 									</div><!-- /.navbar-collapse -->
 								</nav>

@@ -21,7 +21,7 @@ angular.module('nvslonlineAppApp')
         vm.getTeamsByDivision = getTeamsByDivision;
         //vm.getDivisionName = getDivisionName;
 
-    var indexedDivisions = [];
+    
 
         //carga inicial de data
         getTeams();
@@ -35,18 +35,18 @@ angular.module('nvslonlineAppApp')
             });
         }
 
+        /*var indexedDivisions = [];
         $scope.teamsToFilter = function(){
             indexedDivisions.length = 0;
             return vm.teams;
         }
-
         $scope.filterDivisions = function(team){
             var divisionIsNew = indexedDivisions.indexOf(team.DivisionId)==-1;
             if(divisionIsNew){
                 indexedDivisions.push(team.DivisionId);
             }
             return divisionIsNew;
-        }
+        }*/
 
         function getDivision() {
             return datacontext.getDivisions(webUrl).then(function (response) {

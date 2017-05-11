@@ -8,7 +8,7 @@
  * Service in the nvslonlineAppApp.
  */
 angular.module('nvslonlineAppApp')
-  .service('datacontext', function ($http) {
+  .service('datacontext', function ($http,common) {
     
 
     /********************************* Division *******************************/
@@ -240,12 +240,12 @@ this.editDivision = function (webUrl,objDivision) {
         });
     };
 
-    this.deleteVenue = function (webUrl,objVenue) {
+    this.deleteSchedule = function (webUrl,objSchedule) {
         return $http({
             method: 'DELETE',
-            url: webUrl +  'api/venues/' + objVenue.Id,
+            url: webUrl +  'api/schedules/' + objSchedule.Id,
             //withCredentials: true,
-           data: objVenue
+           data: objSchedule
         }).then(function successCallback(response){
             console.log(response);
         },function errorCallback(response){
@@ -327,9 +327,10 @@ this.editDivision = function (webUrl,objDivision) {
             //withCredentials: true,
         }).then(function successCallback(response){
             console.log(response);
+            return common.successResponse(response);
         },function errorCallback(response){
             console.log(response);
-            return response;
+            return common.errorResponse(response);
         });
     };
 

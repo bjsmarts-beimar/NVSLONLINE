@@ -42,10 +42,9 @@ angular.module('nvslonlineAppApp')
                 contactValues.requestSubject = vm.requestSubject;
                 contactValues.modifiedBy = parameters.loginAccess.user;
                 contactValues.modifiedByfullName = parameters.loginAccess.user;
-               console.log(contactValues);
+               
                 var dataUpdated = datacontext.addContact(webUrl,contactValues).then(function (response) {
-                  console.log(response);
-                  if (response == undefined) {
+                  if (response.success) {
                        vm.success = true;
                        vm.error = false;
                       vm.name = null;

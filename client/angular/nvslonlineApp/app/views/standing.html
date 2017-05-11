@@ -24,10 +24,17 @@
                 </select>
             </div>
 
-            <div data-cc-widget-header data-ng-repeat="(SeasonId,standingsSeason) in vm.standings | filter:{SeasonId:vm.season} | groupBy: 'SeasonId'">
-               <b>Season: {{standingsSeason[$index].Season.SeasonName}}</b>
+            <!--<div data-cc-widget-header data-ng-repeat="(SeasonId,standingsSeason) in vm.standings | filter:{SeasonId:vm.season} | groupBy: 'SeasonId'">
+               <b>Season: {{standingsSeason[$index].Season.SeasonName}}</b>-->
 
-                <div data-cc-widget-header data-ng-repeat="(DivisionName,standingsDivision) in standingsSeason | filter:{DivisionId:vm.division}| groupBy: 'Division.DivisionName'">
+            <div data-cc-widget-header 
+            data-ng-repeat="(SeasonName,standingsSeason) in vm.standings | filter:{SeasonId:vm.season} | groupBy: 'Season.SeasonName'">
+               <b>Season: {{SeasonName}}</b>
+
+
+                <div data-cc-widget-header 
+                data-ng-repeat="(DivisionName,standingsDivision) in standingsSeason | filter:{DivisionId:vm.division}| groupBy: 'Division.DivisionName'">
+                    
                     <b>{{DivisionName}}</b>
 
                      <div class="widget-content text-center text-info">

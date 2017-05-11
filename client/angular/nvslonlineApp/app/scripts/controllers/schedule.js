@@ -19,6 +19,17 @@ angular.module('nvslonlineAppApp')
     vm.convertMomentTime = common.convertMomentTime;
       
 
+    vm.getSeasonName = common.getSeasonName;
+    vm.getDivisionName = common.getDivisionName;
+    getTeams();
+    function getTeams() {
+            return datacontext.getTeams(webUrl).then(function (response) {
+                //console.log(data);
+                return vm.teams = response.data;
+            });
+        }
+
+
     datacontext.getSeasons(webUrl).then(
       function (response) {
         //console.log(response.data);
@@ -50,29 +61,5 @@ angular.module('nvslonlineAppApp')
       });
 
       
-      /*function getScheduleBySeasonDivision(seasonId, divisionId) {
-            console.log(seasonId);
-            console.log(divisionId);
-            var filter = new String;
-            if (seasonId == null) {
-                if (divisionId == null) {
-                    filter = "p => p";
-                } else {
-                    filter = "p => p.DivisionId == " + divisionId;
-                }
-            } else {
-                if (divisionId == null) {
-                    filter = "p => p.SeasonId ==" + seasonId ;
-                } else {
-                    filter = "p => p.SeasonId ==" + seasonId + "&& p.DivisionId == " + divisionId;
-                }
-            }
-             
-           vm.schedules = Enumerable.From(vm.schedules)
-                            .Where(filter)
-                            .ToArray();
-                            console.log(vm.schedules);
-        }
-      */
 
   }]);

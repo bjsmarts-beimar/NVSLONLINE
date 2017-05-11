@@ -8,7 +8,7 @@
  * Service in the nvslonlineAppApp.
  */
 angular.module('nvslonlineAppApp')
-  .service('common', function (parameters,$location) {
+  .service('common', function (parameters,$location,$linq) {
     // AngularJS will instantiate a singleton by calling "new" on this function
 
     this.randomDate = function(start, end){
@@ -36,11 +36,27 @@ angular.module('nvslonlineAppApp')
        return moment(stringDate).format('L');
     };
 
+    this.successResponse = function(response) {
+        var oResponse = {
+          success:true,
+          response : response
+        };
+       return oResponse;
+    };
+    this.errorResponse = function(response) {
+        var oResponse = {
+         success:false,
+         response : response
+        };
+       return oResponse;
+    };
+
    this.convertToDate = function(stringDate) {
       var dateOut = new Date(stringDate);
       dateOut.setDate(dateOut.getDate()+1);
       return dateOut;
     };
+
     this.convertToDate2 = function(stringDate) {
       var dateOut = new Date(stringDate);
       dateOut.setDate(dateOut.getDate()+1);
@@ -59,8 +75,6 @@ angular.module('nvslonlineAppApp')
       }
     };
 
-   
-
     this.shuffle = function(array){
       var currentIndex = array.length,temporaryValue,randomIndex;
       //While there remain elements to shuffle..
@@ -76,5 +90,19 @@ angular.module('nvslonlineAppApp')
       }
       return array;
     };
+
+    this.getSeasonName = function(seasonId,lstSeasons){
+                  var objSeason  = $linq.Enumerable().From(lstSeasons)
+                            .Where("p => p.SeasonId ==" + seasonId)
+                            .FirstOrDefault();
+                  return objSeason.Season.SeasonName;
+    }
+
+    this.getDivisionName = function(divisionId,lstDivisions){
+                  var objDivision  = $linq.Enumerable().From(lstDivisions)
+                            .Where("p => p.DivisionId ==" + divisionId)
+                            .FirstOrDefault();
+                  return objDivision.Division.DivisionName;
+    }
 
   });
