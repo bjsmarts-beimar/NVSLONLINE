@@ -47,11 +47,14 @@
         </div>
         <div class="modal-body">
 
-            <form role="form">
+            <form role="form" name="form">
 
                 <div class="form-group">
                     <label for="divisionName">Division Name</label>
-                    <input type="text" class="form-control" id="divisionName" data-ng-model="divisionName" placeholder="Enter Division Name"/>
+                    <input type="text" class="form-control" name="divisionName" id="divisionName" data-ng-model="divisionName" placeholder="Enter Division Name" required
+                    data-ng-class="{error:form.divisionName.$invalid && !form.$pristine}"/>
+                    <span class="errorText" ng-show="!form.$pristine && form.divisionName.$error.required">Division Name is required</span>
+                    
                 </div>
                 
               
@@ -59,7 +62,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal" data-ng-click="cancel()">Close</button>
-            <button type="button" class="btn btn-primary" data-ng-click="ok()">Save changes</button>
+            <button type="button" class="btn btn-primary" data-ng-click="ok()" data-ng-disabled="!form.$valid">Save changes</button>
         </div>
     </div><!-- /.modal-content -->
     </script>

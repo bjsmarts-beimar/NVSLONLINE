@@ -101,32 +101,39 @@
         </div>
         <div class="modal-body">
 
-            <form role="form">
+            <form name="form">
 
                 <div class="form-group">
                     <label for="teamName">Team Name</label>
-                    <input type="text" class="form-control" id="teamName" data-ng-model="teamName" placeholder="Enter Team Name"/>
+                    <input type="text" class="form-control" name="teamName" id="teamName" data-ng-model="teamName" placeholder="Enter Team Name" required
+                    data-ng-class="{error:form.teamName.$invalid && !form.$pristine}"/>
+                    <span class="errorText" ng-show="!form.$pristine && form.teamName.$error.required">Team Name is required</span>
                 </div>
                 <div class="form-group">
                     <label for="division">Division</label>
-                    <!--<input type="text" class="form-control" id="category" data-ng-model="category" placeholder="Enter Category"/>-->
-                    <select id="division" class="form-control" name="division" data-ng-model="division" data-ng-options="Division.Id as Division.DivisionName for Division in Divisions">
-                        <option value='0'>--choose level--</option>
+   
+                    <select id="division" class="form-control" name="division" data-ng-model="division" data-ng-options="Division.Id as Division.DivisionName for Division in Divisions" required
+                    data-ng-class="{error:form.division.$invalid && !form.$pristine}"/>
+                        <!--<option value='0'>--choose division--</option>-->
                     </select>
+                    <span class="errorText" ng-show="!form.$pristine && form.division.$error.required">Choose Division</span>
+                    
                 </div>
                 <div class="form-group">
                     <label for="season">Season</label>
-                    <!--<input type="text" class="form-control" id="category" data-ng-model="category" placeholder="Enter Category"/>-->
-                    <select id="season" class="form-control" name="season" data-ng-model="season" data-ng-options="Season.Id as Season.SeasonName for Season in Seasons">
-                        <option value='0'>--choose level--</option>
+                    <select id="season" class="form-control" name="season" data-ng-model="season" data-ng-options="Season.Id as Season.SeasonName for Season in Seasons" required
+                    data-ng-class="{error:form.season.$invalid && !form.$pristine}"/>
+                        <!--<option value='0'>--choose season--</option>-->
                     </select>
+                    <span class="errorText" ng-show="!form.$pristine && form.season.$error.required">Choose Season</span>
+                    
                 </div>
               
             </form>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal" data-ng-click="cancel()">Close</button>
-            <button type="button" class="btn btn-primary" data-ng-click="ok()">Save changes</button>
+            <button type="button" class="btn btn-primary" data-ng-click="ok()" data-ng-disabled="!form.$valid">Save changes</button>
         </div>
     </div><!-- /.modal-content -->
     </script>

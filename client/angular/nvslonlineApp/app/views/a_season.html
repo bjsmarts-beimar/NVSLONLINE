@@ -44,7 +44,7 @@
     <script type="text/ng-template" id="season.html">
     <div class="modal-content" >
         <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" data-ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title">Season</h4>
         </div>
         <div class="modal-body">
@@ -60,7 +60,7 @@
         
                 <div class="form-group">
                     <label for="seasonStart">Season start date</label>
-                    <input type="date" id="seasonStart" name="seasonStart" data-ng-model="seasonStart" placeholder="yyyy-MM-dd"required
+                    <input type="date" id="seasonStart" class="form-control" name="seasonStart" data-ng-model="seasonStart" placeholder="yyyy-MM-dd" required
                     data-ng-class="{error:form.seasonStart.$invalid && !form.$pristine}"/>
                     <span class="errorText" ng-show="!form.$pristine && form.seasonStart.$error.required">Start Date is required</span>
                     <span class="errorText" ng-show="!form.$pristine && form.seasonStart.$error.date">Start Date is invalid</span>
@@ -69,7 +69,10 @@
         
                 <div class="form-group">
                     <label for="seasonEnd">Season end</label>
-                    <input type="date" id="seasonEnd" name="seasonEnd" data-ng-model="seasonEnd" placeholder="yyyy-MM-dd"><br><br>
+                    <input type="date" id="seasonEnd" class="form-control" name="seasonEnd" data-ng-model="seasonEnd" placeholder="yyyy-MM-dd"required
+                    data-ng-class="{error:form.seasonEnd.$invalid && !form.$pristine}"/>
+                    <span class="errorText" ng-show="!form.$pristine && form.seasonEnd.$error.required">End Date is required</span>
+                    <span class="errorText" ng-show="!form.$pristine && form.seasonEnd.$error.date">End Date is invalid</span>
                 </div>
                
             </form>
