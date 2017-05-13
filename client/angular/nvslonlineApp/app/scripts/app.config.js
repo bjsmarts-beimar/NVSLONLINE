@@ -7,10 +7,23 @@ angular.module('nvslonlineAppApp').value("debug", true)
 angular.module('nvslonlineAppApp').config(function($urlRouterProvider, $stateProvider) {
     $urlRouterProvider.otherwise('/');
     $stateProvider
-    .state('main', {
+
+    .state('home', {
+        url: '/home',
+        templateUrl: '/views/home.html',
+        controller: 'HomeCtrl as vm'
+    })
+    /*.state('main', {
         url: '/',
         templateUrl: '/views/main.html'
+    })*/
+    
+    .state('main', {
+        url: '/',
+        templateUrl: '/views/home.html',
+        controller: 'HomeCtrl as vm'
     })
+
     .state('team', {
         url: '/team',
         templateUrl: '/views/team.html',
@@ -38,7 +51,42 @@ angular.module('nvslonlineAppApp').config(function($urlRouterProvider, $statePro
         controller: 'LoginCtrl as vm'
     })
 
+    .state('contact', {
+        url: '/contact',
+        templateUrl: '/views/contact.html',
+        controller: 'ContactCtrl as vm'
+    })
+
+    /*.state('player', {
+        url: '/player/:id',
+        param:{
+            playerId:null,
+        },
+        templateUrl: '/views/player.html',
+        controller: 'PlayerCtrl as vm',
+        resolve:{
+            resolveId:function($stateParams){
+                return $stateParams.id;
+            }
+        }*/
+        .state('player', {
+        url: '/player',
+        params:{
+            teamId:null,
+        },
+        templateUrl: '/views/player.html',
+        controller: 'PlayerCtrl as vm'
+        
+    })
+
+
     /********************* ADMIN USER ******************/
+
+    .state('dashboard', {
+        url: '/dashboard',
+        templateUrl: '/views/dashboard.html',
+        //controller: 'ADivisionCtrl as vm'
+    })
 
     .state('adminDivision', {
         url: '/ADivisions',
@@ -70,6 +118,20 @@ angular.module('nvslonlineAppApp').config(function($urlRouterProvider, $statePro
         controller: 'AScheduleCtrl as vm'
     })
 
+    .state('adminPlayer', {
+        url: '/APlayers',
+        params:{
+            teamId:null,
+        },
+        templateUrl: '/views/a_player.html',
+        controller: 'APlayerCtrl as vm'
+    })
+
+    .state('adminContact', {
+        url: '/AContact',
+        templateUrl: '/views/a_contact.html',
+        controller: 'AContactCtrl as vm'
+    })
 
     /***************** CONTRIBUIDOR USER ***************/
     
@@ -82,19 +144,18 @@ angular.module('nvslonlineAppApp').config(function($urlRouterProvider, $statePro
 
 
     /***************** CONFIGURATION ***************/
-
-    .state('topNavigation', {
-        url: '/Navigation',
-        templateUrl: '/views/top_navigation_setting.html',
-        controller: 'TopNavigationSettingCtrl as vm'
+    .state('adminNew', {
+        url: '/ANews',
+        templateUrl: '/views/a_new.html',
+        controller: 'ANewCtrl as vm'
     })
-
+   
     /***************** USERS ***************/
 
-    .state('register', {
-        url: '/register',
+    .state('signUp', {
+        url: '/signUp',
         templateUrl: '/views/register.html',
-        controller: 'RegisterCtrl'
+        controller: 'LoginCtrl as vm'
     });
 
 })

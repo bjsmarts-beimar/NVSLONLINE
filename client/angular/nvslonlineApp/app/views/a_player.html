@@ -1,1 +1,126 @@
-<p>This is the a_player view.</p>
+
+<section class="mainbar">
+    <section class="matter">
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-6 text-left">
+                        <h2>{{vm.team.TeamName}}</h2>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <a href ng-click="vm.openNewPlayer()" class="btn btn-default">New Player </a>
+                    </div>
+            </div>
+            <div class="form-group">
+                <label for="team">Search Player</label>
+
+                <input type="text" class="form-control" id="team" data-ng-model="team" placeholder="Search Player"/>
+                
+               <!-- <select id="team" class="form-control" name="team" data-ng-model="vm.team" >
+                    <option value="">--Choose Team--</option>
+                    <option ng-repeat="team in vm.teams " value="{{team.TeamId}}">{{team.TeamName}}</option>
+                </select>-->
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+
+       
+                <div class="widget-content text-center text-info">
+                            <table class="table table-condensed table-striped">
+                                <thead>
+                                <tr>
+                                    <th> </th>
+                                    <th> First Name</th>
+                                    <th>Last Name</th>
+                                   <!-- <th>Team</th>-->
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr data-ng-repeat="p in vm.displayPlayers
+                                = (vm.players | filter:vm.search | filter:{TeamId:vm.teamId}) | limitTo:vm.itemsPerPage:vm.itemsPerPage*(vm.currentPage-1)">
+                                    <td style="text-align: left">
+                                        <a id="Edit" href ng-click="vm.openEditPlayer(p)">Edit </a>|
+                                        <a id="Delete" href ng-click="vm.openDeletePlayer(p)">Delete </a>
+                                    </td>
+                                    <td style="text-align: left">{{p.FirstName}}</td>
+                                    <td style="text-align: left">{{p.LastName}}</td>
+                                    <!--<td style="text-align: left">{{p.Team.TeamName}}</td>-->
+
+                                </tr>
+                                </tbody>
+                            </table>
+                    </div>
+                    <div class="clearfix" ng-show="vm.displayPlayers.length > vm.itemsPerPage">
+                        <pagination 
+                                    ng-model="vm.currentPage"
+                                    total-items="vm.displayPlayers.length"
+                                    items-per-page="vm.itemsPerPage"
+                                    max-size="vm.maxSize"  
+                                    boundary-links="true">
+                        </pagination>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+       
+    </section>
+    <script type="text/ng-template" id="player.html">
+    <div class="modal-content" >
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Players</h4>
+        </div>
+        <div class="modal-body">
+
+            <form role="form">
+
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" class="form-control" id="firstName" data-ng-model="firstName" placeholder="Enter First Name"/>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" class="form-control" id="lastName" data-ng-model="lastName" placeholder="Enter Last Name"/>
+                </div>
+                <!--<div class="form-group">
+                    <label for="team">Team</label>
+                    <select id="team" class="form-control" name="team" data-ng-model="team" data-ng-options="Team.Id as Team.TeamName for Team in teams">
+                        <option value='0'>--choose Team--</option>
+                    </select>
+                </div>-->
+                
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" data-ng-click="cancel()">Close</button>
+            <button type="button" class="btn btn-primary" data-ng-click="ok()">Save changes</button>
+        </div>
+    </div><!-- /.modal-content -->
+    </script>
+
+    <script type="text/ng-template" id="delete.html">
+            
+        <div id="divPrincipalModal">   
+         <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">×</button>
+                <h4 class="modal-title"> Confirm Delete this Player </h4>
+              </div>
+             <div class="modal-body">
+                 <div class="form-group">
+                     <label class="control-label">Player Name:</label>
+                     <div style="padding-left: 10px">{{firstName}} {{lastName}}</div>
+                 </div>
+             </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" data-ng-click="cancel()">Close</button>
+            <button type="button" class="btn btn-primary" data-ng-click="ok()">Delete</button>
+        </div>
+            </div>
+
+        </div>
+   
+        
+    </script>
+</section>
+

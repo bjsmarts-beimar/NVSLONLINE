@@ -1,10 +1,10 @@
 #from django.shortcuts import render
-from NVSLOnline.models import Divisions,Seasons,Venues,Teams,Schedules,Players,Roles,TopNavigations
+from NVSLOnline.models import Divisions,Seasons,Venues,Teams,Schedules,Players,News,Contacts
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
-from  rest_framework.response import Response
+from rest_framework.response import Response
 from rest_framework.views import APIView
-from NVSLOnline_WebService.serializers import DivisionSerializer,SeasonSerializer,VenueSerializer,TeamSerializer,ScheduleSerializer,PlayerSerializer,RoleSerializer,TopNavigationSerializer
+from NVSLOnline_WebService.serializers import DivisionSerializer,SeasonSerializer,VenueSerializer,TeamSerializer,ScheduleSerializer,PlayerSerializer,ContactSerializer,NewSerializer
 from django.core import serializers
 import datetime,json
 # Create your views here.
@@ -16,7 +16,7 @@ class Division(APIView):
             divisions = get_object_or_404(Divisions, pk=id)
             many = False
         else:
-            divisions = Divisions.objects.filter(IsHidden = False)
+            divisions = Divisions.objects.filter(IsHidden = False).order_by('Id')
             many = True
         response = self.serializer_class(divisions,many=many)
         return Response(response.data)
@@ -50,28 +50,6 @@ class Division(APIView):
         serializer = self.serializer_class(division,many=False)
         return Response(serializer.data)
 
-        """serializer = self.serializer_class(division,many=False)
-        if serializer.is_valid():
-            serializer.IsHidden = True
-            serializer.save()
-            return Response(serializer.data)"""
-        """division = Divisions(
-                DivisionName = serializer.data['DivisionName'],
-                IsHidden = True
-            )"""
-           
-        #resp = self.serializer_class(division,many=False)
-        """if serializer.is_valid():
-            #serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors)"""
-            
-
-    """def delete(self, request, id=None, format=None):
-        division = get_object_or_404(Divisions, pk=id)
-        division.delete()
-        return Response(status = status.HTTP_204_NO_CONTENT)"""
-
 
 division = Division.as_view()
             
@@ -82,7 +60,7 @@ class Season(APIView):
             seasons = get_object_or_404(Seasons, pk=id)
             many = False
         else:
-            seasons = Seasons.objects.filter(IsHidden = False)
+            seasons = Seasons.objects.filter(IsHidden = False).order_by('Id')
             many = True
         response = self.serializer_class(seasons,many=many)
         return Response(response.data)
@@ -146,7 +124,7 @@ class Venue(APIView):
             venues = get_object_or_404(Venues, pk=id)
             many = False
         else:
-            venues = Venues.objects.filter(IsHidden = False)
+            venues = Venues.objects.filter(IsHidden = False).order_by('Id')
             many = True
         response = self.serializer_class(venues,many=many)
         return Response(response.data)
@@ -189,7 +167,7 @@ class Team(APIView):
             teams = get_object_or_404(Teams, pk=id)
             many = False
         else:
-            teams = Teams.objects.filter(IsHidden = False)
+            teams = Teams.objects.filter(IsHidden = False).order_by('Id')
             many = True
         response = self.serializer_class(teams,many=many)
         return Response(response.data)
@@ -237,7 +215,7 @@ class Player(APIView):
             players = get_object_or_404(Players, pk=id)
             many = False
         else:
-            players = Players.objects.filter(IsHidden = False)
+            players = Players.objects.filter(IsHidden = False).order_by('Id')
             many = True
         response = self.serializer_class(players,many=many)
         return Response(response.data)
@@ -258,10 +236,35 @@ class Player(APIView):
         else:
            return Response(serializer.errors)
 
+    def put(self, request, id=None, format=None):
+        players = get_object_or_404(Players, pk=id)
+        serializer = self.serializer_class(players, data=request.data)# request.POST y request.GET, request.FILES
+        if serializer.is_valid():
+            
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors)
+
+    def delete(self, request, id=None, format=None):
+        players = get_object_or_404(Players, pk=id)
+        players.IsHidden =True
+        players.save()
+        serializer = self.serializer_class(players,many=False)
+        return Response(serializer.data)
+           
+
    
 player = Player.as_view()
 
+class PlayerViewSet(viewsets.ViewSet):
+    serializer_class = PlayerSerializer
+    def getPlayersByTeamId(self, request, id=None, format=None):
+        #players = get_object_or_404(Players, TeamId=id)
+        players = Players.objects.filter(TeamId=id,IsHidden = False)
+        response = self.serializer_class(players,many=True)
+        return Response(response.data)        
 
+getPlayersByTeamId = PlayerViewSet.as_view({'get':'getPlayersByTeamId'})
 """class DivisionViewset(viewsets.ModelViewSet):
     serializer_class = DivisionSerializer
     queryset = Divisions.objects.filter(IsHidden = False)
@@ -287,7 +290,7 @@ class Schedule(APIView):
             schedules = get_object_or_404(Schedules, pk=id)
             many = False
         else:
-            schedules = Schedules.objects.filter(IsHidden = False)
+            schedules = Schedules.objects.filter(IsHidden = False).order_by('Id')
             many = True
         response = self.serializer_class(schedules,many=many)
         return Response(response.data)
@@ -340,29 +343,29 @@ class Standing(APIView):
         #for k,v in teams2.OrderedDict:
         #    print(k,v)
         data = serializers.serialize("json", Teams.objects.filter(IsHidden = False))
-        print(json.loads(data))
+       # print(json.loads(data))
 
-        #for item in data:
-            #print(item)
-        #return Response(teams)  
-        
-
-        for team in teams:
-            teamsEnJuego = Schedules.objects.filter(HomeTeamId = team.Id, AwayTeamId = team.Id)
+        for team in json.loads(data):
+             
+            fieldsTeam = team['fields']
+            objSeason = serializers.serialize("json", Seasons.objects.filter(Id = fieldsTeam['SeasonId']))
+            objDivision = serializers.serialize("json", Divisions.objects.filter(Id = fieldsTeam['DivisionId']))
+            
+            teamsEnJuego = Schedules.objects.filter(HomeTeamId = team['pk'], AwayTeamId = team['pk'])
             #print(team)
             standing = {}
-            #standing["SeasonId"] = team.SeasonId;
-           # standing["Season"] = team.Season;
-            #standing["DivisionId"] = team.DivisionId;
-            #standing["Division"] = team.Division;
+            standing["SeasonId"] = fieldsTeam['SeasonId']
+            standing["Season"] = json.loads(objSeason)[0]['fields']
+            standing["DivisionId"] = fieldsTeam['DivisionId']
+            standing["Division"] = json.loads(objDivision)[0]['fields']
 
-            standing["TeamName"] = team.TeamName;
-            standing["Wins"] = 0;
-            standing["Losses"] = 0;
-            standing["Ties"] = 0;
-            standing["Points"] = 0;
-            standing["GoalsFor"] = 0;
-            standing["GoalsAgainst"] = 0;
+            standing["TeamName"] = fieldsTeam['TeamName']
+            standing["Wins"] = 0
+            standing["Losses"] = 0
+            standing["Ties"] = 0
+            standing["Points"] = 0
+            standing["GoalsFor"] = 0
+            standing["GoalsAgainst"] = 0
 
             for teamEnJuego in teamsEnJuego:
                 if team.Id == teamEnJuego.HomeTeamId:
@@ -406,84 +409,85 @@ standing = Standing.as_view()
 
 ###################################### CONFIGURATION #########################################
 
-class Role(APIView):
-    serializer_class = RoleSerializer
+class New(APIView):
+    serializer_class = NewSerializer
     def get(self, request, id=None, format=None):
         if id!=None:
-            roles = get_object_or_404(Roles, pk=id)
+            news = get_object_or_404(News, pk=id)
             many = False
         else:
-            roles = Roles.objects.filter(IsHidden = False)
+            news = News.objects.filter(IsHidden = False).order_by('modified').reverse()
             many = True
-        response = self.serializer_class(roles,many=many)
+        response = self.serializer_class(news,many=many)
         return Response(response.data)
 
     def post(self, request, format=None):
         serializer = self.serializer_class(data=request.data)# request.POST y request.GET, request.FILES
         if serializer.is_valid():
-            role = Roles(
-                RoleName = serializer.data['RoleName'],
-                LoweredRoleName = serializer.data['RoleName'].lower(),
-                Description = serializer.data['Description'],
-                #UserId = serializer.data['UserId'],
-                IsHidden = False
-            )
-            role.save()
-            resp = self.serializer_class(role,many=False)
+            
+            serializer.save()
+            resp = self.serializer_class(serializer,many=False)
             return Response(resp.data)
             
         else:
            return Response(serializer.errors)
 
-role = Role.as_view()
+    def put(self, request, id=None, format=None):
+        news = get_object_or_404(News, pk=id)
+        serializer = self.serializer_class(news, data=request.data)# request.POST y request.GET, request.FILES
+        if serializer.is_valid():
+            
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors)
 
-class TopNavigation(APIView):
-    serializer_class = TopNavigationSerializer
+    def delete(self, request, id=None, format=None):
+        news = get_object_or_404(News, pk=id)
+        news.IsHidden =True
+        news.save()
+        serializer = self.serializer_class(news,many=False)
+        return Response(serializer.data)
+   
+
+new = New.as_view()
+
+class Contact(APIView):
+    serializer_class = ContactSerializer
     def get(self, request, id=None, format=None):
         if id!=None:
-            navigation = get_object_or_404(TopNavigations, pk=id)
+            contacts = get_object_or_404(Contacts, pk=id)
             many = False
         else:
-            navigation = TopNavigations.objects.filter(IsHidden = False)
+            contacts = Contacts.objects.filter(IsHidden = False).order_by('Id')
             many = True
-        response = self.serializer_class(navigation,many=many)
+        response = self.serializer_class(contacts,many=many)
         return Response(response.data)
 
     def post(self, request, format=None):
         serializer = self.serializer_class(data=request.data)# request.POST y request.GET, request.FILES
         if serializer.is_valid():
-            navigation = TopNavigations(
-                TopMenu= serializer.data['TopMenu'],
-                TopMenuDescription = serializer.data['TopMenuDescription'],
-                TopMenuLink = serializer.data['TopMenuLink'],
-                TopMenuOrder = serializer.data['TopMenuOrder'],
-                TopParentId = serializer.data['TopParentId'],
-                TopMenuExternal = serializer.data['TopMenuExternal'],
-                
-                RoleId = get_object_or_404(Roles, pk= request.data['RoleId']),
-                IsHidden = False
-            )
-            navigation.save()
-            resp = self.serializer_class(navigation,many=False)
+            
+            serializer.save()
+            resp = self.serializer_class(serializer,many=False)
             return Response(resp.data)
-            #return Response(serializer.data)
+            
         else:
            return Response(serializer.errors)
 
     def put(self, request, id=None, format=None):
-        topNavigation = get_object_or_404(TopNavigations, pk=id)
-        serializer = self.serializer_class(topNavigation, data=request.data)# request.POST y request.GET, request.FILES
+        contacts = get_object_or_404(Contacts, pk=id)
+        serializer = self.serializer_class(contacts, data=request.data)# request.POST y request.GET, request.FILES
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors)
 
     def delete(self, request, id=None, format=None):
-        topNavigation = get_object_or_404(TopNavigations, pk=id)
-        topNavigation.IsHidden =True
-        topNavigation.save()
-        serializer = self.serializer_class(topNavigation,many=False)
+        contacts = get_object_or_404(Contacts, pk=id)
+        contacts.IsHidden =True
+        contacts.save()
+        serializer = self.serializer_class(contacts,many=False)
         return Response(serializer.data)
-
    
-topNavigation = TopNavigation.as_view()
+
+contact = Contact.as_view()

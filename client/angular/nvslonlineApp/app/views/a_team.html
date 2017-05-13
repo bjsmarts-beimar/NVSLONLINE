@@ -6,8 +6,14 @@
             </h2>
 
             <div class="form-group">
+                <label for="season">Season</label>
+                <select id="season" class="form-control" name="season" data-ng-model="vm.season" >
+                    <option value="">--Choose Season--</option>
+                    <option ng-repeat="season in vm.allTeams | unique:'SeasonId'" value="{{season.SeasonId}}">{{season.Season.SeasonName}}</option>
+                </select>
+            </div>
+            <div class="form-group">
                 <label for="division">Division</label>
-
                 <select id="division" class="form-control" name="division" data-ng-model="vm.division" >
                     <option value="">--Choose Division--</option>
                     <option ng-repeat="division in vm.allTeams | unique:'DivisionId'" value="{{division.DivisionId}}">{{division.Division.DivisionName}}</option>
@@ -16,7 +22,40 @@
             <div class="row">
                 <div class="col-md-12">
 
-        <div data-cc-widget-header data-ng-repeat="teamsPerDivision in teamsToFilter() | filter: filterDivisions | filter:{DivisionId:vm.division}">
+ <div data-cc-widget-header data-ng-repeat="(SeasonName,teamsSeason) in vm.teams | filter:{SeasonId:vm.season} | groupBy: 'Season.SeasonName'">
+                <b>Season: {{SeasonName}}</b>
+                    <div data-cc-widget-header data-ng-repeat="(DivisionName,teamsDivision) in teamsSeason  | filter:{DivisionId:vm.division}| groupBy: 'Division.DivisionName' ">
+                    <b> {{DivisionName}}</b>
+                        <div class="widget-content text-center text-info">
+                            <table class="table table-condensed table-striped">
+                                <thead>
+                                  <tr>
+                                    <th> </th>
+                                    <th> Name</th>
+                                    <th>Division Name</th>
+                                    <th>Season Name</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                    <tr data-ng-repeat="p in teamsDivision | filter:{SeasonId:vm.season,DivisionId:vm.division}" >
+                                        <td style="text-align: left">
+                                            <a id="Edit" href ng-click="vm.openEditTeam(p)">Edit </a>|
+                                            <a id="Delete" href ng-click="vm.openDeleteTeam(p)">Delete </a>
+                                        </td>
+                                        <td style="text-align: left"><a ui-sref="adminPlayer({teamId:p.Id})">{{p.TeamName}}</a></td>
+                                        <td style="text-align: left">{{p.Division.DivisionName}}</td>
+                                        <td style="text-align: left">{{p.Season.SeasonName}}</td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                            <div class="widget-foot">
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+        <!--<div data-cc-widget-header data-ng-repeat="teamsPerDivision in teamsToFilter() | filter: filterDivisions | filter:{DivisionId:vm.division}">
         <b>{{teamsPerDivision.Division.DivisionName}}</b>
 
         <div class="widget-content text-center text-info">
@@ -35,7 +74,7 @@
                                         <a id="Edit" href ng-click="vm.openEditTeam(p)">Edit </a>|
                                         <a id="Delete" href ng-click="vm.openDeleteTeam(p)">Delete </a>
                                     </td>
-                                    <td style="text-align: left">{{p.TeamName}}</td>
+                                    <td style="text-align: left"><a ui-sref="adminPlayer({teamId:p.Id})">{{p.TeamName}}</a></td>
                                     <td style="text-align: left">{{p.Division.DivisionName}}</td>
                                     <td style="text-align: left">{{p.Season.SeasonName}}</td>
 
@@ -46,7 +85,7 @@
                         </div>
 
 
-</div>
+        </div>-->
 
                 </div>
 
@@ -62,32 +101,39 @@
         </div>
         <div class="modal-body">
 
-            <form role="form">
+            <form name="form">
 
                 <div class="form-group">
                     <label for="teamName">Team Name</label>
-                    <input type="text" class="form-control" id="teamName" data-ng-model="teamName" placeholder="Enter Team Name"/>
+                    <input type="text" class="form-control" name="teamName" id="teamName" data-ng-model="teamName" placeholder="Enter Team Name" required
+                    data-ng-class="{error:form.teamName.$invalid && !form.$pristine}"/>
+                    <span class="errorText" ng-show="!form.$pristine && form.teamName.$error.required">Team Name is required</span>
                 </div>
                 <div class="form-group">
                     <label for="division">Division</label>
-                    <!--<input type="text" class="form-control" id="category" data-ng-model="category" placeholder="Enter Category"/>-->
-                    <select id="division" class="form-control" name="division" data-ng-model="division" data-ng-options="Division.Id as Division.DivisionName for Division in Divisions">
-                        <option value='0'>--choose level--</option>
+   
+                    <select id="division" class="form-control" name="division" data-ng-model="division" data-ng-options="Division.Id as Division.DivisionName for Division in Divisions" required
+                    data-ng-class="{error:form.division.$invalid && !form.$pristine}"/>
+                        <!--<option value='0'>--choose division--</option>-->
                     </select>
+                    <span class="errorText" ng-show="!form.$pristine && form.division.$error.required">Choose Division</span>
+                    
                 </div>
                 <div class="form-group">
                     <label for="season">Season</label>
-                    <!--<input type="text" class="form-control" id="category" data-ng-model="category" placeholder="Enter Category"/>-->
-                    <select id="season" class="form-control" name="season" data-ng-model="season" data-ng-options="Season.Id as Season.SeasonName for Season in Seasons">
-                        <option value='0'>--choose level--</option>
+                    <select id="season" class="form-control" name="season" data-ng-model="season" data-ng-options="Season.Id as Season.SeasonName for Season in Seasons" required
+                    data-ng-class="{error:form.season.$invalid && !form.$pristine}"/>
+                        <!--<option value='0'>--choose season--</option>-->
                     </select>
+                    <span class="errorText" ng-show="!form.$pristine && form.season.$error.required">Choose Season</span>
+                    
                 </div>
               
             </form>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal" data-ng-click="cancel()">Close</button>
-            <button type="button" class="btn btn-primary" data-ng-click="ok()">Save changes</button>
+            <button type="button" class="btn btn-primary" data-ng-click="ok()" data-ng-disabled="!form.$valid">Save changes</button>
         </div>
     </div><!-- /.modal-content -->
     </script>

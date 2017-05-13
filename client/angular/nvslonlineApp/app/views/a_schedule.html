@@ -3,18 +3,35 @@
         <div class="container">
             <h2> <a href ng-click="vm.openNewSchedule()" class="btn btn-default">New Schedule </a>
             </h2>
+
+             <div class="form-group">
+                        <label for="season">Season</label>
+                        <select id="season" class="form-control" name="season" data-ng-model="vm.season" >
+                            <option value="">--Choose Season--</option>
+                            <option ng-repeat="season in vm.teams | unique:'SeasonId'" value="{{season.SeasonId}}">{{season.Season.SeasonName}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="division">Division</label>
+                        <select id="division" class="form-control" name="division" data-ng-model="vm.division" >
+                            <option value="">--Choose Division--</option>
+                            <option ng-repeat="division in vm.teams | unique:'DivisionId'" value="{{division.DivisionId}}">{{division.Division.DivisionName}}</option>
+                        </select>
+                    </div>
+
             <div class="row">
-                <div class="col-md-6">
-                    <div class="widget wviolet" ng-repeat="(key, value) in vm.schedules | groupBy: 'SeasonId'">
+                <div class="col-md-12">
+                    <div class="widget wviolet" ng-repeat="(key, value) in vm.schedules | filter:{SeasonId:vm.season} | groupBy: 'SeasonId'">
                         Season:  {{ vm.getSeasonName(key, value) }}
                       
-                        <div class="widget wviolet" ng-repeat="(keyDivision, valueDivision) in value | groupBy: 'DivisionId'">
-                            <div data-cc-widget-header title="Division: {{ vm.getDivisionName(keyDivision, valueDivision) }}" allow-collapse="false"></div>
-                            <div class="widget-content user">
-                                <p>
-                                    <button type="button" class="btn btn-danger" data-ng-click="vm.openDeleteSchedule(value)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>Delete Schedule</button>
+                        <div class="widget wviolet" ng-repeat="(keyDivision, valueDivision) in value | filter:{DivisionId:vm.division} | groupBy: 'DivisionId'">
+                            <div class="col-md-6">
+                                    Division: {{ vm.getDivisionName(keyDivision, valueDivision) }}
+                             <!--<div data-cc-widget-header title="Division: {{ vm.getDivisionName(keyDivision, valueDivision) }}" allow-collapse="false"></div>-->
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <button type="button" class="btn btn-danger" style="padding:5px;margin:0" data-ng-click="vm.openDeleteSchedule(value)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>Delete Schedule</button>
                                     <!-- Division: .-->
-                                </p>
                             </div>
 
                             <div class="widget-content text-center text-info">
@@ -23,6 +40,7 @@
                                     <table class="table table-condensed table-striped">
                                         <thead>
                                             <tr>
+                                                <th></th>
                                                 <th>Status</th>
                                                 <th>Date</th>
                                                 <th>Time</th>
@@ -33,11 +51,14 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr data-ng-repeat="p in valueDivision">
+                                            <tr data-ng-repeat="p in valueDivision | filter:{SeasonId:vm.season,DivisionId:vm.division}">
+                                                <td style="text-align: left">
+                                                    <a id="Edit" href data-ng-click="vm.openEditScore(p)">Score </a>
+                                                </td>
 
                                                 <td style="text-align: left">{{p.Status}}</td>
-                                                <td style="text-align: left"><span data-ng-bind="vm.convertToDate(p.DateTime) | date:'dd/MM/yyyy'"></span></td>
-                                                <td style="text-align: left"><span data-ng-bind="vm.convertToTime(p.DateTime)"></span></td>
+                                                <td style="text-align: left"><span data-ng-bind="vm.convertMomentDate(p.DateTime) | date:'dd/MM/yyyy'"></span></td>
+                                                <td style="text-align: left"><span data-ng-bind="vm.convertMomentTime(p.DateTime)"></span></td>
                                                 <td style="text-align: left">{{p.HomeTeam.TeamName}}</td>
                                                 <td>{{p.GoalsHomeTeam}} - {{p.GoalsAwayTeam}}</td>
                                                 <!--<td style="text-align: left">{{p.Division.DivisionName}}</td>-->
@@ -64,7 +85,7 @@
     <script type="text/ng-template" id="schedule.html">
     <div class="modal-content" >
         <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <button type="button" class="close" data-ng-click="cancel()" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title">Schedule</h4>
         </div>
         <div class="modal-body">
@@ -73,7 +94,7 @@
         
                 <div class="form-group">
                     <label for="season">Season</label>
-                    <select id="season" class="form-control" name="season" data-ng-model="season"  
+                    <select id="season" class="form-control" name="season" data-ng-model="season"  data-ng-change="seasonFilter()"
                     data-ng-options="Season.Id as Season.SeasonName for Season in Seasons">
                         <option value="">--choose season--</option>
                     </select>
@@ -91,7 +112,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                     <tr data-ng-repeat="(DivisionName,teamsDivision) in Teams  | groupBy: 'Division.DivisionName' ">
+                                                     <tr data-ng-repeat="(DivisionName,teamsDivision) in Teams  | groupBy: 'Division.DivisionName'">
                                                        
                                                         <td style="text-align: left">
                                                             <div>{{DivisionName}}</div>
@@ -113,46 +134,15 @@
                                             </table>
                                            
                                         </div>
-                                            <div class="alert alert-danger" data-ng-show="season>0" style="text-align:center">
+                                            <div class="alert alert-warning" data-ng-show="season>0" style="text-align:center">
                                               <p class="alert-link">Cada Division debe tener un minimo de 4 equipos</p><br>
                                               <p class="alert-link">El cronograma se creara solo para aquellas divisiones que tengan al menos 4 equipos </p>
                                             </div>
-
-
-        <!-- <div class="widget wviolet">
-                                        <div data-cc-widget-header title="Divisions and Teams" allow-collapse="true"></div>
-                                        <div class="widget-content text-center text-info">
-                                            <table class="table table-condensed table-striped">
-                                                <thead>
-                                                    <tr>
-        
-                                                        <th>Division</th>
-                                                        <th style="text-align: center">Number Teams </th>
-                                                        <th></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                     <tr data-ng-repeat="p in divisionTeams">
-                                                       <!-- <td style="text-align: left">
-                                                            <a id="Edit" href ng-click="vm.openEditSchedule(p)">Edit </a>|
-                                                            <a id="Delete" href ng-click="vm.openDeleteSchedule(p)">Delete </a>
-                                                        </td>-->
-                                                       <!-- <td style="text-align: left">{{p.DivisionName}}</td>
-                                                        <td style="text-align: center">{{p.CountTeam}}</td>
-                                                        <td>
-                                                            <span class="glyphicon glyphicon-ok" style="color:green" aria-hidden="true" data-ng-show="p.CountTeam>=4"></span>
-                                                            <span class="glyphicon glyphicon-remove" style="color:red" aria-hidden="true" data-ng-show="p.CountTeam<4"></span>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                           
-                                        </div>
-                                            <div class="alert alert-danger" data-ng-show="teamsMessage" style="text-align:center">
-                                              <a href="#" class="alert-link">Cada Division debe tener un minimo de 4 equipos</a><br>
-                                              <a href="#" class="alert-link">El cronograma se creara solo para aquellas divisiones que tengan al menos 4 equipos </a>
+                                            <div class="alert alert-danger" data-ng-show="error_message.length>0" >
+                                              <p class="alert-link">{{error_message}}</p>
                                             </div>
-               </div>-->
+
+
             </form>
         </div>
         <div class="modal-footer">
@@ -174,14 +164,37 @@
              <div class="modal-body">
 
                  <div class="form-group">
-                     <label class="control-label">Team Name:</label>
-                     <div style="padding-left: 10px">{{teamName}}</div>
+                     <label class="control-label">Division: {{division}}</label>
                  </div>
-
-                 <div class="form-group">
-                     <label class="control-label">Division:</label>
-                     <div style="padding-left: 10px">{{division}}</div>
-                 </div>
+                    <div class="widget-content text-center text-info">
+                    <div style="font-size:small">
+                            <table class="table table-condensed table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Status</th>
+                                                <th>Date</th>
+                                                <th>Time</th>
+                                                <th>Home</th>
+                                                <th style="text-align: center">Score</th>
+                                                <th>Away</th>
+                                                <th>Venue</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr data-ng-repeat="p in teams">
+                                                <td style="text-align: left">{{p.Status}}</td>
+                                                <td style="text-align: left"><span data-ng-bind="convertMomentDate(p.DateTime)"></span></td>
+                                                <td style="text-align: left"><span data-ng-bind="convertMomentTime(p.DateTime)"></span></td>
+                                                <td style="text-align: left">{{p.HomeTeam.TeamName}}</td>
+                                                <td>{{p.GoalsHomeTeam}} - {{p.GoalsAwayTeam}}</td>
+                                                <!--<td style="text-align: left">{{p.Division.DivisionName}}</td>-->
+                                                <td style="text-align: left">{{p.AwayTeam.TeamName}}</td>
+                                                <td style="text-align: left">{{p.Venue.VenueName}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                      </div>
+                    </div>
              </div>
               <!--<div class="modal-footer">
                   
@@ -197,6 +210,71 @@
         </div>
    
         
+    </script>
+
+     <script type="text/ng-template" id="score.html">
+    <div class="modal-content" >
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Results score</h4>
+        </div>
+        <div class="modal-body">
+
+            <form role="form">
+                <div class="row">
+                        <div class="col-md-12">
+                            <div class="widget wviolet">
+                                <div data-cc-widget-header title="Score"></div>
+                                <div class="widget-content text-center text-info">
+                                    <table class="table table-condensed table-striped">
+                                        <thead>
+                                            <tr>
+                                            
+                                            <th>Status</th>
+                                           
+                                            <th>Home</th>
+                                            <th style="text-align: center">Score</th>
+                                            <!--<th>DivisionName</th>-->
+                                            <th>Away</th>
+                                            <th>Venue</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            
+                                            <td style="text-align: left">{{objSchedule.Status}}</td>
+                                            <td style="text-align: left">{{objSchedule.HomeTeam.TeamName}}</td>
+                                            <td style="text-align: left"><!--{{objSchedule.Score}}-->
+                                                <table style="width: 100%;">
+                                                    <tr>
+                                                        <td><input id="goalsHomeTeam" type="text" data-ng-model="goalsHomeTeam" size="1" style="text-align:center;"/></td>
+                                                        <td><input id="goalsAwayTeam" type="text" data-ng-model="goalsAwayTeam" size="1" style="text-align:center;"/></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <!--<td style="text-align: left">{{objSchedule.Division.DivisionName}}</td>-->
+                                            <td style="text-align: left">{{objSchedule.AwayTeam.TeamName}}</td>
+                                            <td style="text-align: left">{{objSchedule.Venue.VenueName}}</td>
+
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            <div class="widget-foot">
+                                <div class="clearfix"></div>
+                            </div>
+                    </div>
+                        </div>
+                </div>
+                
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" data-ng-click="cancel()">Close</button>
+            <button type="button" class="btn btn-primary" data-ng-click="ok()" ng-disabled="goalsAwayTeam == undefined || goalsHomeTeam == undefined">Ok</button>
+        </div>
+    </div><!-- /.modal-content -->
     </script>
 </section>
 

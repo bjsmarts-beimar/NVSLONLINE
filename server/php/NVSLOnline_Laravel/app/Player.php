@@ -21,4 +21,8 @@ class Player extends Model
 		'IsHidden',
         'TeamId'
 	];
+
+	public function Team(){
+		 return $this->hasOne(Team::class,'Id','TeamId');
+	 }
 }

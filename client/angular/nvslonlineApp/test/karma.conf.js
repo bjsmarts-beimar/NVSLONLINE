@@ -28,6 +28,7 @@ module.exports = function(config) {
       'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
       'bower_components/angular-linq/angular-linq.js',
       'bower_components/angular-filter/dist/angular-filter.js',
+      'bower_components/moment/moment.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.js',

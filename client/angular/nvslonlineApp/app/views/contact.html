@@ -1,0 +1,100 @@
+<div class="col-md-1"></div>
+<div class="col-md-10">
+<section class="mainbar">
+    <section class="matter">
+        <div>
+            <h2>NVSLOnline::Contact</h2>
+            <div><h3>Helpful Links</h3></div>
+            <ul>
+                <li>Are you a new player interested in joining a a team?</li>
+                <li>Are you interested in creating a new team in NVSLOnline?</li>
+            </ul>
+            <div class="row">
+                	<div class="col-md-10">
+                        <div class="well well-sm">
+                        <form class="form-horizontal" ng-submit="vm.submit()">
+                        <fieldset>
+                            <legend class="text-left"><h5>For General League or Website Questions, please fill in the below form</h5> </legend>
+                    
+                            <!-- Request Subject -->
+                            <div class="form-group">
+                            <label class="col-md-3 control-label" for="name">Request Subject</label>
+                            <div class="col-md-9">
+                                
+                            <select id="request" class="form-control" name="request" data-ng-model="vm.requestSubject" data-ng-options="request.Id as request.subject for request in vm.request">
+                                <option value='0'>--choose level--</option>
+                            </select>
+                            </div>
+                            </div>
+
+                            <!-- Name input-->
+                            <div class="form-group">
+                            <label class="col-md-3 control-label" for="name">Your Name</label>
+                            <div class="col-md-9">
+                                <input id="name" name="name" data-ng-model="vm.name" type="text" placeholder="Your name" class="form-control">
+                            </div>
+                            </div>
+                    
+                            <!-- Email input-->
+                            <div class="form-group">
+                            <label class="col-md-3 control-label" for="email">Your E-mail</label>
+                            <div class="col-md-9">
+                                <input id="email" name="email" data-ng-model="vm.email" type="text" placeholder="Your email" class="form-control">
+                            </div>
+                            </div>
+                    
+                            <!-- Message body -->
+                            <div class="form-group">
+                            <label class="col-md-3 control-label" for="message">Your message</label>
+                            <div class="col-md-9">
+                                <textarea class="form-control" id="message" name="message" data-ng-model="vm.message"  placeholder="Please enter your message here..." rows="5"></textarea>
+                            </div>
+                            </div>
+
+                            <!-- Captcha input-->
+                            <div class="form-group">
+                            <label class="col-md-3 control-label" for="captcha">{{vm.captcha}}</label>
+                            <div class="col-md-3">
+                                <input id="captcha" name="captcha" type="text" data-ng-model="vm.captchaValue" placeholder="Your answer" class="form-control">
+                                <span class="errorText">{{vm.messageCaptcha}}</span>
+                            </div>
+                            <div class="col-md-1">
+                                <button type="button" class="btn btn-default" data-ng-click="vm.refresh()">
+                                    <span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>
+                                </button>
+                            </div>
+                            </div>
+                    
+                            <!-- Form actions -->
+                            <div class="form-group">
+                            <div class="col-md-8 text-center">
+                                <div class="alert alert-success" ng-show="vm.success">
+                                <strong >
+                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                </strong> Message sent succesfully.
+                                </div>
+
+                                <div class="alert alert-danger" ng-show="vm.error">
+                                <strong>    
+                                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                </strong> Error message was not sent.
+                                </div>
+                            </div>
+                            <div class="col-md-4 text-right">
+                                <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+                            </div>
+                            </div>
+                        </fieldset>
+                        </form>
+                        </div>
+                    </div>
+            </div>
+                <div><h5>Mailing Address</h5></div>
+                <div><h6>NVSL</h6></div>
+                <div><h6>PO Box 2760</h6></div>
+                <div><h6>Merrifield, VA 22116</h6></div>
+            </div>
+        </div>
+    </section>
+</section>
+</div>

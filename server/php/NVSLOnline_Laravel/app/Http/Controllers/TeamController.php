@@ -11,9 +11,10 @@ class TeamController extends Controller
     public function index(){
 		$teams = Team::with('Division','Season')
 		->where('IsHidden','=','false')
+		->orderBy('Id','ASC')
 		->get();
 
-				return response()->json($teams->toArray());
+		return response()->json($teams);
 	}
 	
 	public function show($id){
@@ -33,11 +34,8 @@ class TeamController extends Controller
 			$objTeam -> DivisionId = $request->DivisionId;
 			$objTeam -> SeasonId = $request->SeasonId;
 			$objTeam -> save();
-			return response()->json([
-						"msg" => "Success",
-						"id" => $objTeam->Id
-						],200
-					);
+			return response()->json($objTeam);
+			
 		}
 	}
 
@@ -48,21 +46,14 @@ class TeamController extends Controller
 		$objTeam -> DivisionId = $request->DivisionId;
 		$objTeam -> SeasonId = $request->SeasonId;
 		$objTeam -> save();
-		return response()->json([
-					"msg" => "Success",
-					"id" => $objTeam->Id
-					],200
-				);
+		return response()->json($objTeam);
+		
 	}
 	public function updateDelete($id){
 		$objTeam = Team::find($id);
 		$objTeam -> IsHidden = 1;
 		$objTeam -> save();
-		return response()->json([
-					"msg" => "Success",
-					"id" => $objTeam->Id
-					],200
-				);
+		return response()->json($objTeam);
 	}
 	public function destroy($id){
 		$objTeam = Team::find($id)->delete();

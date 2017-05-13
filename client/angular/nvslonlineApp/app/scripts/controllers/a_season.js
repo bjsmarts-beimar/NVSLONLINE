@@ -8,21 +8,17 @@
  * Controller of the nvslonlineAppApp
  */
 angular.module('nvslonlineAppApp')
-  .controller('ASeasonCtrl', ['$scope', '$modal', 'datacontext', 'toastr', 'webUrl','common', 
-  function ($scope, $modal, datacontext, toastr, webUrl, common) {
+  .controller('ASeasonCtrl', ['$scope', '$modal', 'datacontext', 'toastr', 'webUrl','common','parameters','$location',
+  function ($scope, $modal, datacontext, toastr, webUrl, common, parameters, $location) {
     var vm = this;
-
+    common.accessLogin();
     vm.convertToTime = common.convertToTime;
     vm.convertToDate = common.convertToDate;
-        //vm.news = {
-        //    title: 'Hot Towel Angular',
-        //    description: 'Hot Towel Angular is a SPA template for Angular developers.'
-        //};
-        //vm.messageCount = 0;
-        //vm.people = [];
+        
         vm.title = 'Season';
         vm.openNewSeason = openNewSeason;
         vm.openEditSeason = openEditSeason;
+        vm.openDeleteSeason = openDeleteSeason;
         
         getSeason();
          function getSeason() {
@@ -83,6 +79,30 @@ angular.module('nvslonlineAppApp')
             }, function () {
             });
         }
+
+        function openDeleteSeason(season) {
+            var options = {};
+            options.season = season;
+            options.webUrl = webUrl;
+
+            var modalInstance = $modal.open({
+                templateUrl: 'delete.html',
+                controller: modalInstanceDeleteSeason,
+                //size: size,
+
+                resolve: {
+                    options: function () { //esta es la info enviada al modal si se cargo correctamente. tb se puede info en el scope que abre el modal
+                        return options;
+                    }
+                }
+            });
+            modalInstance.result.then(function (data) {
+               getSeason();
+                //log('Changes Saved');
+            }, function () {
+            });
+        } 
+
   }]);
 
   var modalInstanceNewSeason = ['$scope', '$modalInstance', 'options', 'datacontext','$filter',
@@ -122,6 +142,22 @@ angular.module('nvslonlineAppApp')
             objSeason.SeasonEnd = $filter('date')(this.seasonEnd,'yyyy-MM-dd');
 
             var dataUpdated = datacontext.editSeason(options.webUrl,objSeason);
+            $modalInstance.close(dataUpdated);
+        };
+        $scope.cancel = function () { $modalInstance.dismiss('cancel'); };
+    }];
+
+var modalInstanceDeleteSeason = ['$scope', '$modalInstance', 'datacontext', 'options', 
+function ($scope, $modalInstance, datacontext, options) {
+    
+        var objSeason = options.season;
+
+        $scope.seasonName = objSeason.SeasonName;
+        
+        $scope.ok = function () {
+            
+            var dataUpdated = datacontext.deleteSeason(options.webUrl,objSeason);
+            //console.log(updated);
             $modalInstance.close(dataUpdated);
         };
         $scope.cancel = function () { $modalInstance.dismiss('cancel'); };

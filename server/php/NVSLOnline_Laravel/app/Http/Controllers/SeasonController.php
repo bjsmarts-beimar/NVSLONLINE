@@ -5,12 +5,14 @@ namespace NVSLOnline\Http\Controllers;
 use Illuminate\Http\Request;
 use NVSLOnline\Season;
 use DB;
+use Carbon\Carbon;
 
 class SeasonController extends Controller
 {
       public function index(){
      	$seasons = DB::table('Seasons')
 				->where('IsHidden','=','false')
+				->orderBy('Id','ASC')
 				->get();
 		
 				return response()->json($seasons);
@@ -30,9 +32,6 @@ class SeasonController extends Controller
 		return response()->json($season);
 	}
 	
-	public function create(){
-
-	}
 	public function store(Request $request){
 		$objSeason = New Season(); 
 		$objSeason -> SeasonName = $request->SeasonName;
@@ -52,7 +51,10 @@ class SeasonController extends Controller
 		//$objDivision = Division::find($request->Id);
 		$objSeason = Season::find($id);
 		$objSeason -> SeasonName = $request->SeasonName;
+		$objSeason -> SeasonStart = $request->SeasonStart;
+		$objSeason -> SeasonEnd = $request->SeasonEnd;
 		$objSeason -> save();
+		print(objSeason);
 		return response()->json([
 					"msg" => "Success",
 					"id" => $objSeason->Id

@@ -13,6 +13,7 @@ class DivisionController extends Controller
     public function index(){
 				$divisions = DB::table('Divisions')
 				->where('IsHidden','=','false')
+				->orderBy('Id','ASC')
 				->get();
 
 		return response()->json($divisions);		

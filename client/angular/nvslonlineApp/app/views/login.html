@@ -10,20 +10,18 @@
 
                         <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
                             
-                        <form id="loginform" class="form-horizontal" ng-submit="login()" role="form">
+                        <form id="loginform" class="form-horizontal" ng-submit="vm.login()" role="form">
                                     
                             <div style="margin-bottom: 25px" class="input-group">
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                        <input id="login-username" type="text" class="form-control" name="username" ng-model="username"" value="" placeholder="username or email">                                        
+                                        <input id="login-username" type="text" class="form-control" name="loginusername" ng-model="vm.loginusername"  placeholder="username or email">                                        
                                     </div>
                                 
                             <div style="margin-bottom: 25px" class="input-group">
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                                        <input id="login-password" type="password" class="form-control" name="password" ng-model="password"" placeholder="password">
+                                        <input id="login-password" type="password" class="form-control" name="loginpassword" ng-model="vm.loginpassword" placeholder="password">
                                     </div>
-                                    
-
-                                
+                                      
                             <div class="input-group">
                                       <div class="checkbox">
                                         <label>
@@ -32,12 +30,16 @@
                                       </div>
                                     </div>
 
+                                <div class="alert alert-danger" data-ng-show="vm.error_message.length>0" >
+                                              <p class="alert-link">{{vm.error_message}}</p>
+                                </div>
+
 
                                 <div style="margin-top:10px" class="form-group">
                                     <!-- Button -->
 
                                     <div class="col-sm-12 controls">
-                                      <a id="btn-login" href="#" type="submit" class="btn btn-success">Login  </a>
+                                      <button id="btn-login" type="submit" class="btn btn-success"><i class="icon-hand-right"></i> &nbsp Login</button>
                                       <a id="btn-fblogin" href="#" class="btn btn-primary">Login with Facebook</a>
 
                                     </div>
@@ -48,7 +50,7 @@
                                     <div class="col-md-12 control">
                                         <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%" >
                                             Don't have an account! 
-                                        <a href="#" onClick="$('#loginbox').hide(); $('#signupbox').show()">
+                                        <a style="cursor:pointer" onClick="$('#loginbox').hide(); $('#signupbox').show()">
                                             Sign Up Here
                                         </a>
                                         </div>
@@ -65,55 +67,62 @@
                     <div class="panel panel-info">
                         <div class="panel-heading">
                             <div class="panel-title">Sign Up</div>
-                            <div style="float:right; font-size: 85%; position: relative; top:-10px"><a id="signinlink" href="#" onclick="$('#signupbox').hide(); $('#loginbox').show()">Sign In</a></div>
+                            <div style="float:right; font-size: 85%; position: relative; top:-10px"><a id="signinlink" style="cursor:pointer" onclick="$('#signupbox').hide(); $('#loginbox').show()">Sign In</a></div>
                         </div>  
                         <div class="panel-body" >
-                            <form id="signupform" class="form-horizontal" role="form">
+                            <form id="signupform" class="form-horizontal" role="form" ng-submit="vm.register()">
                                 
                                 <div id="signupalert" style="display:none" class="alert alert-danger">
                                     <p>Error:</p>
                                     <span></span>
                                 </div>
-                                    
                                 
-                                  
-                                <div class="form-group">
-                                    <label for="email" class="col-md-3 control-label">Email</label>
-                                    <div class="col-md-9">
-                                        <input type="text" class="form-control" name="email" placeholder="Email Address">
-                                    </div>
-                                </div>
                                     
                                 <div class="form-group">
                                     <label for="firstname" class="col-md-3 control-label">First Name</label>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control" name="firstname" placeholder="First Name">
+                                        <input type="text" class="form-control" name="firstname" ng-model="vm.firstname" placeholder="First Name">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="lastname" class="col-md-3 control-label">Last Name</label>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control" name="lastname" placeholder="Last Name">
+                                        <input type="text" class="form-control" name="lastname" ng-model="vm.lastname" placeholder="Last Name">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email" class="col-md-3 control-label">Email</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" name="email" ng-model="vm.email" placeholder="Email Address">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="username" class="col-md-3 control-label">Username</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" name="username" ng-model="vm.username" placeholder="Username">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="password" class="col-md-3 control-label">Password</label>
                                     <div class="col-md-9">
-                                        <input type="password" class="form-control" name="passwd" placeholder="Password">
+                                        <input type="password" class="form-control" name="password" ng-model="vm.password" placeholder="Password">
                                     </div>
                                 </div>
                                     
                                 <div class="form-group">
-                                    <label for="icode" class="col-md-3 control-label">Invitation Code</label>
+                                    <label for="cpassword" class="col-md-3 control-label">Confirm Password</label>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control" name="icode" placeholder="">
+                                        <input type="password" class="form-control" name="cpassword" ng-model="vm.cpassword" placeholder="Confirm Password">
                                     </div>
+                                </div>
+                                <div class="alert alert-danger" data-ng-show="vm.error_message.length>0" >
+                                              <p class="alert-link">{{vm.error_message}}</p>
                                 </div>
 
                                 <div class="form-group">
                                     <!-- Button -->                                        
                                     <div class="col-md-offset-3 col-md-9">
-                                        <button id="btn-signup" type="button" class="btn btn-info"><i class="icon-hand-right"></i> &nbsp Sign Up</button>
+                                        <button id="btn-signup" type="submit" class="btn btn-info"><i class="icon-hand-right"></i> &nbsp Sign Up</button>
                                         <span style="margin-left:8px;">or</span>  
                                     </div>
                                 </div>

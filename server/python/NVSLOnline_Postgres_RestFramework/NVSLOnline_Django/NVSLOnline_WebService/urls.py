@@ -29,6 +29,7 @@ urlpatterns = [
     ################################## PLAYERS ##################################
     url(r'^api/players/?$', NVSLOnline_Views.player, name='get_player'),
     url(r'^api/players/(?P<id>\d+)/?$', NVSLOnline_Views.player, name='getPlayerId'),
+    url(r'^api/playersByTeam/(?P<id>\d+)/?$', NVSLOnline_Views.getPlayersByTeamId, name='getPlayerId'),
 
     ################################## SCHEDULES ##################################
     url(r'^api/schedules/?$', NVSLOnline_Views.schedule, name='get_schedule'),
@@ -38,10 +39,12 @@ urlpatterns = [
     ################################## STANDINGS ##################################
     url(r'^api/standings/?$', NVSLOnline_Views.standing, name='get_standing'),
 
-    ################################## Roles ##################################
-    url(r'^api/roles/?$', NVSLOnline_Views.role, name='get_roles'),
+    ################################## CONTACT ##################################
+    url(r'^api/contacts/?$', NVSLOnline_Views.contact, name='get_contact'),
+    url(r'^api/contacts/(?P<id>\d+)/?$', NVSLOnline_Views.contact, name='getcontactId'),
 
-    ################################## TopNavigation ##################################
-    url(r'^api/topNavigation/?$', NVSLOnline_Views.topNavigation, name='get_topNavigation'),
-    url(r'^api/topNavigation/(?P<id>\d+)/?$', NVSLOnline_Views.topNavigation, name='get_topNavigationId'),
+    ################################## NEWS ##################################
+    url(r'^api/news/?$', NVSLOnline_Views.new, name='get_news'),
+    url(r'^api/news/(?P<id>\d+)/?$', NVSLOnline_Views.new, name='getnewsId'),
+    
 ]

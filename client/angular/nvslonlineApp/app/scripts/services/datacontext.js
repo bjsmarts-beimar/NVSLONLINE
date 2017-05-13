@@ -8,7 +8,7 @@
  * Service in the nvslonlineAppApp.
  */
 angular.module('nvslonlineAppApp')
-  .service('datacontext', function ($http) {
+  .service('datacontext', function ($http,common) {
     
 
     /********************************* Division *******************************/
@@ -56,6 +56,15 @@ this.editDivision = function (webUrl,objDivision) {
             //withCredentials: true,
             data: 'json',
             url: webUrl +  'api/teams'
+        });
+    };
+
+    this.getTeamById = function (webUrl,Id) {
+        return $http({
+            method: 'GET',
+            //withCredentials: true,
+            data: 'json',
+            url: webUrl +  'api/teams/' + Id
         });
     };
 
@@ -131,6 +140,16 @@ this.editDivision = function (webUrl,objDivision) {
 
     };
 
+    this.editSeasonActive = function (webUrl,objSeason) {
+        return $http({
+            method: 'PUT',
+            url: webUrl +  'api/seasons/seasonActive/' + objSeason.Id,
+            //withCredentials: true,
+           data: objSeason
+        });
+
+    };
+
     this.deleteSeason = function (webUrl,objSeason) {
         return $http({
             method: 'DELETE',
@@ -142,7 +161,7 @@ this.editDivision = function (webUrl,objDivision) {
     };
 
     /********************************* Venues *******************************/
-    this.getVenue = function (webUrl) {
+    this.getVenues = function (webUrl) {
         return $http({
             method: 'GET',
             //withCredentials: true,
@@ -195,6 +214,45 @@ this.editDivision = function (webUrl,objDivision) {
         });
     };
 
+    this.addSchedule = function (webUrl, objSchedule) {
+        return $http({
+            method: 'POST',
+            url: webUrl +  'api/schedules',
+            data: objSchedule,
+            //withCredentials: true,
+        }).then(function successCallback(response){
+            console.log(response);
+        },function errorCallback(response){
+            console.log(response);
+        });
+    };
+
+    this.editScore = function (webUrl,objSchedule) {
+        return $http({
+            method: 'PUT',
+            url: webUrl +  'api/schedules/scheduleScore/' + objSchedule.Id,
+            //withCredentials: true,
+           data: objSchedule
+        }).then(function successCallback(response){
+            console.log(response);
+        },function errorCallback(response){
+            console.log(response);
+        });
+    };
+
+    this.deleteSchedule = function (webUrl,objSchedule) {
+        return $http({
+            method: 'DELETE',
+            url: webUrl +  'api/schedules/' + objSchedule.Id,
+            //withCredentials: true,
+           data: objSchedule
+        }).then(function successCallback(response){
+            console.log(response);
+        },function errorCallback(response){
+            console.log(response);
+        });
+    };
+
     /********************************* Standings *******************************/
 
     this.getStandings = function (webUrl) {
@@ -206,33 +264,22 @@ this.editDivision = function (webUrl,objDivision) {
         });
     };
 
-    /********************************* Roles *******************************/
-    
-    this.getRoles = function (webUrl) {
+    /*********************************** News **********************************/
+
+    this.getNews = function (webUrl) {
         return $http({
             method: 'GET',
             //withCredentials: true,
             data: 'json',
-            url: webUrl +  'api/roles'
+            url: webUrl +  'api/news'
         });
     };
 
-    /********************************* TopNavigation *******************************/
-    
-    this.getTopNavigation = function (webUrl) {
-        return $http({
-            method: 'GET',
-            //withCredentials: true,
-            data: 'json',
-            url: webUrl +  'api/topNavigation'
-        });
-    };
-
-    this.addTopNavigation = function (webUrl, objTopNavigation) {
+    this.addNew = function (webUrl, objNew) {
         return $http({
             method: 'POST',
-            url: webUrl +  'api/topNavigation',
-            data: objTopNavigation,
+            url: webUrl +  'api/news',
+            data: objNew,
             //withCredentials: true,
         }).then(function successCallback(response){
             console.log(response);
@@ -241,14 +288,154 @@ this.editDivision = function (webUrl,objDivision) {
         });
     };
 
-    this.editTopNavigation = function (webUrl,objTopNavigation) {
+    this.editNew = function (webUrl,objNew) {
         return $http({
             method: 'PUT',
-            url: webUrl +  'api/topNavigation/' + objTopNavigation.Id,
+            url: webUrl +  'api/news/' + objNew.Id,
             //withCredentials: true,
-           data: objTopNavigation
+           data: objNew
         });
 
+    };
+
+    this.deleteNew = function (webUrl,objNew) {
+        return $http({
+            method: 'DELETE',
+            url: webUrl +  'api/news/' + objNew.Id,
+            //withCredentials: true,
+           data: objNew
+        });
+
+    };
+
+    /*********************************** Contacts **********************************/
+
+    this.getContacts = function (webUrl) {
+        return $http({
+            method: 'GET',
+            //withCredentials: true,
+            data: 'json',
+            url: webUrl +  'api/contacts'
+        });
+    };
+
+    this.addContact = function (webUrl, objContact) {
+        return $http({
+            method: 'POST',
+            url: webUrl +  'api/contacts',
+            data: objContact,
+            //withCredentials: true,
+        }).then(function successCallback(response){
+            console.log(response);
+            return common.successResponse(response);
+        },function errorCallback(response){
+            console.log(response);
+            return common.errorResponse(response);
+        });
+    };
+
+    this.deleteContact = function (webUrl,objContact) {
+        return $http({
+            method: 'DELETE',
+            url: webUrl +  'api/contacts/' + objContact.Id,
+            //withCredentials: true,
+           data: objContact
+        });
+    };
+    
+    /*********************************** Players **********************************/
+
+    this.getPlayers = function (webUrl) {
+        return $http({
+            method: 'GET',
+            //withCredentials: true,
+            data: 'json',
+            url: webUrl +  'api/players'
+        });
+    };
+
+    this.getPlayersByTeamId = function (webUrl,teamId) {
+        return $http({
+            method: 'GET',
+            //withCredentials: true,
+            data: 'json',
+            url: webUrl +  'api/playersByTeam/' + teamId
+        });
+    };
+
+    this.addPlayer = function (webUrl, objPlayer) {
+        return $http({
+            method: 'POST',
+            url: webUrl +  'api/players',
+            data: objPlayer,
+            //withCredentials: true,
+        }).then(function successCallback(response){
+            console.log(response);
+        },function errorCallback(response){
+            console.log(response);
+        });
+    };
+
+    this.editPlayer = function (webUrl,objPlayer) {
+        return $http({
+            method: 'PUT',
+            url: webUrl +  'api/players/' + objPlayer.Id,
+            //withCredentials: true,
+           data: objPlayer
+        });
+
+    };
+
+    this.deletePlayer = function (webUrl,objPlayer) {
+        return $http({
+            method: 'DELETE',
+            url: webUrl +  'api/players/' + objPlayer.Id,
+            //withCredentials: true,
+           data: objPlayer
+        });
+
+    };
+
+    /*********************************** login **********************************/
+
+    this.register = function (webUrl, objUser) {
+        return $http({
+            method: 'POST',
+            url: webUrl +  'api/users/register',
+            data: objUser,
+            //withCredentials: true,
+        }).then(function successCallback(response){
+            return response;
+            console.log(response);
+        },function errorCallback(response){
+            console.log(response);
+        });
+    };
+
+    this.authenticate = function (webUrl, objUser) {
+        return $http({
+            method: 'POST',
+            url: webUrl +  'api/users/authenticate',
+            data: objUser,
+            //withCredentials: true,
+        }).then(function successCallback(response){
+            return response;
+        },function errorCallback(response){
+            console.log(response);
+        });
+    };
+
+    this.changePassword = function (webUrl, objUser) {
+        return $http({
+            method: 'POST',
+            url: webUrl +  'api/users/changepass',
+            data: objUser,
+            //withCredentials: true,
+        }).then(function successCallback(response){
+            console.log(response);
+        },function errorCallback(response){
+            console.log(response);
+        });
     };
 
   });

@@ -8,17 +8,17 @@
  * Controller of the nvslonlineAppApp
  */
 angular.module('nvslonlineAppApp')
-  .controller('AVenueCtrl', ['$scope', '$modal', 'datacontext', 'toastr', 'webUrl','common', 
-  function ($scope, $modal, datacontext, toastr, webUrl, common) {
+  .controller('AVenueCtrl', ['$scope', '$modal', 'datacontext', 'toastr', 'webUrl','common','parameters','$location',
+  function ($scope, $modal, datacontext, toastr, webUrl, common, parameters, $location) {
     var vm = this;
-
+        common.accessLogin();
         vm.title = 'Venues';
         vm.openNewVenue = openNewVenue;
         vm.openEditVenue = openEditVenue;
         
         getVenues();
          function getVenues() {
-            return datacontext.getVenue(webUrl).then(function (response) {
+            return datacontext.getVenues(webUrl).then(function (response) {
                 //console.log(data);
                 return vm.venues = response.data;
             });
