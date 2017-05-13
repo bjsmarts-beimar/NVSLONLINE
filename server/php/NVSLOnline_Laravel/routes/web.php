@@ -83,7 +83,4 @@ Route::get("contacts", "ContactController@index");
 Route::post("contacts", "ContactController@store");
 Route::put("contacts/{id}", "ContactController@update");
 Route::delete("contacts/{id}", "ContactController@updateDelete");
-
-Route::post("users/register", "UserController@store");
-Route::post("users/authenticate", "UserController@authenticateUser");
 });

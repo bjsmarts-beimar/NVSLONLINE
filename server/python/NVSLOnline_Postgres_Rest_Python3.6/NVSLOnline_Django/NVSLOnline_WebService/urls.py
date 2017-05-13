@@ -47,9 +47,5 @@ urlpatterns = [
     url(r'^api/news/?$', NVSLOnline_Views.new, name='get_news'),
     url(r'^api/news/(?P<id>\d+)/?$', NVSLOnline_Views.new, name='getnewsId'),
 
-    ################################## USERS ##################################
-    url(r'^api/users/register/?$', NVSLOnline_Views.register, name='register_user'),
-    url(r'^api/users/authenticate/?$', NVSLOnline_Views.authenticateUser, name='authenticate_user'),
-    url(r'^api/users/changepass/?$', NVSLOnline_Views.changePassword, name='change_password'),
     
 ]

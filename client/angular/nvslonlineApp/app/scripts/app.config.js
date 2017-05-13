@@ -155,7 +155,7 @@ angular.module('nvslonlineAppApp').config(function($urlRouterProvider, $statePro
     .state('signUp', {
         url: '/signUp',
         templateUrl: '/views/register.html',
-        controller: 'LoginCtrl as vm'
+        controller: 'RegisterCtrl as vm'
     });
 
 })

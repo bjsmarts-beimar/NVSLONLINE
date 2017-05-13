@@ -22,17 +22,20 @@ angular.module('nvslonlineAppApp')
     });
 
     function login() {
-      /*parameters.loginAccess.access = true;
+      parameters.loginAccess.access = true;
+      parameters.loginAccess.user = "beimar medina";
       vm.access = true;
+      vm.user = "beimar medina";
+      
       $location.path('/dashboard');
-      */
-      $location.path('/login')
+      
+      //$location.path('/login')
     } 
 
     function logOut() {
-      parameters.setLoginAccess("",false)
-      /*parameters.loginAccess.access = false;
-      vm.access = false;*/
+      //parameters.setLoginAccess("",false)
+      parameters.loginAccess.access = false;
+      vm.access = false;
       $location.path('/home')
     } 
     

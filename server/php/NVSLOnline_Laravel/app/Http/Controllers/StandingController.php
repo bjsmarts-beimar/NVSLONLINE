@@ -36,6 +36,8 @@ class StandingController extends Controller
             $standing["GoalsAgainst"] = 0;
 
             foreach ($teamsEnJuego as $teamEnJuego) {
+                if ($teamEnJuego->IsHidden == false) {
+                 
                 if ($team->Id == $teamEnJuego->HomeTeamId) {
                         $standing["GoalsFor"] += $teamEnJuego->GoalsHomeTeam;
                         $standing["GoalsAgainst"] += $teamEnJuego->GoalsAwayTeam;
@@ -71,7 +73,11 @@ class StandingController extends Controller
                             $standing["Points"] += 1;
                         }
                     }
-            }
+            
+            
+                    }
+               
+                }
 
             $standing["Differential"] = $standing["GoalsFor"] - $standing["GoalsAgainst"];
             array_push($lstStanding,$standing);

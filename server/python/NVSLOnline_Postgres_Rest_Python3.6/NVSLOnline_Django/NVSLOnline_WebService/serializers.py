@@ -66,10 +66,3 @@ class NewSerializer(ModelSerializer):
         fields = ('Id','title','description','IsHidden','created','modifiedBy','modifiedByfullName','modified')
         #read_only_fields = ('Id')
 
-class UserSerializer(ModelSerializer):
-    class Meta:
-        model = User # el modelo usuario es extraido de los modelos de Django revisar import
-        fields = ('username','password','email','first_name','last_name')
-        '''widgets = {
-            'password':forms.PasswordInput(),
-        }'''
