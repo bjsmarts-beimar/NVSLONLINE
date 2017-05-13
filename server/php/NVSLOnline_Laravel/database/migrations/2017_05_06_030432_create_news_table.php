@@ -16,7 +16,7 @@ class CreateNewsTable extends Migration
        Schema::create('News', function (Blueprint $table) {
             $table->increments('Id');
             $table->string('title');
-            $table->string('description',1500);
+            $table->longText('description');
             
             $table->boolean('IsHidden')->default(false);
             $table->dateTime('created');

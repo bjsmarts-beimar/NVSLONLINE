@@ -53,7 +53,8 @@ Route::get("seasons/{id}", "SeasonController@show");
 Route::post("seasons", "SeasonController@store");
 Route::put("seasons/{id}", "SeasonController@update");
 Route::put("seasons/seasonActive/{id}", "SeasonController@editSeasonActive");
-Route::delete("seasons/{id}", "SeasonController@destroy");
+Route::delete("seasons/{id}", "SeasonController@updateDelete");
+//Route::delete("seasons/{id}", "SeasonController@destroy");
 
 Route::get("venues", "VenueController@index");
 Route::post("venues", "VenueController@store");
