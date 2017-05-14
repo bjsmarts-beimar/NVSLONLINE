@@ -32,8 +32,8 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     #'django.contrib.admin',
-    #'django.contrib.auth',
-    #'django.contrib.contenttypes',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
     #'django.contrib.sessions',
     #'django.contrib.messages',
     #'django.contrib.staticfiles',
@@ -86,7 +86,7 @@ WSGI_APPLICATION = 'NVSLOnline_Django.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'nvslonline2',                      
+        'NAME': 'nvslonline3',                      
         'USER': 'nvslonlineuser',
         'PASSWORD': '4rfv5tgb^YHN&UJM',
         'HOST': '',
