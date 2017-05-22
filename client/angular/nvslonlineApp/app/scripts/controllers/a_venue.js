@@ -77,34 +77,46 @@ angular.module('nvslonlineAppApp')
         }
   }]);
 
-  var modalInstanceNewVenue = ['$scope', '$modalInstance', 'options', 'datacontext','$filter',
-        function($scope, $modalInstance, options, datacontext,$filter) {
+  var modalInstanceNewVenue = ['$scope', '$modalInstance', 'options', 'datacontext','$filter','toastr',
+        function($scope, $modalInstance, options, datacontext,$filter,toastr) {
             $scope.ok = function () {
                 var venueValues = {};
                 venueValues.VenueName = this.venueName;
                 venueValues.IsHidden = false;
                 
-                var dataUpdated = datacontext.addVenue(options.webUrl,venueValues);
-
-                $modalInstance.close(dataUpdated);
+                datacontext.addVenue(options.webUrl,venueValues).then(function (response) {
+                   if (response.status!=200) {
+                       toastr.error("Error has occurred: " + response.data, "Fatal error", {
+                        positionClass: 'toast-bottom-full-width'})
+                   }else{
+                       $modalInstance.close(response);
+                   }
+                });
+                
             };
             $scope.cancel = function () { $modalInstance.dismiss('cancel'); };
         }];
 
-    var modalInstanceEditVenue = ['$scope', '$modalInstance', 'datacontext','common', 'options','$filter', 
-        function ($scope, $modalInstance, datacontext,common, options, $filter) {
+    var modalInstanceEditVenue = ['$scope', '$modalInstance', 'datacontext','common', 'options','$filter', 'toastr',
+        function ($scope, $modalInstance, datacontext,common, options, $filter, toastr) {
 
         var objVenue = options.venue;
-       console.log(objVenue);
-        
         $scope.venueName = objVenue.VenueName;
-        
+        var aux = JSON.parse(JSON.stringify(objVenue));
         $scope.ok = function () {
            
             objVenue.VenueName = this.venueName;
            
-            var dataUpdated = datacontext.editVenue(options.webUrl,objVenue);
-            $modalInstance.close(dataUpdated);
+           datacontext.editVenue(options.webUrl,objVenue).then(function (response) {
+                   if (response.status!=200) {
+                       toastr.error("Error has occurred: " + response.data, "Fatal error", {
+                        positionClass: 'toast-bottom-full-width'})
+                        objVenue.VenueName=aux.VenueName;
+                   }else{
+                       $modalInstance.close(response);
+                   }
+                });
+            
         };
         $scope.cancel = function () { $modalInstance.dismiss('cancel'); };
     }];

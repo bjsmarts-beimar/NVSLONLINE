@@ -15,7 +15,11 @@
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
-    
+    <script>
+    function show(){
+      var div = document.getElementById('panelIzq').style.visibility='visible';
+    }
+    </script>
   </head>
   <body ng-app="nvslonlineAppApp" ng-controller="MainCtrl as vm" ng-init="vm.access=false">
     <!--[if lte IE 8]>
@@ -51,7 +55,7 @@
               <li ui-sref-active="active" ng-if="!vm.access"><a ui-sref="standing">Standing</a></li>
               <li ui-sref-active="active" ng-if="!vm.access"><a ui-sref="contact">Contact</a></li>
               <li ui-sref-active="active" ng-if="!vm.access"><a ui-sref="signUp">Sign Up</a></li>
-              <li ui-sref-active="active" ng-if="!vm.access" style="cursor:pointer"><a ng-click="vm.login()">Log In</a></li>
+              <li ui-sref-active="active" ng-if="!vm.access" style="cursor:pointer"><a ng-click="vm.login()" onclick="show()">Log In</a></li>
                 <li ng-hide="!vm.access" class='dropdown' style="cursor:pointer">
                             
                             <a class='dropdown-toggle' data-toggle='dropdown'>{{vm.user}}
@@ -68,54 +72,54 @@
       </div>
     </div>
     
-
   
     <div class="container-fluid">
       <div class="row">
-       <div ng-if="vm.access">
-                <div class="col-md-2 sidebar">
-	 				<div class="row">
-						<!-- uncomment code for absolute positioning tweek see top comment in css -->
-						<div class="absolute-wrapper"> </div>
-							<!-- Menu -->
-							<div class="side-menu">
-								<nav class="navbar navbar-default" role="navigation">
-									<!-- Main Menu -->
-									<div class="side-menu-container">
-                    
-										<ul class="nav navbar-nav">
-											<li style="clear:both;"><a ui-sref="dashboard"><span class="glyphicon glyphicon-dashboard"></span> Dashboard</a></li>
-											<li style="clear:both;"><a ui-sref="adminTeam"><span class="glyphicon glyphicon-picture"></span> Teams</a></li>
-                      <!--<li style="clear:both;"><a ui-sref="adminPlayer"><span class="glyphicon glyphicon-picture"></span> Players</a></li>-->
-											<li style="clear:both;"><a ui-sref="adminSchedule"><span class="glyphicon glyphicon-calendar"></span> Schedule</a></li>
-											<li style="clear:both;"><a ui-sref="standing"><span class="glyphicon glyphicon-globe"></span> Standings</a></li>
-											<!-- Dropdown-->
-											<li style="clear:both;" id="dropdown" >
-                          <button style="clear:both;text-decoration:none" type="button" class="btn btn-link" data-toggle="collapse" data-target="#dropdown-lvl1">
-                            <span class="glyphicon glyphicon-user"></span> Lookup tables
-                            </button>
-  
-												<div id="dropdown-lvl1" class="collapse">
-													<div class="panel-body">
-														<ul class="nav navbar-nav">
-															<li style="clear:both;"><a ui-sref="adminSeason" >Seasons</a></li>
-															<li style="clear:both;"><a ui-sref="adminDivision" >Divisions</a></li>
-															<li style="clear:both;"><a ui-sref="adminVenue" >Venues</a></li>
-															<li style="clear:both;"><a ui-sref="adminContact" >Contacts</a></li>
-															<li style="clear:both;"><a ui-sref="adminNew" >News</a></li>
-														</ul>
-													</div>
-												</div>
-											</li>
-											<li style="clear:both;"><a href="#"><span class="glyphicon glyphicon-edit"></span> Settings</a></li>
-										</ul>
-									</div><!-- /.navbar-collapse -->
-								</nav>
-							</div>
-						</div>  		
-				</div>
-            </div> 
+        <div style="visibility:hidden" ID="panelIzq">
+            <div ng-if="vm.access">
+                      <div class="col-md-2 sidebar">
+                <div class="row">
+                  <!-- uncomment code for absolute positioning tweek see top comment in css -->
+                  <div class="absolute-wrapper"> </div>
+                    <!-- Menu -->
+                    <div class="side-menu">
+                      <nav class="navbar navbar-default" role="navigation">
+                        <!-- Main Menu -->
+                        <div class="side-menu-container">
+                          
+                          <ul class="nav navbar-nav">
+                            <li style="clear:both;"><a ui-sref="dashboard"><span class="glyphicon glyphicon-dashboard"></span> Dashboard</a></li>
+                            <li style="clear:both;"><a ui-sref="adminTeam"><span class="glyphicon glyphicon-picture"></span> Teams</a></li>
+                            <!--<li style="clear:both;"><a ui-sref="adminPlayer"><span class="glyphicon glyphicon-picture"></span> Players</a></li>-->
+                            <li style="clear:both;"><a ui-sref="adminSchedule"><span class="glyphicon glyphicon-calendar"></span> Schedule</a></li>
+                            <li style="clear:both;"><a ui-sref="standing"><span class="glyphicon glyphicon-globe"></span> Standings</a></li>
+                            <!-- Dropdown-->
+                            <li style="clear:both;" id="dropdown" >
+                                <button style="clear:both;text-decoration:none" type="button" class="btn btn-link" data-toggle="collapse" data-target="#dropdown-lvl1">
+                                  <span class="glyphicon glyphicon-user"></span> Lookup tables
+                                  </button>
         
+                              <div id="dropdown-lvl1" class="collapse">
+                                <div class="panel-body">
+                                  <ul class="nav navbar-nav">
+                                    <li style="clear:both;"><a ui-sref="adminSeason" >Seasons</a></li>
+                                    <li style="clear:both;"><a ui-sref="adminDivision" >Divisions</a></li>
+                                    <li style="clear:both;"><a ui-sref="adminVenue" >Venues</a></li>
+                                    <li style="clear:both;"><a ui-sref="adminContact" >Contacts</a></li>
+                                    <li style="clear:both;"><a ui-sref="adminNew" >News</a></li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </li>
+                            <li style="clear:both;"><a href="#"><span class="glyphicon glyphicon-edit"></span> Settings</a></li>
+                          </ul>
+                        </div><!-- /.navbar-collapse -->
+                      </nav>
+                    </div>
+                  </div>  		
+              </div>
+            </div> 
+        </div>
         <div class="col-md-10" ui-view></div>
       </div>
     

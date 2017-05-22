@@ -144,8 +144,8 @@ angular.module('nvslonlineAppApp')
         }
   }]);
 
-   var modalInstanceNewTeam = ['$scope', '$modalInstance', 'options', 'datacontext',
-       function ($scope, $modalInstance, options, datacontext) {
+   var modalInstanceNewTeam = ['$scope', '$modalInstance', 'options', 'datacontext','toastr',
+       function ($scope, $modalInstance, options, datacontext, toastr) {
            
            $scope.Divisions = options.dataDivision;
            $scope.Seasons = options.dataSeason;
@@ -157,15 +157,20 @@ angular.module('nvslonlineAppApp')
                teamValues.SeasonId = this.season;
                teamValues.IsHidden = false;
 
-               var dataUpdated = datacontext.addTeam(options.webUrl,teamValues);
-
-               $modalInstance.close(dataUpdated);
+               datacontext.addTeam(options.webUrl,teamValues).then(function (response) {
+                   if (response.status!=200) {
+                       toastr.error("Error has occurred: " + response.data, "Fatal error", {
+                        positionClass: 'toast-bottom-full-width'})
+                   }else{
+                       $modalInstance.close(response);
+                   }
+                });
            };
            $scope.cancel = function () { $modalInstance.dismiss('cancel'); };
        }];
 
-    var modalInstanceEdit = ['$scope', '$modalInstance', 'datacontext', 'options', 
-    function ($scope, $modalInstance, datacontext, options) {
+    var modalInstanceEdit = ['$scope', '$modalInstance', 'datacontext', 'options', 'toastr',
+    function ($scope, $modalInstance, datacontext, options,toastr) {
          
         var objTeam = options.team;
         $scope.Divisions = options.dataDivision;
@@ -175,13 +180,24 @@ angular.module('nvslonlineAppApp')
         $scope.division = objTeam.DivisionId;
         $scope.season = objTeam.SeasonId;
         
+        var aux = JSON.parse(JSON.stringify(objTeam));
         $scope.ok = function () {
                objTeam.TeamName = this.teamName;
                objTeam.DivisionId = this.division;
                objTeam.SeasonId = this.season;
 
-               var dataUpdated = datacontext.editTeam(options.webUrl,objTeam);
-               $modalInstance.close(dataUpdated);
+                datacontext.editTeam(options.webUrl,objTeam).then(function (response) {
+                   if (response.status!=200) {
+                       toastr.error("Error has occurred: " + response.data, "Fatal error", {
+                        positionClass: 'toast-bottom-full-width'})
+                        objTeam.TeamName=aux.TeamName;
+                        objTeam.DivisionId=aux.DivisionId;
+                        objTeam.SeasonId=aux.SeasonId;
+                   }else{
+                       $modalInstance.close(response);
+                   }
+                });
+               
            };
            $scope.cancel = function () { $modalInstance.dismiss('cancel'); };
     }];

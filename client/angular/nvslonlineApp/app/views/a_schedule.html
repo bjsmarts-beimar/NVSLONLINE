@@ -59,10 +59,10 @@
                                                 <td style="text-align: left">{{p.Status}}</td>
                                                 <td style="text-align: left"><span data-ng-bind="vm.convertMomentDate(p.DateTime) | date:'dd/MM/yyyy'"></span></td>
                                                 <td style="text-align: left"><span data-ng-bind="vm.convertMomentTime(p.DateTime)"></span></td>
-                                                <td style="text-align: left">{{p.HomeTeam.TeamName}}</td>
+                                                <td style="text-align: left"><a ui-sref="adminPlayer({teamId:p.HomeTeamId})">{{p.HomeTeam.TeamName}}</a></td>
                                                 <td>{{p.GoalsHomeTeam}} - {{p.GoalsAwayTeam}}</td>
                                                 <!--<td style="text-align: left">{{p.Division.DivisionName}}</td>-->
-                                                <td style="text-align: left">{{p.AwayTeam.TeamName}}</td>
+                                                <td style="text-align: left"><a ui-sref="adminPlayer({teamId:p.AwayTeamId})">{{p.AwayTeam.TeamName}}</a></td>
                                                 <td style="text-align: left">{{p.Venue.VenueName}}</td>
                                             </tr>
                                         </tbody>
@@ -146,9 +146,9 @@
             </form>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal" data-ng-click="cancel()">Close</button>
             <button type="button" class="btn btn-primary" data-ng-click="ok()" ng-disabled="teamsValidate || season == undefined">Generar Schedule</button>
-          
+            <button type="button" class="btn btn-default" data-dismiss="modal" data-ng-click="cancel()">Close</button>
+           
         </div>
     </div><!-- /.modal-content -->
     </script>
@@ -202,8 +202,9 @@
                   <input type="button" id="cancel" class="btn btn-default" ng-click="cancel()" value="Close" data-dismiss="modal"/>
               </div>-->
          <div class="modal-footer">
+             <button type="button" class="btn btn-primary" data-ng-click="ok()">Delete</button>
             <button type="button" class="btn btn-default" data-dismiss="modal" data-ng-click="cancel()">Close</button>
-            <button type="button" class="btn btn-primary" data-ng-click="ok()">Delete</button>
+            
         </div>
             </div>
 

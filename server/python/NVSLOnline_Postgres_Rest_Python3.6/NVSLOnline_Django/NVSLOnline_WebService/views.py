@@ -7,7 +7,7 @@ from pprint import pprint
 
 from django.contrib.auth import authenticate
 from django.shortcuts import get_object_or_404
-from rest_framework import viewsets
+from rest_framework import viewsets,status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -19,6 +19,8 @@ from time import gmtime
 
 from django.utils import formats
 # Create your views here.
+
+EXITS = 'Already existing'
 
 class Division(APIView):
     serializer_class = NVSLOnline_serializer.DivisionSerializer
@@ -34,14 +36,22 @@ class Division(APIView):
 
     def post(self, request, format=None):
         serializer = self.serializer_class(data=request.data)# request.POST y request.GET, request.FILES
+        
         if serializer.is_valid():
-            division = Divisions(
-                DivisionName = serializer.data['DivisionName'],
-                IsHidden = False
-            )
-            division.save()
-            resp = self.serializer_class(division,many=False)
-            return Response(resp.data)
+            try:
+                oFound = Divisions.objects.get(DivisionName__iexact = serializer.data['DivisionName'],IsHidden=False)
+                # Duplicate
+                return Response(EXITS,status=204)
+            except Divisions.DoesNotExist:
+                # No Duplicate
+                division = Divisions(
+                    DivisionName = serializer.data['DivisionName'],
+                    IsHidden = False
+                )
+                
+                division.save()
+                resp = self.serializer_class(division,many=False)
+                return Response(resp.data)
             
         else:
            return Response(serializer.errors)
@@ -50,8 +60,17 @@ class Division(APIView):
         division = get_object_or_404(Divisions, pk=id)
         serializer = self.serializer_class(division, data=request.data)# request.POST y request.GET, request.FILES
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
+            if request.data.get("DivisionName").upper() == division.DivisionName.upper():
+                serializer.save()
+                return Response(serializer.data)
+            else:
+                try:
+                    oFound = Divisions.objects.get(DivisionName__iexact = request.data.get("DivisionName"),IsHidden=False)
+                    # Duplicate
+                    return Response(EXITS,status=204)
+                except Divisions.DoesNotExist:
+                    serializer.save()
+                    return Response(serializer.data)
         return Response(serializer.errors)
 
     def delete(self, request, id=None, format=None):
@@ -79,16 +98,20 @@ class Season(APIView):
     def post(self, request, format=None):
         serializer = self.serializer_class(data=request.data)# request.POST y request.GET, request.FILES
         if serializer.is_valid():
-            season = Seasons(
-                SeasonName = serializer.data['SeasonName'],
-                SeasonStart = datetime.datetime.strptime(serializer.data['SeasonStart'],'%Y-%m-%d').date(),
-                SeasonEnd = datetime.datetime.strptime(serializer.data['SeasonEnd'],'%Y-%m-%d').date(),
-                IsHidden = False
-            )
-            print(serializer.data)
-            season.save()
-            resp = self.serializer_class(season,many=False)
-            return Response(resp.data)
+            try:
+                Seasons.objects.get(SeasonName__iexact = serializer.data['SeasonName'],IsHidden=False)
+                # Duplicate
+                return Response(EXITS,status=204)
+            except Seasons.DoesNotExist:
+                season = Seasons(
+                    SeasonName = serializer.data['SeasonName'],
+                    SeasonStart = datetime.datetime.strptime(serializer.data['SeasonStart'],'%Y-%m-%d').date(),
+                    SeasonEnd = datetime.datetime.strptime(serializer.data['SeasonEnd'],'%Y-%m-%d').date(),
+                    IsHidden = False
+                )
+                season.save()
+                resp = self.serializer_class(season,many=False)
+                return Response(resp.data)
             
         else:
            return Response(serializer.errors)
@@ -97,8 +120,17 @@ class Season(APIView):
         season = get_object_or_404(Seasons, pk=id)
         serializer = self.serializer_class(season, data=request.data)# request.POST y request.GET, request.FILES
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
+            if request.data.get("SeasonName").upper() == season.SeasonName.upper():
+                serializer.save()
+                return Response(serializer.data)
+            else:
+                try:
+                    oFound = Seasons.objects.get(SeasonName__iexact = request.data.get("SeasonName"),IsHidden=False)
+                    # Duplicate
+                    return Response(EXITS,status=204)
+                except Seasons.DoesNotExist:
+                    serializer.save()
+                    return Response(serializer.data)
         return Response(serializer.errors)
 
     def delete(self, request, id=None, format=None):
@@ -143,13 +175,18 @@ class Venue(APIView):
     def post(self, request, format=None):
         serializer = self.serializer_class(data=request.data)# request.POST y request.GET, request.FILES
         if serializer.is_valid():
-            venue = Venues(
-                VenueName = serializer.data['VenueName'],
-                IsHidden = False
-            )
-            venue.save()
-            resp = self.serializer_class(venue,many=False)
-            return Response(resp.data)
+            try:
+                Venues.objects.get(VenueName__iexact = serializer.data['VenueName'],IsHidden=False)
+                # Duplicate
+                return Response(EXITS,status=204)
+            except Venues.DoesNotExist:
+                venue = Venues(
+                    VenueName = serializer.data['VenueName'],
+                    IsHidden = False
+                )
+                venue.save()
+                resp = self.serializer_class(venue,many=False)
+                return Response(resp.data)
             
         else:
            return Response(serializer.errors)
@@ -158,8 +195,17 @@ class Venue(APIView):
         venue = get_object_or_404(Venues, pk=id)
         serializer = self.serializer_class(venue, data=request.data)# request.POST y request.GET, request.FILES
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
+            if request.data.get("VenueName").upper() == venue.VenueName.upper():
+                serializer.save()
+                return Response(serializer.data)
+            else:
+                try:
+                    oFound = Venues.objects.get(VenueName__iexact = request.data.get("VenueName"),IsHidden=False)
+                    # Duplicate
+                    return Response(EXITS,status=204)
+                except Venues.DoesNotExist:
+                    serializer.save()
+                    return Response(serializer.data)
         return Response(serializer.errors)
 
     def delete(self, request, id=None, format=None):
@@ -186,17 +232,22 @@ class Team(APIView):
     def post(self, request, format=None):
         serializer = self.serializer_class(data=request.data)# request.POST y request.GET, request.FILES
         if serializer.is_valid():
-            team = Teams(
-                TeamName = serializer.data['TeamName'],
-                #Division= Divisions.objects.get(Id = request.data['DivisionId']),
-                #Season = Seasons.objects.get(Id = request.data['SeasonId']),
-                DivisionId= get_object_or_404(Divisions, pk= request.data['DivisionId']),
-                SeasonId = get_object_or_404(Seasons, pk= request.data['SeasonId']),
-                IsHidden = False
-            )
-            team.save()
-            resp = self.serializer_class(team,many=False)
-            return Response(resp.data)
+            try:
+                Teams.objects.get(TeamName__iexact = serializer.data['TeamName'],DivisionId = serializer.data['DivisionId'],SeasonId = serializer.data['SeasonId'],IsHidden=False)
+                # Duplicate
+                return Response(EXITS,status=204)
+            except Teams.DoesNotExist:
+                team = Teams(
+                    TeamName = serializer.data['TeamName'],
+                    #Division= Divisions.objects.get(Id = request.data['DivisionId']),
+                    #Season = Seasons.objects.get(Id = request.data['SeasonId']),
+                    DivisionId= get_object_or_404(Divisions, pk= request.data['DivisionId']),
+                    SeasonId = get_object_or_404(Seasons, pk= request.data['SeasonId']),
+                    IsHidden = False
+                )
+                team.save()
+                resp = self.serializer_class(team,many=False)
+                return Response(resp.data)
         else:
            return Response(serializer.errors)
 
@@ -204,8 +255,17 @@ class Team(APIView):
         team = get_object_or_404(Teams, pk=id)
         serializer = self.serializer_class(team, data=request.data)# request.POST y request.GET, request.FILES
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
+            if request.data.get("TeamName").upper() == team.TeamName.upper():
+                serializer.save()
+                return Response(serializer.data)
+            else:
+                try:
+                    oFound = Teams.objects.get(TeamName__iexact = request.data.get("TeamName"),DivisionId = serializer.data['DivisionId'],SeasonId = serializer.data['SeasonId'],IsHidden=False)
+                    # Duplicate
+                    return Response(EXITS,status=204)
+                except Teams.DoesNotExist:
+                    serializer.save()
+                    return Response(serializer.data)
         return Response(serializer.errors)
 
     def delete(self, request, id=None, format=None):
@@ -233,15 +293,20 @@ class Player(APIView):
     def post(self, request, format=None):
         serializer = self.serializer_class(data=request.data)# request.POST y request.GET, request.FILES
         if serializer.is_valid():
-            player = Players(
-                FirstName = serializer.data['FirstName'],
-                LastName = serializer.data['LastName'],
-                TeamId = get_object_or_404(Teams, pk= request.data['TeamId']),
-                IsHidden = False
-            )
-            player.save()
-            resp = self.serializer_class(player,many=False)
-            return Response(resp.data)
+            try:
+                Players.objects.get(FirstName__iexact = serializer.data['FirstName'],LastName__iexact = serializer.data['LastName'],IsHidden=False)
+                # Duplicate
+                return Response(EXITS,status=204)
+            except Players.DoesNotExist:
+                player = Players(
+                    FirstName = serializer.data['FirstName'],
+                    LastName = serializer.data['LastName'],
+                    TeamId = get_object_or_404(Teams, pk= request.data['TeamId']),
+                    IsHidden = False
+                )
+                player.save()
+                resp = self.serializer_class(player,many=False)
+                return Response(resp.data)
           
         else:
            return Response(serializer.errors)
@@ -365,38 +430,47 @@ class Standing(APIView):
 
             for teamEnJuego in teamsEnJuego:
                 #pprint("test" + str(team['pk']) + ":" + str(teamEnJuego.HomeTeamId.Id))
+                vrGoalsHomeTeam = teamEnJuego.GoalsHomeTeam
+                vrGoalsAwayTeam = teamEnJuego.GoalsAwayTeam
+                if teamEnJuego.GoalsHomeTeam is None:
+                    vrGoalsHomeTeam = 0
+
+                if teamEnJuego.GoalsAwayTeam is None:
+                    vrGoalsAwayTeam = 0
+
                 if team['pk'] == teamEnJuego.HomeTeamId.Id:
-                    standing["GoalsFor"] += teamEnJuego.GoalsHomeTeam;
-                    standing["GoalsAgainst"] += teamEnJuego.GoalsAwayTeam;
+                    
+                    standing["GoalsFor"] = standing["GoalsFor"] + vrGoalsHomeTeam
+                    standing["GoalsAgainst"] = standing["GoalsAgainst"] + vrGoalsAwayTeam
                     #pprint("forA" + str(standing["GoalsFor"]))
 
-                    if teamEnJuego.GoalsHomeTeam > teamEnJuego.GoalsAwayTeam:
-                        standing["Wins"] += 1;
-                        standing["Points"] += 3;
+                    if vrGoalsHomeTeam > vrGoalsAwayTeam:
+                        standing["Wins"] += 1
+                        standing["Points"] += 3
                     
-                    if teamEnJuego.GoalsHomeTeam < teamEnJuego.GoalsAwayTeam:
-                        standing["Losses"] += 1;
-                        
-                    if teamEnJuego.GoalsHomeTeam == teamEnJuego.GoalsAwayTeam and teamEnJuego.GoalsHomeTeam != "":
-                        standing["Ties"] += 1;
-                        standing["Points"] += 1;
+                    if vrGoalsHomeTeam < vrGoalsAwayTeam:
+                        standing["Losses"] += 1
+                   
+                    if vrGoalsHomeTeam == vrGoalsAwayTeam and teamEnJuego.GoalsHomeTeam != None:
+                        standing["Ties"] += 1
+                        standing["Points"] += 1
                 else:
-                    standing["GoalsFor"] += teamEnJuego.GoalsAwayTeam;
-                    standing["GoalsAgainst"] += teamEnJuego.GoalsHomeTeam;
+                    standing["GoalsFor"] = standing["GoalsFor"] + vrGoalsAwayTeam
+                    standing["GoalsAgainst"] = standing["GoalsAgainst"] + vrGoalsHomeTeam
                     #pprint("forB" + str(standing["GoalsFor"]))
 
-                    if teamEnJuego.GoalsAwayTeam > teamEnJuego.GoalsHomeTeam:
-                        standing["Wins"] += 1;
-                        standing["Points"] += 3;
-                    if teamEnJuego.GoalsAwayTeam < teamEnJuego.GoalsHomeTeam:
-                        standing["Losses"] += 1;
-                    if teamEnJuego.GoalsAwayTeam == teamEnJuego.GoalsHomeTeam and teamEnJuego.GoalsHomeTeam != "":
-                        standing["Ties"] += 1;
-                        standing["Points"] += 1;
+                    if vrGoalsAwayTeam > vrGoalsHomeTeam:
+                        standing["Wins"] += 1
+                        standing["Points"] += 3
+                    if vrGoalsAwayTeam < vrGoalsHomeTeam:
+                        standing["Losses"] += 1
+                    if vrGoalsAwayTeam == vrGoalsHomeTeam and teamEnJuego.GoalsHomeTeam != None:
+                        standing["Ties"] += 1
+                        standing["Points"] += 1
                         
             #pprint(standing["GoalsFor"])
             #pprint(standing["GoalsAgainst"])
-            standing["Differential"] = standing["GoalsFor"] - standing["GoalsAgainst"];
+            standing["Differential"] = standing["GoalsFor"] - standing["GoalsAgainst"]
             lstStanding.append(standing.copy())
   
         return Response(lstStanding)

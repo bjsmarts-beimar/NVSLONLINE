@@ -82,18 +82,13 @@
                     <label for="lastName">Last Name</label>
                     <input type="text" class="form-control" id="lastName" data-ng-model="lastName" placeholder="Enter Last Name"/>
                 </div>
-                <!--<div class="form-group">
-                    <label for="team">Team</label>
-                    <select id="team" class="form-control" name="team" data-ng-model="team" data-ng-options="Team.Id as Team.TeamName for Team in teams">
-                        <option value='0'>--choose Team--</option>
-                    </select>
-                </div>-->
                 
             </form>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal" data-ng-click="cancel()">Close</button>
             <button type="button" class="btn btn-primary" data-ng-click="ok()">Save changes</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal" data-ng-click="cancel()">Close</button>
+            
         </div>
     </div><!-- /.modal-content -->
     </script>
@@ -113,8 +108,9 @@
                  </div>
              </div>
          <div class="modal-footer">
+             <button type="button" class="btn btn-primary" data-ng-click="ok()">Delete</button>
             <button type="button" class="btn btn-default" data-dismiss="modal" data-ng-click="cancel()">Close</button>
-            <button type="button" class="btn btn-primary" data-ng-click="ok()">Delete</button>
+            
         </div>
             </div>
 

@@ -124,9 +124,11 @@ this.editDivision = function (webUrl,objDivision) {
             data: objSeason,
             //withCredentials: true,
         }).then(function successCallback(response){
-            console.log(response);
+            return response;
+            //console.log(response);
         },function errorCallback(response){
-            console.log(response);
+            return response;
+            //console.log(response);
         });
     };
 
@@ -177,9 +179,9 @@ this.editDivision = function (webUrl,objDivision) {
             data: objVenue,
             //withCredentials: true,
         }).then(function successCallback(response){
-            console.log(response);
+            return response;
         },function errorCallback(response){
-            console.log(response);
+            return response;
         });
     };
 
