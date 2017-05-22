@@ -8,8 +8,9 @@
  * Controller of the nvslonlineAppApp
  */
 angular.module('nvslonlineAppApp')
-  .controller('MainCtrl', function ($rootScope,$scope,$location,parameters) {
+  .controller('MainCtrl', function ($rootScope,$scope,$location,parameters,common) {
     var vm = this;
+    common.accessLogin();
     vm.title = "Northern Virginia Soccer League"
     vm.login = login;
     vm.logOut = logOut;
@@ -22,6 +23,8 @@ angular.module('nvslonlineAppApp')
     });
 
     function login() {
+      
+
       parameters.loginAccess.access = true;
       parameters.loginAccess.user = "beimar medina";
       vm.access = true;

@@ -175,7 +175,7 @@ angular.module('nvslonlineAppApp')
            
 
            $scope.ok = function () {
-            season = this.season;
+            var season = this.season;
 
             var $d = $q.defer();
             var promesas = [];

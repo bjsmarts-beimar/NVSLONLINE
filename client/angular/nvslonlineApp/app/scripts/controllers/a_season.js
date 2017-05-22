@@ -105,8 +105,8 @@ angular.module('nvslonlineAppApp')
 
   }]);
 
-  var modalInstanceNewSeason = ['$scope', '$modalInstance', 'options', 'datacontext','$filter',
-        function($scope, $modalInstance, options, datacontext,$filter) {
+  var modalInstanceNewSeason = ['$scope', '$modalInstance', 'options', 'datacontext','$filter','toastr',
+        function($scope, $modalInstance, options, datacontext,$filter,toastr) {
             $scope.ok = function () {
                 var seasonValues = {};
                 seasonValues.SeasonName = this.seasonName;
@@ -114,35 +114,49 @@ angular.module('nvslonlineAppApp')
                 seasonValues.IsHidden = false;
                 seasonValues.SeasonStart = $filter('date')(this.seasonStart, 'yyyy-MM-dd');
                 seasonValues.SeasonEnd = $filter('date')(this.seasonEnd,'yyyy-MM-dd');
-                //seasonValues.SeasonStart = this.seasonStart;
-                //seasonValues.SeasonEnd = this.seasonEnd;
-                console.log(seasonValues);
-                
-                var dataUpdated = datacontext.addSeason(options.webUrl,seasonValues);
 
-                $modalInstance.close(dataUpdated);
+                datacontext.addSeason(options.webUrl,seasonValues).then(function (response) {
+                    console.log(response);
+                   if (response.status!=200) {
+                       toastr.error("Error has occurred: " + response.data, "Fatal error", {
+                        positionClass: 'toast-bottom-full-width'})
+                   }else{
+                       $modalInstance.close(response);
+                   }
+                });
+                
             };
             $scope.cancel = function () { $modalInstance.dismiss('cancel'); };
         }];
 
-    var modalInstanceEditSeason = ['$scope', '$modalInstance', 'datacontext','common', 'options','$filter', 
-        function ($scope, $modalInstance, datacontext,common, options, $filter) {
+    var modalInstanceEditSeason = ['$scope', '$modalInstance', 'datacontext','common', 'options','$filter','toastr',
+        function ($scope, $modalInstance, datacontext,common, options, $filter,toastr) {
 
         var objSeason = options.season;
-       console.log(objSeason);
-        
+      
         $scope.seasonName = objSeason.SeasonName;
         $scope.seasonStart = common.convertToDate(objSeason.SeasonStart);
         $scope.seasonEnd = common.convertToDate(objSeason.SeasonEnd);
        
+        var aux = JSON.parse(JSON.stringify(objSeason));
         $scope.ok = function () {
            
             objSeason.SeasonName = this.seasonName;
             objSeason.SeasonStart = $filter('date')(this.seasonStart, 'yyyy-MM-dd');
             objSeason.SeasonEnd = $filter('date')(this.seasonEnd,'yyyy-MM-dd');
 
-            var dataUpdated = datacontext.editSeason(options.webUrl,objSeason);
-            $modalInstance.close(dataUpdated);
+            datacontext.editSeason(options.webUrl,objSeason).then(function (response) {
+                   if (response.status!=200) {
+                       toastr.error("Error has occurred: " + response.data, "Fatal error", {
+                        positionClass: 'toast-bottom-full-width'})
+                        objSeason.SeasonName=aux.SeasonName;
+                        objSeason.SeasonStart=aux.SeasonStart;
+                        objSeason.SeasonEnd=aux.SeasonEnd;
+                   }else{
+                       $modalInstance.close(response);
+                   }
+                });
+
         };
         $scope.cancel = function () { $modalInstance.dismiss('cancel'); };
     }];
