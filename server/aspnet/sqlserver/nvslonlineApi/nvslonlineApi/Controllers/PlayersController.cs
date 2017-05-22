@@ -12,55 +12,51 @@ using nvslonlineApi.Models;
 
 namespace nvslonlineApi.Controllers
 {
-    public class SchedulesController : ApiController
+    public class PlayersController : ApiController
     {
         private NVSLOnlineDataContext db = new NVSLOnlineDataContext();
 
-        // GET: api/Schedules
-        public IQueryable<Schedule> GetSchedules()
-        {
-            //return db.Schedules;
+        // GET: api/Players
+        public IQueryable<Players> GetPlayers()
+        {            
+            var players = db.Players.Include(t => t.Teams);                
 
-            var schedules = db.Schedules.Include(d => d.Division)
-                .Include(s => s.Season);
-
-            return schedules;
-
+            return players;
         }
 
-        // GET: api/Schedules/5
-        [ResponseType(typeof(Schedule))]
-        public IHttpActionResult GetSchedule(int id)
+        // GET: api/Players/5
+        [ResponseType(typeof(Players))]
+        public IHttpActionResult GetPlayers(int id)
         {
-            //Schedule schedule = db.Schedules.Find(id);
+            //Players players = db.Players.Find(id);
 
-            var schedule = db.Schedules.Include(d => d.Division)
-                .Include(s => s.Season)
+            var players = db.Players.Include(t => t.Teams)                
                 .SingleOrDefault(x => x.Id == id);
 
-            if (schedule == null)
+
+            if (players == null)
             {
                 return NotFound();
             }
 
-            return Ok(schedule);
+            return Ok(players);
         }
 
-        // PUT: api/Schedules/5
+        // PUT: api/Players/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutSchedule(int id, Schedule schedule)
+        public IHttpActionResult PutPlayers(int id, Players players)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != schedule.Id)
+            if (id != players.Id)
             {
                 return BadRequest();
             }
 
-            db.Entry(schedule).State = EntityState.Modified;
+            db.Entry(players).State = EntityState.Modified;
 
             try
             {
@@ -68,7 +64,7 @@ namespace nvslonlineApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ScheduleExists(id))
+                if (!PlayersExists(id))
                 {
                     return NotFound();
                 }
@@ -81,35 +77,35 @@ namespace nvslonlineApi.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Schedules
-        [ResponseType(typeof(Schedule))]
-        public IHttpActionResult PostSchedule(Schedule schedule)
+        // POST: api/Players
+        [ResponseType(typeof(Players))]
+        public IHttpActionResult PostPlayers(Players players)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Schedules.Add(schedule);
+            db.Players.Add(players);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = schedule.Id }, schedule);
+            return CreatedAtRoute("DefaultApi", new { id = players.Id }, players);
         }
 
-        // DELETE: api/Schedules/5
-        [ResponseType(typeof(Schedule))]
-        public IHttpActionResult DeleteSchedule(int id)
+        // DELETE: api/Players/5
+        [ResponseType(typeof(Players))]
+        public IHttpActionResult DeletePlayers(int id)
         {
-            Schedule schedule = db.Schedules.Find(id);
-            if (schedule == null)
+            Players players = db.Players.Find(id);
+            if (players == null)
             {
                 return NotFound();
             }
 
-            db.Schedules.Remove(schedule);
+            db.Players.Remove(players);
             db.SaveChanges();
 
-            return Ok(schedule);
+            return Ok(players);
         }
 
         protected override void Dispose(bool disposing)
@@ -121,9 +117,9 @@ namespace nvslonlineApi.Controllers
             base.Dispose(disposing);
         }
 
-        private bool ScheduleExists(int id)
+        private bool PlayersExists(int id)
         {
-            return db.Schedules.Count(e => e.Id == id) > 0;
+            return db.Players.Count(e => e.Id == id) > 0;
         }
     }
 }

@@ -22,6 +22,8 @@ namespace nvslonlineApi.Models
 
         public System.Data.Entity.DbSet<nvslonlineApi.Models.Teams> Teams { get; set; }
 
+        public System.Data.Entity.DbSet<nvslonlineApi.Models.Players> Players { get; set; }
+
         public System.Data.Entity.DbSet<nvslonlineApi.Models.Standings> Standings { get; set; }
 
         public System.Data.Entity.DbSet<nvslonlineApi.Models.Schedule> Schedules { get; set; }

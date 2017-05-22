@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 
+import * as moment from 'moment';
+
 import { INews } from '../../shared/interfaces/interfaces';
 import { News } from '../../shared/models/news';
 
@@ -25,6 +27,10 @@ export class AddNewsComponent implements OnInit {
     }
 
     submitForm(form: NgForm) {
+
+        let currentDate = moment().format();        
+        this.singleNews.created = currentDate;
+
         this.dataService.addSingleNews(this.singleNews)
             .subscribe(
                 data => console.log('success: ', data),

@@ -19,14 +19,23 @@ namespace nvslonlineApi.Controllers
         // GET: api/Standings
         public IQueryable<Standings> GetStandings()
         {
-            return db.Standings;
+            //return db.Standings;
+            var standings = db.Standings.Include(d => d.Divisions)
+                .Include(t => t.Teams);
+
+            return standings;
+
         }
 
         // GET: api/Standings/5
         [ResponseType(typeof(Standings))]
         public IHttpActionResult GetStandings(int id)
         {
-            Standings standings = db.Standings.Find(id);
+            //Standings standings = db.Standings.Find(id);
+            var standings = db.Standings.Include(d => d.Divisions)
+                .Include(t => t.Teams)
+                .SingleOrDefault(x => x.Id == id);
+
             if (standings == null)
             {
                 return NotFound();
