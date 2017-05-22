@@ -117,6 +117,7 @@ angular.module('nvslonlineAppApp')
                divisionValues.IsHidden = false;
 
                datacontext.addDivision(options.webUrl,divisionValues).then(function (response) {
+                   console.log(response);
                    if (response.status!=200) {
                        toastr.error("Error has occurred: " + response.data, "Fatal error", {
                         positionClass: 'toast-bottom-full-width'})
