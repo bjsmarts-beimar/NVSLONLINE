@@ -15,9 +15,14 @@ import { DivisionsModule } from './divisions/divisions.module';
 import { VenuesModule } from './venues/venues.module';
 import { NewsModule } from './news/news.module';
 import { ContactsModule } from './contacts/contacts.module';
+import { TeamsModule } from './teams/teams.module';
+import { StandingsModule } from './standings/standings.module';
+import { SchedulesModule } from './schedules/schedules.module';
+import { PublicModule } from './public/public.module';
 
 //Services
 import { DataService } from './shared/services/data.service';
+//import { DivisionFilterPipe } from './shared/pipes/division-filter.pipe';
 
 //Pipes
 //import { TruncatePipe } from './shared/pipes/truncate.pipe';
@@ -28,6 +33,7 @@ import { DataService } from './shared/services/data.service';
     AppComponent,
     DashboardComponent,
     HomeComponent,
+    //DivisionFilterPipe,
     //TruncatePipe
   ],
   imports: [
@@ -44,7 +50,11 @@ import { DataService } from './shared/services/data.service';
     DivisionsModule,
     VenuesModule,
     NewsModule,
-    ContactsModule
+    ContactsModule,
+    TeamsModule,
+    StandingsModule,
+    SchedulesModule,
+    PublicModule
   ],
   providers: [
     DataService    

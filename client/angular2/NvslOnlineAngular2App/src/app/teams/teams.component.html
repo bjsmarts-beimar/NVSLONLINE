@@ -1,0 +1,64 @@
+<main class="panel pt-5">
+
+  <div class="form-group">      
+      <div class="row">
+        <div class="col-xs-6">
+        <label class="control-label">Season</label>
+        <select #name="ngModel" id="ddlSeason" name="ddlSeason" class="form-control" [(ngModel)]="selectedSeason" (ngModelChange)="onChangeUpdate($event)" style="width: 100%">
+            <option *ngFor="let season of seasons" value={{season.Id}}>{{season.SeasonName}}</option>
+        </select>      
+        </div>
+      </div>
+  </div>
+  <div class="form-group">
+      <div class="row">
+        <div class="col-xs-6">
+        <label class="control-label">Division</label>
+        <select #name="ngModel" id="ddlDivision" name="ddlDivision" class="form-control" [(ngModel)]="selectedDivision" (ngModelChange)="onChangeDivisionUpdate($event)" style="width: 100%">
+            <option *ngFor="let division of divisions" value={{division.Id}}>{{division.DivisionName}}</option>
+        </select>      
+        </div>
+      </div>
+  </div>
+    
+    <div class="card mb-5">
+        <div class="card-header">
+            <b>Teams</b>
+            <div class="pull-right"><a [routerLink]="['/addteam']" class="btn btn-sm btn-primary btn-create">Create New</a></div>                        
+        </div>
+        
+        <div class="card-block p-0">
+            <table class="table table-bordered table-sm m-0">
+                <thead class="">
+                    <tr>
+                        <th></th>
+                        <th>Team Name</th>
+                        <th>Division Name</th>
+                        <th>Season Name</th>
+                        <!--<th>Created</th>
+                        <th>Created By</th>
+                        <th>Modified</th>
+                        <th>Modified By</th>                        -->
+                    </tr>
+                </thead>
+                <tbody>                    
+                    <tr *ngFor='let team of teams'>                        
+                        <td>
+                            <a class="btn btn-sm btn-primary btn-create" [routerLink]="['/team', team.Id]" >Edit</a>
+                            <a class="btn btn-sm btn-danger" (click)='remove(team.Id)' >Delete</a>
+                        </td>
+                        <td>{{team.TeamName}}</td>
+                        <td>{{team.Division.DivisionName}}</td>
+                        <td>{{team.Season.SeasonName}}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>                 
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer p-0">
+        </div>
+    </div>
+</main>

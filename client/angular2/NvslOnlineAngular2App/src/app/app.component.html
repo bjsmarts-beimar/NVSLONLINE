@@ -25,9 +25,9 @@ $('#search-trigger').click(function () {
 
                 <ul class='nav navbar-nav navbar-right'>
                     <li *ngIf="!userLogin"><a [routerLink]="['/home']">Home</a></li>                    
-                    <li *ngIf="!userLogin"><a [routerLink]="['/teams']">Teams</a></li>                    
+                    <li *ngIf="!userLogin"><a [routerLink]="['/team']">Teams</a></li>                    
                     <li *ngIf="!userLogin"><a [routerLink]="['/schedule']">Schedule</a></li>                    
-                    <li *ngIf="!userLogin"><a [routerLink]="['/standings']">Standings</a></li>
+                    <li *ngIf="!userLogin"><a [routerLink]="['/standing']">Standings</a></li>
                     <li *ngIf="!userLogin"><a [routerLink]="['/contact']">Contact</a></li>                    
                     <li *ngIf="!userLogin"><a [routerLink]="['/signup']">Sign Up</a></li>                    
                     <li *ngIf="!userLogin"><a (click)="LogIn()">Log In</a></li>

@@ -14,7 +14,7 @@ import { DataService } from '../../shared/services/data.service';
 })
 export class AddComponent implements OnInit {
 
-    public pageTitle: string = 'Add Season';  
+    public pageTitle: string = 'Edit Season';  
     public season = new Season(0, '', false, false, '', '');
 
     constructor(private dataService: DataService,

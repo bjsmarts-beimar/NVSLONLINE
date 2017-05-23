@@ -1,4 +1,14 @@
 
+export interface ITeam {
+    Id : number;
+    TeamName : string;
+    IsHidden : boolean;
+    DivisionId : number;
+    Division : IDivision;
+    SeasonId : number;
+    Season: ISeason;
+}
+
 export interface INews {
     Id: number;    
     title: string;
@@ -27,6 +37,9 @@ export interface IVenue {
     VenueName: string;    
     IsHidden: boolean;
 }
+
+
+
 
 
 

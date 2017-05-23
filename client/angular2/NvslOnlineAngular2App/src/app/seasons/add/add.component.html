@@ -9,6 +9,20 @@
         <input type="text" #name="ngModel" name="name" [(ngModel)]="season.SeasonName" class="form-control" placeholder="Name" required />
         <p *ngIf="name.invalid && !name.pristine" class="help-block">Name is required.</p>           
     </div>
+    
+    <!-- START DATE -->
+    <div class="form-group" [class.has-error]="SeasonStart.invalid && !SeasonStart.pristine">
+        <label for="SeasonStart">Start Date</label>
+        <input type="date" #SeasonStart="ngModel" name="SeasonStart" [(ngModel)]="season.SeasonStart" class="form-control" placeholder="yyyy-MM-dd" required />
+        <p *ngIf="SeasonStart.invalid && !SeasonStart.pristine" class="help-block">Start Date is required.</p>
+    </div>
+
+    <!-- END DATE -->
+    <div class="form-group" [class.has-error]="SeasonEnd.invalid && !SeasonEnd.pristine">
+        <label for="seasonStart">End Date</label>
+        <input type="date" #SeasonEnd="ngModel" name="SeasonEnd" [(ngModel)]="season.SeasonEnd" class="form-control" placeholder="yyyy-MM-dd" required />
+        <p *ngIf="SeasonEnd.invalid && !SeasonEnd.pristine" class="help-block">End Date is required.</p>
+    </div>
         
     <!-- SUBMIT BUTTON -->
     <div class="form-group">    
