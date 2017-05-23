@@ -5,11 +5,24 @@
 </div>
 <div class="col-md-10">
     <H1>News From The League</H1>
+    
+    <!--<div class="panel panel-default" *ngFor="let SingleNews of news">
+        <div class="panel-heading">{{SingleNews.title}}</div>
+        <div class="panel-body">{{trimData(SingleNews.description)}}</div>
+    </div>
+    -->
+    <div class="panel panel-default">
+        <div class="panel-heading">{{selectTitle}}<br>{{selectDateCreated | date:'MM/dd/yyyy h:mm a'}}</div>
+        <div class="panel-body">{{selectDescription}}</div>
+    </div>
     <h3>All News</h3>
-    <div class="panel panel-default" *ngFor="let SingleNews of news">
-    <div class="panel-heading">{{SingleNews.title}}</div>
-    <div class="panel-body">{{trimData(SingleNews.description)}}</div>
-</div>
+    <div *ngFor="let singleNew of news">
+       <!--<a (click)="selectNew(singleNew)">{{singleNew.title}}</a>-->
+       <!--<button type="button" class="btn btn-link" (click)="selectNew(singleNew)">{{singleNew.title}}</button>-->
+       <span class='link' (click)="selectNew(singleNew)">{{singleNew.title}}</span>
+
+    </div>
+    
 </div>
 <div class="col-md-1">
     

@@ -6,10 +6,16 @@ use Illuminate\Http\Request;
 use NVSLOnline\Season;
 use DB;
 use Carbon\Carbon;
+use Config;
 
 class SeasonController extends Controller
 {
-      public function index(){
+	function __construct(){
+		$this->exists = Config::get('parameters.exists.exists');
+		$this->status = Config::get('parameters.exists.status');
+	}
+
+    public function index(){
      	$seasons = DB::table('Seasons')
 				->where('IsHidden','=','false')
 				->orderBy('Id','ASC')
@@ -33,6 +39,15 @@ class SeasonController extends Controller
 	}
 	
 	public function store(Request $request){
+		$season = Season::where([
+			['SeasonName','=',$request->SeasonName],
+			['IsHidden','=',false]
+		])->first();
+
+			if ($season) {
+				return response()->json($this->exists,$this->status);
+			}
+
 		$objSeason = New Season(); 
 		$objSeason -> SeasonName = $request->SeasonName;
 		$objSeason -> Active = $request->Active;
@@ -50,16 +65,24 @@ class SeasonController extends Controller
 	public function update(Request $request,$id){
 		//$objDivision = Division::find($request->Id);
 		$objSeason = Season::find($id);
+
+		$season = Season::where([
+			['SeasonName','=',$request->SeasonName],
+			['IsHidden','=',false]
+		])->first();
+		
+		if ($season) {
+			if ($request->SeasonName != $objSeason->SeasonName) {
+				return response()->json($this->exists,$this->status);
+			}
+		}
+
 		$objSeason -> SeasonName = $request->SeasonName;
 		$objSeason -> SeasonStart = $request->SeasonStart;
 		$objSeason -> SeasonEnd = $request->SeasonEnd;
 		$objSeason -> save();
-		print(objSeason);
-		return response()->json([
-					"msg" => "Success",
-					"id" => $objSeason->Id
-					],200
-				);
+		
+		return response()->json($objSeason,200);
 	}
 	public function updateDelete($id){
 		$objSeason = Season::find($id);

@@ -5,9 +5,15 @@ namespace NVSLOnline\Http\Controllers;
 use Illuminate\Http\Request;
 use NVSLOnline\Team;
 use DB;
+use Config;
 
 class TeamController extends Controller
 {
+	function __construct(){
+		$this->exists = Config::get('parameters.exists.exists');
+		$this->status = Config::get('parameters.exists.status');
+	}
+
     public function index(){
 		$teams = Team::with('Division','Season')
 		->where('IsHidden','=','false')
@@ -28,6 +34,17 @@ class TeamController extends Controller
 	
 	public function store(Request $request){
 		if($request){
+			$team = Team::where([
+				['TeamName','=',$request->TeamName],
+				['DivisionId','=',$request->DivisionId],
+				['SeasonId','=',$request->SeasonId],
+				['IsHidden','=',false]
+			])->first();
+
+			if ($team) {
+				return response()->json($this->exists,$this->status);
+			}
+			
 			$objTeam = new Team; 
 			$objTeam -> TeamName = $request->TeamName;
 			$objTeam -> IsHidden = 0;
@@ -41,6 +58,20 @@ class TeamController extends Controller
 
 	public function update(Request $request,$id){
 		$objTeam = Team::find($id);
+
+		$team = Team::where([
+				['TeamName','=',$request->TeamName],
+				['DivisionId','=',$request->DivisionId],
+				['SeasonId','=',$request->SeasonId],
+				['IsHidden','=',false]
+			])->first();
+		
+		if ($team) {
+			if ($request->TeamName != $objTeam->TeamName) {
+				return response()->json($this->exists,$this->status);
+			}
+		}
+
 		$objTeam -> TeamName = $request->TeamName;
 		//$objTeam -> IsHidden = 0;
 		$objTeam -> DivisionId = $request->DivisionId;

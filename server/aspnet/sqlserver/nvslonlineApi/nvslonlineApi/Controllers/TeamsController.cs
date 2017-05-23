@@ -19,14 +19,23 @@ namespace nvslonlineApi.Controllers
         // GET: api/Teams
         public IQueryable<Teams> GetTeams()
         {
-            return db.Teams;
+
+            var teams = db.Teams.Include(d => d.Division)
+                .Include(s => s.Season);
+
+            return teams;
         }
 
         // GET: api/Teams/5
         [ResponseType(typeof(Teams))]
         public IHttpActionResult GetTeams(int id)
-        {
-            Teams teams = db.Teams.Find(id);
+        {            
+            //Teams teams = db.Teams.Find(id);
+
+            var teams = db.Teams.Include(d => d.Division)
+                .Include(s => s.Season)
+                .SingleOrDefault(x => x.Id == id);
+
             if (teams == null)
             {
                 return NotFound();
