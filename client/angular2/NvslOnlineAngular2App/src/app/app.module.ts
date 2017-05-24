@@ -4,6 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from "@angular/router";
 
+//External Components
+//import { Ng2Bs3ModalModule } from 'ng2-bs3-modal/ng2-bs3-modal';
+
 //Components
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -22,19 +25,12 @@ import { PublicModule } from './public/public.module';
 
 //Services
 import { DataService } from './shared/services/data.service';
-//import { DivisionFilterPipe } from './shared/pipes/division-filter.pipe';
-
-//Pipes
-//import { TruncatePipe } from './shared/pipes/truncate.pipe';
-
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
     HomeComponent,
-    //DivisionFilterPipe,
-    //TruncatePipe
   ],
   imports: [
     BrowserModule,
@@ -54,11 +50,12 @@ import { DataService } from './shared/services/data.service';
     TeamsModule,
     StandingsModule,
     SchedulesModule,
-    PublicModule
+    PublicModule    
   ],
   providers: [
     DataService    
   ],
+  
   bootstrap: [AppComponent]
 })
 export class AppModule { }

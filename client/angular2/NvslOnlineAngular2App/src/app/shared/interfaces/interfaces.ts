@@ -1,4 +1,5 @@
 
+
 export interface ITeam {
     Id : number;
     TeamName : string;
@@ -36,6 +37,14 @@ export interface IVenue {
     Id : number;
     VenueName: string;    
     IsHidden: boolean;
+}
+
+export interface IPlayer {
+    Id : number;
+    FirstName: string;
+    LastName: string;
+    IsHidden: boolean;
+    TeamId: number;    
 }
 
 

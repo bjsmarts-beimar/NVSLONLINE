@@ -14,45 +14,44 @@ $('#search-trigger').click(function () {
 });
 </script>
 
-<div>
-        <nav class='navbar navbar-default'>
-            <div class='container-fluid'>
-                
-                <a class="navbar-brand" href="/">
-                    <img src="images/logo.png" style="display: inline-block; height: 40px; margin-bottom: 10px;">
-                    <span style="display: inline-block;"><h3 style="margin-top: 5px;">{{title}}</h3></span>
-                </a>
+<div class="header">            
+            <div class="navbar navbar-default" role="navigation">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" [routerLink]="['/home']">{{title}}</a>
+                    </div>
+                    <div class="collapse navbar-collapse" id="js-navbar-collapse">
 
-                <ul class='nav navbar-nav navbar-right'>
-                    <li *ngIf="!userLogin"><a [routerLink]="['/home']">Home</a></li>                    
-                    <li *ngIf="!userLogin"><a [routerLink]="['/team']">Teams</a></li>                    
-                    <li *ngIf="!userLogin"><a [routerLink]="['/schedule']">Schedule</a></li>                    
-                    <li *ngIf="!userLogin"><a [routerLink]="['/standing']">Standings</a></li>
-                    <li *ngIf="!userLogin"><a [routerLink]="['/contact']">Contact</a></li>                    
-                    <li *ngIf="!userLogin"><a [routerLink]="['/signup']">Sign Up</a></li>                    
-                    <li *ngIf="!userLogin"><a (click)="LogIn()">Log In</a></li>
-                        <li *ngIf="userLogin" class='dropdown'>
-                            <a class='dropdown-toggle' data-toggle='dropdown'>Beimar Medina <b class='caret'></b></a>
-                            <ul class='dropdown-menu'>
-                                <li><a [routerLink]="['/settings']">Edit Profile</a></li>                                
-                                <li><a [routerLink]="['/settings']">Account Settings</a></li>
-                                <li><a (click)="LogOut()">Sign Out</a></li>
-                            </ul>
-
-                        <!--<li *ngIf="userLogin" class='dropdown'>
-                            <a href='#' class='dropdown-toggle' data-toggle='dropdown'><span class='glyphicon glyphicon-edit'></span></a>
-                            <ul class='dropdown-menu'>
-                                <li><a [routerLink]="['/seasons']">Seasons</a></li>                    
-                            </ul>
-                        </li>                    -->
-                </ul>
+                        <ul class='nav navbar-nav navbar-right'>
+                    		<li *ngIf="!userLogin"><a [routerLink]="['/home']">Home</a></li>                    
+                    		<li *ngIf="!userLogin"><a [routerLink]="['/team']">Teams</a></li>                    
+                    		<li *ngIf="!userLogin"><a [routerLink]="['/schedule']">Schedule</a></li>                    
+                    		<li *ngIf="!userLogin"><a [routerLink]="['/standing']">Standings</a></li>
+                    		<li *ngIf="!userLogin"><a [routerLink]="['/contact']">Contact</a></li>                    
+                    		<li *ngIf="!userLogin"><a [routerLink]="['/signup']">Sign Up</a></li>                    
+                    		<li *ngIf="!userLogin"><a (click)="LogIn()">Log In</a></li>
+                        	<li *ngIf="userLogin" class='dropdown'>
+                            	<a class='dropdown-toggle' data-toggle='dropdown'>Beimar Medina <b class='caret'></b></a>
+                            	<ul class='dropdown-menu'>
+                                	<li><a [routerLink]="['/settings']">Edit Profile</a></li>                                
+                                	<li><a [routerLink]="['/settings']">Account Settings</a></li>
+                                	<li><a (click)="LogOut()">Sign Out</a></li>
+                            	</ul>                        
+                		</ul>
+                    </div>
+                </div>
             </div>
-        </nav>
-        <div class='container-fluid main-container'>
-            <!--<p>userLogin: {{userLogin}}</p>-->
+</div>
+<div class='container-fluid main-container'>
             <div [hidden]="sidebar">
                 <div class="col-md-2 sidebar">
-	 				<div class="row">
+	 				<!--<div class="row">-->
 						<!-- uncomment code for absolute positioning tweek see top comment in css -->
 						<div class="absolute-wrapper"> </div>
 							<!-- Menu -->
@@ -85,14 +84,14 @@ $('#search-trigger').click(function () {
 											</li>
 											<li><a href="#"><span class="glyphicon glyphicon-edit"></span> Settings</a></li>
 										</ul>
-									</div><!-- /.navbar-collapse -->
+									</div>
 								</nav>
 							</div>
-						</div>  		
+						<!--</div>  		-->
 				</div>
             </div>   
             <div class="col-md-10 content">          
                 <router-outlet></router-outlet>
             </div>
-        </div>
-     </div>
+</div>
+     
