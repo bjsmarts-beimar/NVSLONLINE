@@ -17,7 +17,7 @@ AwayTeam	../NVSLOnline_WebService/serializers.py	/^    AwayTeam = TeamSerializer
 AwayTeamId	../NVSLOnline/models.py	/^    AwayTeamId = models.ForeignKey(Teams, related_name='AwayTeam',db_column = 'AwayTeamId', null=True)$/;"	kind:variable	line:61
 BASE_DIR	../NVSLOnline_Django/settings.py	/^BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))$/;"	kind:variable	line:16
 CORS_ORIGIN_ALLOW_ALL	../NVSLOnline_Django/settings.py	/^CORS_ORIGIN_ALLOW_ALL = True$/;"	kind:variable	line:60
-Contact	../NVSLOnline_WebService/views.py	/^class Contact(APIView):$/;"	kind:class	line:515
+Contact	../NVSLOnline_WebService/views.py	/^class Contact(APIView):$/;"	kind:class	line:524
 ContactSerializer	../NVSLOnline_WebService/serializers.py	/^class ContactSerializer(ModelSerializer):$/;"	kind:class	line:56
 Contacts	../NVSLOnline/models.py	/^class Contacts(models.Model):$/;"	kind:class	line:80
 Contacts	../NVSLOnline_WebService/serializers.py	/^from NVSLOnline.models import Divisions,Seasons,Venues,Teams,Schedules,Players,News,Contacts$/;"	kind:namespace	line:1
@@ -74,7 +74,7 @@ Migration	../NVSLOnline/migrations/0002_auto_20170507_1854.py	/^class Migration(
 ModelSerializer	../NVSLOnline_WebService/serializers.py	/^from rest_framework.serializers import ModelSerializer$/;"	kind:namespace	line:2
 NVSLOnline_Views	../NVSLOnline_WebService/urls.py	/^from NVSLOnline_WebService import views as NVSLOnline_Views$/;"	kind:namespace	line:3
 NVSLOnline_serializer	../NVSLOnline_WebService/views.py	/^from NVSLOnline_WebService import serializers as NVSLOnline_serializer$/;"	kind:namespace	line:14
-New	../NVSLOnline_WebService/views.py	/^class New(APIView):$/;"	kind:class	line:473
+New	../NVSLOnline_WebService/views.py	/^class New(APIView):$/;"	kind:class	line:482
 NewSerializer	../NVSLOnline_WebService/serializers.py	/^class NewSerializer(ModelSerializer):$/;"	kind:class	line:63
 News	../NVSLOnline/models.py	/^class News(models.Model):$/;"	kind:class	line:70
 News	../NVSLOnline_WebService/serializers.py	/^from NVSLOnline.models import Divisions,Seasons,Venues,Teams,Schedules,Players,News,Contacts$/;"	kind:namespace	line:1
@@ -161,7 +161,7 @@ application	../NVSLOnline_Django/wsgi.py	/^application = get_wsgi_application()$
 apps.py	../NVSLOnline/apps.py	1;"	kind:file	line:1
 apps.py	../NVSLOnline_WebService/apps.py	1;"	kind:file	line:1
 authenticate	../NVSLOnline_WebService/views.py	/^from django.contrib.auth import authenticate$/;"	kind:namespace	line:8
-contact	../NVSLOnline_WebService/views.py	/^contact = Contact.as_view()$/;"	kind:variable	line:563
+contact	../NVSLOnline_WebService/views.py	/^contact = Contact.as_view()$/;"	kind:variable	line:572
 created	../NVSLOnline/models.py	/^    created = models.DateTimeField(auto_now_add=True)$/;"	kind:variable	line:75
 created	../NVSLOnline/models.py	/^    created = models.DateTimeField(auto_now_add=True)$/;"	kind:variable	line:88
 datetime	../NVSLOnline_WebService/views.py	/^import datetime,json$/;"	kind:namespace	line:17
@@ -171,8 +171,8 @@ delete	../NVSLOnline_WebService/views.py	/^    def delete(self, request, id=None
 delete	../NVSLOnline_WebService/views.py	/^    def delete(self, request, id=None, format=None):$/;"	kind:member	line:271
 delete	../NVSLOnline_WebService/views.py	/^    def delete(self, request, id=None, format=None):$/;"	kind:member	line:323
 delete	../NVSLOnline_WebService/views.py	/^    def delete(self, request, id=None, format=None):$/;"	kind:member	line:380
-delete	../NVSLOnline_WebService/views.py	/^    def delete(self, request, id=None, format=None):$/;"	kind:member	line:505
-delete	../NVSLOnline_WebService/views.py	/^    def delete(self, request, id=None, format=None):$/;"	kind:member	line:555
+delete	../NVSLOnline_WebService/views.py	/^    def delete(self, request, id=None, format=None):$/;"	kind:member	line:514
+delete	../NVSLOnline_WebService/views.py	/^    def delete(self, request, id=None, format=None):$/;"	kind:member	line:564
 delete	../NVSLOnline_WebService/views.py	/^    def delete(self, request, id=None, format=None):$/;"	kind:member	line:76
 deletion	../NVSLOnline/migrations/0001_initial.py	/^import django.db.models.deletion$/;"	kind:namespace	line:6
 dependencies	../NVSLOnline/migrations/0001_initial.py	/^    dependencies = [$/;"	kind:variable	line:13
@@ -218,8 +218,8 @@ get	../NVSLOnline_WebService/views.py	/^    def get(self, request, id=None, form
 get	../NVSLOnline_WebService/views.py	/^    def get(self, request, id=None, format=None):$/;"	kind:member	line:283
 get	../NVSLOnline_WebService/views.py	/^    def get(self, request, id=None, format=None):$/;"	kind:member	line:346
 get	../NVSLOnline_WebService/views.py	/^    def get(self, request, id=None, format=None):$/;"	kind:member	line:404
-get	../NVSLOnline_WebService/views.py	/^    def get(self, request, id=None, format=None):$/;"	kind:member	line:475
-get	../NVSLOnline_WebService/views.py	/^    def get(self, request, id=None, format=None):$/;"	kind:member	line:517
+get	../NVSLOnline_WebService/views.py	/^    def get(self, request, id=None, format=None):$/;"	kind:member	line:484
+get	../NVSLOnline_WebService/views.py	/^    def get(self, request, id=None, format=None):$/;"	kind:member	line:526
 get	../NVSLOnline_WebService/views.py	/^    def get(self, request, id=None, format=None):$/;"	kind:member	line:88
 getPlayersByTeamId	../NVSLOnline_WebService/views.py	/^    def getPlayersByTeamId(self, request, id=None, format=None):$/;"	kind:member	line:336
 getPlayersByTeamId	../NVSLOnline_WebService/views.py	/^getPlayersByTeamId = PlayerViewSet.as_view({'get':'getPlayersByTeamId'})$/;"	kind:variable	line:342
@@ -282,7 +282,7 @@ name	../NVSLOnline/migrations/0001_initial.py	/^            name='Venues',$/;"	k
 name	../NVSLOnline/migrations/0002_auto_20170507_1854.py	/^            name='modifiedBy',$/;"	kind:variable	line:17
 name	../NVSLOnline/migrations/0002_auto_20170507_1854.py	/^            name='modifiedByfullName',$/;"	kind:variable	line:22
 name	../NVSLOnline_WebService/apps.py	/^    name = 'NVSLOnline_WebService'$/;"	kind:variable	line:5
-new	../NVSLOnline_WebService/views.py	/^new = New.as_view()$/;"	kind:variable	line:513
+new	../NVSLOnline_WebService/views.py	/^new = New.as_view()$/;"	kind:variable	line:522
 operations	../NVSLOnline/migrations/0001_initial.py	/^    operations = [$/;"	kind:variable	line:16
 operations	../NVSLOnline/migrations/0002_auto_20170507_1854.py	/^    operations = [$/;"	kind:variable	line:14
 os	../NVSLOnline_Django/settings.py	/^import os$/;"	kind:namespace	line:13
@@ -294,24 +294,24 @@ post	../NVSLOnline_WebService/views.py	/^    def post(self, request, format=None
 post	../NVSLOnline_WebService/views.py	/^    def post(self, request, format=None):$/;"	kind:member	line:293
 post	../NVSLOnline_WebService/views.py	/^    def post(self, request, format=None):$/;"	kind:member	line:356
 post	../NVSLOnline_WebService/views.py	/^    def post(self, request, format=None):$/;"	kind:member	line:37
-post	../NVSLOnline_WebService/views.py	/^    def post(self, request, format=None):$/;"	kind:member	line:485
-post	../NVSLOnline_WebService/views.py	/^    def post(self, request, format=None):$/;"	kind:member	line:527
+post	../NVSLOnline_WebService/views.py	/^    def post(self, request, format=None):$/;"	kind:member	line:494
+post	../NVSLOnline_WebService/views.py	/^    def post(self, request, format=None):$/;"	kind:member	line:536
 post	../NVSLOnline_WebService/views.py	/^    def post(self, request, format=None):$/;"	kind:member	line:98
 pprint	../NVSLOnline_WebService/views.py	/^from pprint import pprint$/;"	kind:namespace	line:6
 put	../NVSLOnline_WebService/views.py	/^    def put(self, request, id=None, format=None):$/;"	kind:member	line:119
 put	../NVSLOnline_WebService/views.py	/^    def put(self, request, id=None, format=None):$/;"	kind:member	line:194
 put	../NVSLOnline_WebService/views.py	/^    def put(self, request, id=None, format=None):$/;"	kind:member	line:254
 put	../NVSLOnline_WebService/views.py	/^    def put(self, request, id=None, format=None):$/;"	kind:member	line:314
-put	../NVSLOnline_WebService/views.py	/^    def put(self, request, id=None, format=None):$/;"	kind:member	line:496
-put	../NVSLOnline_WebService/views.py	/^    def put(self, request, id=None, format=None):$/;"	kind:member	line:547
+put	../NVSLOnline_WebService/views.py	/^    def put(self, request, id=None, format=None):$/;"	kind:member	line:505
+put	../NVSLOnline_WebService/views.py	/^    def put(self, request, id=None, format=None):$/;"	kind:member	line:556
 put	../NVSLOnline_WebService/views.py	/^    def put(self, request, id=None, format=None):$/;"	kind:member	line:59
 render	../NVSLOnline/views.py	/^from django.shortcuts import render$/;"	kind:namespace	line:1
 requestSubject	../NVSLOnline/models.py	/^    requestSubject = models.IntegerField()$/;"	kind:variable	line:87
 schedule	../NVSLOnline_WebService/views.py	/^schedule = Schedule.as_view()$/;"	kind:variable	line:387
 season	../NVSLOnline_WebService/views.py	/^season = Season.as_view()$/;"	kind:variable	line:144
-serializer_class	../NVSLOnline_WebService/views.py	/^    serializer_class = NVSLOnline_serializer.ContactSerializer$/;"	kind:variable	line:516
+serializer_class	../NVSLOnline_WebService/views.py	/^    serializer_class = NVSLOnline_serializer.ContactSerializer$/;"	kind:variable	line:525
 serializer_class	../NVSLOnline_WebService/views.py	/^    serializer_class = NVSLOnline_serializer.DivisionSerializer$/;"	kind:variable	line:26
-serializer_class	../NVSLOnline_WebService/views.py	/^    serializer_class = NVSLOnline_serializer.NewSerializer$/;"	kind:variable	line:474
+serializer_class	../NVSLOnline_WebService/views.py	/^    serializer_class = NVSLOnline_serializer.NewSerializer$/;"	kind:variable	line:483
 serializer_class	../NVSLOnline_WebService/views.py	/^    serializer_class = NVSLOnline_serializer.PlayerSerializer$/;"	kind:variable	line:282
 serializer_class	../NVSLOnline_WebService/views.py	/^    serializer_class = NVSLOnline_serializer.PlayerSerializer$/;"	kind:variable	line:335
 serializer_class	../NVSLOnline_WebService/views.py	/^    serializer_class = NVSLOnline_serializer.ScheduleSerializer$/;"	kind:variable	line:345
@@ -325,7 +325,7 @@ serializers	../NVSLOnline_WebService/serializers.py	/^from rest_framework import
 serializers	../NVSLOnline_WebService/views.py	/^from django.core import serializers$/;"	kind:namespace	line:16
 serializers.py	../NVSLOnline_WebService/serializers.py	1;"	kind:file	line:1
 settings.py	../NVSLOnline_Django/settings.py	1;"	kind:file	line:1
-standing	../NVSLOnline_WebService/views.py	/^standing = Standing.as_view()$/;"	kind:variable	line:469
+standing	../NVSLOnline_WebService/views.py	/^standing = Standing.as_view()$/;"	kind:variable	line:478
 status	../NVSLOnline_WebService/views.py	/^from rest_framework import viewsets,status$/;"	kind:namespace	line:10
 sys	../manage.py	/^import sys$/;"	kind:namespace	line:3
 team	../NVSLOnline_WebService/views.py	/^team = Team.as_view()$/;"	kind:variable	line:279

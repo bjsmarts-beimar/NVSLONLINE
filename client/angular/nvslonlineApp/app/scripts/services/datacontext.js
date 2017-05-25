@@ -113,7 +113,7 @@ this.editDivision = function (webUrl,objDivision) {
             method: 'GET',
             //withCredentials: true,
             data: 'json',
-            url: webUrl +  'api/seasons/inactive'
+            url: webUrl +  'api/seasons' // 'api/seasons/inactive'
         });
     };
 
