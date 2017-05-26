@@ -300,9 +300,12 @@ angular.module('nvslonlineAppApp')
         $scope.goalsAwayTeam = objSchedule.GoalsAwayTeam;
 
         $scope.ok = function () {
+            objSchedule.Status = "Played";
+            
             objSchedule.GoalsHomeTeam = this.goalsHomeTeam;
             objSchedule.GoalsAwayTeam = this.goalsAwayTeam;
-            
+
+            console.log(objSchedule);
             return datacontext.editScore(options.webUrl, objSchedule).then(function (response) {
                $modalInstance.close();
             });
