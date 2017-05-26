@@ -25,12 +25,14 @@ import { PublicModule } from './public/public.module';
 
 //Services
 import { DataService } from './shared/services/data.service';
+//import { GameTeamFilterPipe } from './shared/pipes/game-team-filter.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
     HomeComponent,
+    //GameTeamFilterPipe,
   ],
   imports: [
     BrowserModule,

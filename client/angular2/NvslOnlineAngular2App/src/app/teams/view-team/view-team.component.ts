@@ -4,13 +4,14 @@ import { NgForm } from '@angular/forms';
 
 import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
 
-import { ISeason, IDivision, ITeam, IPlayer } from '../../shared/interfaces/interfaces';
+import { ISeason, IDivision, ITeam, IPlayer, ISchedule } from '../../shared/interfaces/interfaces';
 import { Season } from '../../shared/models/season';
 import { Division } from '../../shared/models/division';
 import { Team } from '../../shared/models/team';
 import { Player } from '../../shared/models/player';
 
 import { PlayerFilterPipe } from '../../shared/pipes/player-filter.pipe';
+import { GameTeamFilterPipe } from '../../shared/pipes/game-team-filter.pipe';
 
 import { DataService } from '../../shared/services/data.service';
 
@@ -25,7 +26,9 @@ export class ViewTeamComponent implements OnInit {
   public Player = new Player(0, '', '', false, 0);
   private errorMessage : string;
   public teamId : number;
+  public teamName : string;
   public IsInvalid : boolean = true;
+  public schedules: ISchedule[];
 
   @ViewChild('myModal')
   modal: ModalComponent;
@@ -38,21 +41,65 @@ export class ViewTeamComponent implements OnInit {
               private route: ActivatedRoute) 
   { }
 
-  ngOnInit() {
+  ngOnInit() {      
 
       this.teamId = +this.route.snapshot.params['id'];
+
+      this.dataService.getTeam(this.teamId)
+          .subscribe(
+            team => this.teamName = team.TeamName,
+            error => this.errorMessage = <any>error
+          );
+    
       
       this.dataService.getPlayers()
           .subscribe(
             players => this.players = players,
             error => this.errorMessage = <any>error
           ); 
+
+      this.dataService.getSchedules()
+            .subscribe(
+              schedules => {
+                this.schedules = schedules;
+                console.log(this.schedules);
+              },
+              error => this.errorMessage = <any>error
+            );
   }
 
   OpenModel(): void {    
     this.Player.FirstName = "";
     this.Player.LastName = "";
     this.modal.open();
+  }
+
+  routeToLink(teamId: number) : void {    
+
+       this.teamId = teamId;
+     
+       this.dataService.getTeam(this.teamId)
+            .subscribe(
+              team => this.teamName = team.TeamName,
+              error => this.errorMessage = <any>error
+            );
+
+       this.dataService.getSchedules()
+            .subscribe(
+              schedules => {
+                this.schedules = schedules;
+                console.log(this.schedules);
+              },
+              error => this.errorMessage = <any>error
+            );
+
+        this.dataService.getPlayers()
+          .subscribe(
+            players => this.players = players,
+            error => this.errorMessage = <any>error
+          ); 
+
+        this.router.navigate(['/viewteam/' + this.teamId]);        
   }
 
   EditOpenModel(id: number): void {
@@ -81,7 +128,7 @@ export class ViewTeamComponent implements OnInit {
               .subscribe(
                   data => console.log('success: ', data),
                   err => console.log('error: ', err),
-                  () => this.reload()
+                  () => this.reloadPlayers()
               );     
 
         this.modal.close();
@@ -95,7 +142,7 @@ export class ViewTeamComponent implements OnInit {
                 data => console.log('success: ', data),
                 err => console.log('error: ', err),
                 () => { 
-                  this.reload();
+                  this.reloadPlayers();
                   this.editModal.close();
                 },
             );
@@ -107,13 +154,15 @@ export class ViewTeamComponent implements OnInit {
             .subscribe(
                 data => console.log('success: ', data),                  
                 err => console.log('error: ', err),
-                () => this.reload() 
+                () => this.reloadPlayers() 
             );
         }        
   }
 
-  reload() : void 
+  reloadPlayers() : void 
   {
+        this.teamId = +this.route.snapshot.params['id'];
+        
         this.dataService.getPlayers()
           .subscribe(
             players => this.players = players,

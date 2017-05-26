@@ -4,6 +4,20 @@
     }
 }
 
+span.link {
+  color: #18bc9c;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.toRight {
+    text-align: right;
+}
+
+.toCenter {
+    text-align: center;
+}
+
 .table {
         border: none;
     }

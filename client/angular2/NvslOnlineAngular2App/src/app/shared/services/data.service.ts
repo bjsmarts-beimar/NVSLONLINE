@@ -8,13 +8,14 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
 
-import { ISeason, IDivision, IVenue, INews, ITeam, IPlayer } from '../interfaces/interfaces';
+import { ISeason, IDivision, IVenue, INews, ITeam, IPlayer, ISchedule } from '../interfaces/interfaces';
 import { Season } from '../models/season';
 import { Division } from '../models/division';
 import { Venue } from '../models/venue';
 import { News } from '../models/news';
 import { Team } from '../models/team';
 import { Player } from '../models/player';
+import { Schedule } from '../models/schedule';
 
 import * as global from "../global"; 
 
@@ -22,6 +23,17 @@ import * as global from "../global";
 export class DataService {
 
     constructor(private http: Http) { }
+
+    getSchedules(): Observable<ISchedule[]> {        
+
+        let url = global.url + "api/Schedules";
+        
+        return this.http.get(url)
+                   .map((res: Response) => {
+                        return res.json();
+                    })
+                   .catch(this.handleError);            
+    }
 
     getPlayers(): Observable<IPlayer[]> {        
 

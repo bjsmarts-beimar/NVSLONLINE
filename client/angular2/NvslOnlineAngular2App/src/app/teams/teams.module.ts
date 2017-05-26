@@ -5,6 +5,7 @@ import { RouterModule} from '@angular/router';
 
 import { Ng2Bs3ModalModule } from 'ng2-bs3-modal/ng2-bs3-modal';
 import { PlayerFilterModule } from '../shared/modules/player-filter/player-filter.module';
+import { GameTeamFilterModule } from '../shared/modules/game-team-filter/game-team-filter.module';
 
 
 import { TeamsComponent } from './teams.component';
@@ -26,14 +27,14 @@ import { ViewTeamComponent } from './view-team/view-team.component';
       { path: 'viewteam/:id', component: ViewTeamComponent }
     ]),
     Ng2Bs3ModalModule,
-    PlayerFilterModule
+    PlayerFilterModule,
+    GameTeamFilterModule
   ],
   declarations: [
     TeamsComponent, 
     AddTeamComponent, 
     EditTeamComponent, 
-    ViewTeamComponent, 
-    //PlayerFilterPipe    
+    ViewTeamComponent
     ]
 })
 export class TeamsModule { }

@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule} from '@angular/router';
 
 import { PlayerFilterModule } from '../shared/modules/player-filter/player-filter.module';
+import { GameTeamFilterModule } from '../shared/modules/game-team-filter/game-team-filter.module';
 
 import { TeamsComponent } from './teams/teams.component';
 import { SchedulesComponent } from './schedules/schedules.component';
@@ -21,6 +22,7 @@ import { ViewTeamComponent } from './view-team/view-team.component';
     FormsModule,
     RouterModule,
     PlayerFilterModule,
+    GameTeamFilterModule,
     RouterModule.forChild([
       { path: 'team', component: TeamsComponent },
       { path: 'schedule', component: SchedulesComponent },
@@ -36,7 +38,7 @@ import { ViewTeamComponent } from './view-team/view-team.component';
     StandingsComponent, 
     ContactsComponent,
     SignUpComponent, 
-    DivisionFilterPipe, 
+    DivisionFilterPipe,     
     ViewTeamComponent    
   ]
 })

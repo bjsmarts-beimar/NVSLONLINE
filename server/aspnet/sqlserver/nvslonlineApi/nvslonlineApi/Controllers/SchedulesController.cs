@@ -21,8 +21,12 @@ namespace nvslonlineApi.Controllers
         {
             //return db.Schedules;
 
-            var schedules = db.Schedules.Include(d => d.Division)
-                .Include(s => s.Season);
+            var schedules = db.Schedules
+                .Include(d => d.Division)
+                .Include(s => s.Season)
+                .Include(h => h.HomeTeam)
+                .Include(w => w.AwayTeam)
+                .Include(a => a.Venue);
 
             return schedules;
 
@@ -36,6 +40,9 @@ namespace nvslonlineApi.Controllers
 
             var schedule = db.Schedules.Include(d => d.Division)
                 .Include(s => s.Season)
+                .Include(h => h.HomeTeam)
+                .Include(w => w.AwayTeam)
+                .Include(a => a.Venue)
                 .SingleOrDefault(x => x.Id == id);
 
             if (schedule == null)
