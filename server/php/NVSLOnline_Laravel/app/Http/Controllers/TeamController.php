@@ -25,11 +25,7 @@ class TeamController extends Controller
 	
 	public function show($id){
 		$team = Team::find($id);
-		return response()->json([
-					"msg" => "Success",
-					"team" => $team
-					],200
-				);
+		return response()->json($team,200);
 	}
 	
 	public function store(Request $request){

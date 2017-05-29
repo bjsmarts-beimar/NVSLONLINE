@@ -1,11 +1,11 @@
 <div class="col-md-1"></div>
-<div class="col-md-10">
+<div class="col-md-11">
 <section class="mainbar">
     <section class="matter">
         <div>
             <h2>Teams</h2>
             <div class="row">
-                <div class="col-md-10">
+                <div class="col-md-12">
                     <div class="widget wviolet">
                         <div data-cc-widget-header title="Teams"
                              allow-collapse="true"></div>
@@ -20,12 +20,17 @@
                  </div>
 
                  <div data-cc-widget-header data-ng-repeat="(SeasonName,teamsSeason) in vm.teams | filter:{SeasonId:vm.season} | groupBy: 'Season.SeasonName'">
-                <b>Season: {{SeasonName}}</b>
+                   <div class="card-header">
+                            <b>Season: {{SeasonName}}</b>                     
+                   </div>
                     <div data-cc-widget-header data-ng-repeat="(DivisionName,teamsDivision) in teamsSeason  | groupBy: 'Division.DivisionName' ">
-                    <b> {{DivisionName}}</b>
-                        <div class="widget-content text-center text-info">
-                            <table class="table table-condensed table-striped">
-                                <thead>
+                    
+                        <div class="card-header">
+                            <b>{{DivisionName}}</b>                     
+                        </div>
+                        <div class="card-block p-0">
+                            <table class="table table-bordered table-sm m-0">
+                                <thead class="">
                                     <tr>
                                         <th> Name</th>
                                        
@@ -43,6 +48,7 @@
                             <div class="clearfix"></div>
                         </div>
                     </div>
+                    <p>
                 </div>
 
                     </div>
