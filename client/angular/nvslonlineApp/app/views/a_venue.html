@@ -1,20 +1,23 @@
 <section class="mainbar">
     <section class="matter">
         <div class="container">
-            <h2><a href ng-click="vm.openNewVenue()" class="btn btn-default">New Venue </a>
-            </h2>
-
-            <div class="form-group">
-                    <label for="venueName">Search</label>
-                    <input type="text" class="form-control" id="venueName" data-ng-model="vm.venueName" placeholder="Venue Name"/>
-                </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="widget wviolet">
-                        <div data-cc-widget-header title="Venues" allow-collapse="false"></div>
-                        <div class="widget-content text-center text-info">
-                            <table class="table table-condensed table-striped">
-                                <thead>
+             <div class="row">
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label for="venueName">Search</label>
+                        <input type="text" class="form-control" id="venueName" data-ng-model="vm.venueName" placeholder="Venue Name"/>
+                    </div>
+           
+                    <div class="card mb-5">
+                        <!--<div data-cc-widget-header title="Venues" allow-collapse="false"></div>-->
+                        <div class="card-header">
+                            <b>Venues</b>
+                            <div class="pull-right">
+                            <a class="btn btn-sm btn-primary btn-create" ng-click="vm.openNewVenue()">Create New</a></div>                        
+                        </div>
+                         <div class="card-block p-0">
+                            <table class="table table-bordered table-sm m-0">
+                                <thead class="">
                                     <tr>
                                         <th></th>
                                         <th>Venue Name </th>
@@ -23,8 +26,8 @@
                                 <tbody>
                                     <tr data-ng-repeat="p in vm.venues | filter:vm.venueName">
                                         <td style="text-align: left">
-                                            <a id="Edit" href ng-click="vm.openEditVenue(p)">Edit </a>|
-                                        <a id="Delete" href ng-click="vm.openDeleteVenue(p)">Delete </a>
+                                            <a id="Edit" class="btn btn-sm btn-primary btn-create" href ng-click="vm.openEditVenue(p)">Edit </a>
+                                            <a id="Delete" class="btn btn-sm btn-danger" href ng-click="vm.openDeleteVenue(p)">Delete </a>
                                         </td>
                                         <td style="text-align: left">{{p.VenueName}}</td>
                                        
@@ -68,6 +71,29 @@
             <button type="button" class="btn btn-default" data-dismiss="modal" data-ng-click="cancel()">Close</button>
         </div>
     </div><!-- /.modal-content -->
+    </script>
+        <script type="text/ng-template" id="delete.html">
+            
+        <div id="divPrincipalModal">   
+         <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">×</button>
+                <h4 class="modal-title"> Confirm Delete this Venue </h4>
+              </div>
+             <div class="modal-body">
+
+                 <div class="form-group">
+                     <label class="control-label">Venue Name:</label>
+                     <div style="padding-left: 10px">{{venueName}}</div>
+                 </div>
+             
+             </div>
+         <div class="modal-footer">
+             <button type="button" class="btn btn-primary" data-ng-click="ok()">Delete</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal" data-ng-click="cancel()">Close</button>
+        </div>
+            </div>
+        </div>
     </script>
 </section>
 

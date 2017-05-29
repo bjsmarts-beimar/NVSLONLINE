@@ -13,11 +13,15 @@ angular.module('nvslonlineAppApp')
    var vm = this; 
     common.accessLogin();
 
+        vm.convertMomentDate = common.convertMomentDate;
+        vm.convertMomentTime = common.convertMomentTime;
+
     vm.teamId = $stateParams.teamId;
     if (vm.teamId !== null) {
         datacontext.getTeamById(webUrl,vm.teamId).then(
             function (response) {
                 vm.team = response.data;
+                console.log(response.data);
             }, function(response) {
                 toastr.error("Error has occurred: " + response.data.Message, "Fatal error", {
                 positionClass: 'toast-bottom-full-width'
@@ -36,13 +40,27 @@ angular.module('nvslonlineAppApp')
 
     getPlayers();
     getTeams();
+    getSchedules();
         
      function getTeams() {
             return datacontext.getTeams(webUrl).then(function (response) {
                 vm.allTeams = response.data;
+                
                 return vm.teams =  response.data;
             });
         }
+
+    function getSchedules() {
+            return datacontext.getSchedules(webUrl).then(function (response) {
+                vm.schedules = response.data;
+                return vm.schedules;
+            });
+        }
+    vm.filterSchedules = function(teamId){
+        return function(schedule){
+            return schedule.HomeTeamId == teamId || schedule.AwayTeamId == teamId;
+        }
+    }
 
 
      vm.currentPage = parameters.pagination.currentPage; //pagina actual

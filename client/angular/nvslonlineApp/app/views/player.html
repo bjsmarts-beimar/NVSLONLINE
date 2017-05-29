@@ -1,26 +1,77 @@
 <div class="col-md-1"></div>
-<div class="col-md-6">
+<div class="col-md-11">
 
 	<div class="row">
 		<h2>{{vm.team.TeamName}}</h2>
 		
-		
+		<div class="card mb-5">
+                    <div class="card-header">
+                        <b>Schedule: 
+                        {{(vm.schedules | filter:{SeasonId:vm.team.SeasonId,DivisionId:vm.team.DivisionId} | filter:vm.filterSchedules(vm.team.Id)).length + " Matches"}} </b>            
+                    </div>
+                    <div class="card-block p-0">
+                        <table class="table table-bordered table-sm m-0">
+                            <thead class="">
+                                <tr>
+                                    <th class="toCenter">Status</th>
+                                    <th class="toCenter">Date</th>
+                                    <th class="toCenter">Time</th>
+                                    <th class="toRight">Home</th>
+                                    <th class="toCenter">Score</th>
+                                    <th>Away</th>  
+                                    <th class="toCenter">Venue</th>                      
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-ng-repeat='schedule in vm.schedules 
+                                | filter:{SeasonId:vm.team.SeasonId,DivisionId:vm.team.DivisionId} 
+                                | filter:vm.filterSchedules(vm.team.Id) '>                        
+                                    <td class="toCenter">{{schedule.Status}}</td>
+                                    <td class="toCenter"><span data-ng-bind="vm.convertMomentDate(schedule.DateTime) | date:'dd/MM/yyyy'"></span></td>
+                                    <td class="toCenter"><span data-ng-bind="vm.convertMomentTime(schedule.DateTime)"></span></td>
+                                    <td class="toRight"><a ui-sref="player({teamId:schedule.HomeTeamId})">{{schedule.HomeTeam.TeamName}}</a></td>                        
+                                    <td class="toCenter">{{p.GoalsHomeTeam}} - {{p.GoalsAwayTeam}}</td>
+                                    <td><a ui-sref="player({teamId:schedule.AwayTeamId})">{{schedule.AwayTeam.TeamName}}</a></td>                        
+                                    <td class="toCenter">{{schedule.Venue.VenueName}}</td>                 
+                                </tr>
+                                <tr><td>
+                                
+                                </td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer p-0">
+                    
+                    </div>
+         </div>
+
 		 <div data-cc-widget-header >
-                <b>From de Division: {{vm.team.Division.DivisionName}}</b>
-                    <div data-cc-widget-header >
-                    <div style="text-align:right"><b> Players </b> </div>
-                        <div class="widget-content text-info">
-                            <table class="table table-condensed table-striped">
-                                <thead>
-                                    <tr>
-                                        <th> Name</th>
-                                       
-                                    </tr>
+               <!-- <b>From de Division: {{vm.team.Division.DivisionName}}</b>-->
+                    <div class="card mb-5">
+                    
+                    <div class="card-header">
+                        <b>Players</b>
+                        
+                    </div>
+                        <div class="card-block p-0">
+                        <table class="table table-bordered table-sm m-0">
+                            <thead class="">
+                                <tr>
+                                    
+                                    <th>Player</th>
+                                    <th>Created</th>
+                                    <th>Created By</th>
+                                    <th>Modified</th>
+                                    <th>Modified By</th>                        
+                                </tr>
                                 </thead>
                                 <tbody>
                                     <tr data-ng-repeat="p in vm.players " >
                                         <td>{{p.FirstName}} {{p.LastName}}</td>
-
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
                                     </tr>
                                 </tbody>
                             </table>

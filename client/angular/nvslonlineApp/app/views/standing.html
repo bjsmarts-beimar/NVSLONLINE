@@ -29,19 +29,21 @@
 
             <div data-cc-widget-header 
             data-ng-repeat="(SeasonName,standingsSeason) in vm.standings | filter:{SeasonId:vm.season} | groupBy: 'Season.SeasonName'">
-               <b>Season: {{SeasonName}}</b>
-
-
+               
+                <div class="card-header">
+                    <b>Season: {{SeasonName}}</b>
+                </div>
                 <div data-cc-widget-header 
                 data-ng-repeat="(DivisionName,standingsDivision) in standingsSeason | filter:{DivisionId:vm.division}| groupBy: 'Division.DivisionName'">
-                    
-                    <b>{{DivisionName}}</b>
+                    <div class="card-header">
+                                <b>{{DivisionName}}</b>   
+                    </div>
 
-                     <div class="widget-content text-center text-info">
+                      <div class="card-block p-0">
                                 <div>
-                                    
-                                    <table class="table table-condensed table-striped">
-                                        <thead>
+                                
+                            <table class="table table-bordered table-sm m-0">
+                                    <thead class="">
                                         <tr>
                                             <th>Team</th>
                                             <th>Wins</th>
@@ -76,6 +78,7 @@
 
                             </div>
                 </div>
+                </p>
             </div>
 
             </div>
