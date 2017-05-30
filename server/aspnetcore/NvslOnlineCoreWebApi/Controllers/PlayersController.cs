@@ -24,7 +24,8 @@ namespace NvslOnlineCoreWebApi.Controllers
         [HttpGet]
         public IEnumerable<Players> Getplayers()
         {
-            return _context.players;
+            var players = _context.players.Include(t => t.Teams);
+            return players;
         }
 
         // GET: api/Players/5
@@ -35,8 +36,10 @@ namespace NvslOnlineCoreWebApi.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            Players players = await _context.players.SingleOrDefaultAsync(m => m.Id == id);
+            
+            Players players = await _context.players
+                .Include(t => t.Teams)
+                .SingleOrDefaultAsync(m => m.Id == id);
 
             if (players == null)
             {

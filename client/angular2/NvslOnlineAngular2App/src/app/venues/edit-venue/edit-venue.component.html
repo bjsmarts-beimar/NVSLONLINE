@@ -1,3 +1,25 @@
-<p>
-  edit-venue works!
-</p>
+<div class="main-form main-center">
+<h3>{{pageTitle}}</h3>
+
+<form #form="ngForm" (submit)="submitForm(form)" novalidate>    
+    <!-- NAME -->
+    <div class="form-group" [class.has-error]="name.invalid && !name.pristine" >
+        <label for="title" class="control-label">Field Name</label>
+        <input type="text" #name="ngModel" name="name" [(ngModel)]="venue.VenueName" class="form-control" placeholder="Name" required />
+        <p *ngIf="name.invalid && !name.pristine" class="help-block">Name is required.</p>           
+    </div>    
+    
+    <!-- SUBMIT BUTTON -->
+    <div class="form-group">    
+        <input type="submit" class="btn btn-primary" [disabled]="form.invalid" value="Update" /> 
+        <a class='btn btn-primary' (click)='onBack()' style='width:80px'>
+            Back
+        </a>   
+    </div>
+</form>
+</div>
+venue {{venue|json}}
+<br>
+Angular {{form.value | json}}
+<br>
+for  is valid {{form.valid}}

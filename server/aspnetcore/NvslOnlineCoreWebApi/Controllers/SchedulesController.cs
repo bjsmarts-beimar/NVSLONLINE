@@ -23,8 +23,15 @@ namespace NvslOnlineCoreWebApi.Controllers
         // GET: api/Schedules
         [HttpGet]
         public IEnumerable<Schedule> Getschedule()
-        {
-            return _context.schedule;
+        {            
+            var schedules = _context.schedule
+                .Include(d => d.Division)
+                .Include(s => s.Season)
+                .Include(h => h.HomeTeam)
+                .Include(w => w.AwayTeam)
+                .Include(a => a.Venue);
+
+            return schedules;
         }
 
         // GET: api/Schedules/5
@@ -35,8 +42,13 @@ namespace NvslOnlineCoreWebApi.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            Schedule schedule = await _context.schedule.SingleOrDefaultAsync(m => m.Id == id);
+            
+            Schedule schedule = await _context.schedule
+                .Include(s => s.Season)
+                .Include(h => h.HomeTeam)
+                .Include(w => w.AwayTeam)
+                .Include(a => a.Venue)
+                .SingleOrDefaultAsync(m => m.Id == id);
 
             if (schedule == null)
             {

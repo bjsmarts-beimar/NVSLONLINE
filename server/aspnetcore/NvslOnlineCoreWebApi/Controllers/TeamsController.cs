@@ -23,20 +23,26 @@ namespace NvslOnlineCoreWebApi.Controllers
         // GET: api/Teams
         [HttpGet]
         public IEnumerable<Teams> Getteams()
-        {
-            return _context.teams;
+        {            
+            var teams = _context.teams.Include(d => d.Division)
+                .Include(s => s.Season);
+
+            return teams;
         }
 
         // GET: api/Teams/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTeams([FromRoute] int id)
-        {
+        {            
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            Teams teams = await _context.teams.SingleOrDefaultAsync(m => m.Id == id);
+            Teams teams = await _context.teams
+                .Include(d => d.Division)
+                .Include(s => s.Season )
+                .SingleOrDefaultAsync(m => m.Id == id);
 
             if (teams == null)
             {
