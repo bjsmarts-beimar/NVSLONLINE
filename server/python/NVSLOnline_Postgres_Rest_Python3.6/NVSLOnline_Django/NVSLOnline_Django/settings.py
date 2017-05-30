@@ -86,7 +86,7 @@ WSGI_APPLICATION = 'NVSLOnline_Django.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'nvslonline3',                      
+        'NAME': 'nvslonline',                      
         'USER': 'nvslonlineuser',
         'PASSWORD': '4rfv5tgb^YHN&UJM',
         'HOST': '',
