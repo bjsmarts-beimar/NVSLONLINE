@@ -19,7 +19,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor='let schedule of schedules | gameTeamFilter: teamId'> 
+                    <tr *ngFor='let schedule of schedules | gameTeamFilter: teamId'>                         
                       <td class="toCenter">{{schedule.Status}}</td>
                         <td class="toCenter">{{schedule.DateTime | date:'MM/dd/yyyy'}}</td>
                         <td class="toCenter">{{schedule.DateTime | date:'h:mm a'}}</td>

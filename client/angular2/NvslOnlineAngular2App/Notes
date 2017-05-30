@@ -43,6 +43,10 @@ ng g module shared\modules\playerFilter
 ng g pipe shared\pipes\gameTeamFilter
 ng g module shared\modules\gameTeamFilter
 
+ng g pipe shared\pipes\teamSeasonDivisionFilter
+ng g module shared\modules\teamSeasonDivisionFilter
+
+
 #ng g compoment team
 ng g module teams
 ng g component teams

@@ -1,14 +1,14 @@
 <main class="panel pt-5">
-
+   
   <div class="form-group">      
         <label class="control-label">Season</label>
-        <select #name="ngModel" id="ddlSeason" name="ddlSeason" class="form-control" [(ngModel)]="selectedSeason" (ngModelChange)="onChangeUpdate($event)" style="width: 100%">
+        <select #name="ngModel" id="ddlSeason" name="ddlSeason" class="form-control" [(ngModel)]="selectedSeason" (ngModelChange)="SeasonClicked($event)" style="width: 100%">
             <option *ngFor="let season of seasons" value={{season.Id}}>{{season.SeasonName}}</option>
-        </select>              
+        </select>                      
   </div>
   <div class="form-group">
         <label class="control-label">Division</label>
-        <select #name="ngModel" id="ddlDivision" name="ddlDivision" class="form-control" [(ngModel)]="selectedDivision" (ngModelChange)="onChangeDivisionUpdate($event)" style="width: 100%">
+        <select #name="ngModel" id="ddlDivision" name="ddlDivision" class="form-control" [(ngModel)]="selectedDivision" (ngModelChange)="DivisionClicked($event)" style="width: 100%">
             <option *ngFor="let division of divisions" value={{division.Id}}>{{division.DivisionName}}</option>
         </select>            
   </div>
@@ -34,7 +34,7 @@
                     </tr>
                 </thead>
                 <tbody>                    
-                    <tr *ngFor='let team of teams'>                        
+                    <tr *ngFor='let team of teams | teamSeasonDivisionFilter : selectedSeason : selectedDivision'>                        
                         <td>
                             <a class="btn btn-sm btn-primary btn-create" [routerLink]="['/team', team.Id]" >Edit</a>
                             <a class="btn btn-sm btn-danger" (click)='remove(team.Id)' >Delete</a>

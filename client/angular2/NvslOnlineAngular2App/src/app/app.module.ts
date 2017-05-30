@@ -25,6 +25,7 @@ import { PublicModule } from './public/public.module';
 
 //Services
 import { DataService } from './shared/services/data.service';
+//import { TeamSeasonDivisionFilterPipe } from './shared/pipes/team-season-division-filter.pipe';
 //import { GameTeamFilterPipe } from './shared/pipes/game-team-filter.pipe';
 
 @NgModule({
@@ -32,6 +33,7 @@ import { DataService } from './shared/services/data.service';
     AppComponent,
     DashboardComponent,
     HomeComponent,
+    //TeamSeasonDivisionFilterPipe,
     //GameTeamFilterPipe,
   ],
   imports: [
