@@ -4,6 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from "@angular/router";
 
+//External Components
+//import { Ng2Bs3ModalModule } from 'ng2-bs3-modal/ng2-bs3-modal';
+
 //Components
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -15,20 +18,21 @@ import { DivisionsModule } from './divisions/divisions.module';
 import { VenuesModule } from './venues/venues.module';
 import { NewsModule } from './news/news.module';
 import { ContactsModule } from './contacts/contacts.module';
+import { TeamsModule } from './teams/teams.module';
+import { StandingsModule } from './standings/standings.module';
+import { SchedulesModule } from './schedules/schedules.module';
+import { PublicModule } from './public/public.module';
 
 //Services
 import { DataService } from './shared/services/data.service';
-
-//Pipes
-//import { TruncatePipe } from './shared/pipes/truncate.pipe';
-
+//import { GameTeamFilterPipe } from './shared/pipes/game-team-filter.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
     HomeComponent,
-    //TruncatePipe
+    //GameTeamFilterPipe,
   ],
   imports: [
     BrowserModule,
@@ -44,11 +48,16 @@ import { DataService } from './shared/services/data.service';
     DivisionsModule,
     VenuesModule,
     NewsModule,
-    ContactsModule
+    ContactsModule,
+    TeamsModule,
+    StandingsModule,
+    SchedulesModule,
+    PublicModule    
   ],
   providers: [
     DataService    
   ],
+  
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,55 @@
+<main class="panel pt-5">
+
+  <div class="form-group">      
+        <label class="control-label">Season</label>
+        <select #name="ngModel" id="ddlSeason" name="ddlSeason" class="form-control" [(ngModel)]="selectedSeason" (ngModelChange)="onChangeUpdate($event)" style="width: 100%">
+            <option *ngFor="let season of seasons" value={{season.Id}}>{{season.SeasonName}}</option>
+        </select>              
+  </div>
+  <div class="form-group">
+        <label class="control-label">Division</label>
+        <select #name="ngModel" id="ddlDivision" name="ddlDivision" class="form-control" [(ngModel)]="selectedDivision" (ngModelChange)="onChangeDivisionUpdate($event)" style="width: 100%">
+            <option *ngFor="let division of divisions" value={{division.Id}}>{{division.DivisionName}}</option>
+        </select>            
+  </div>
+    
+    <div class="card mb-5">
+        <div class="card-header">
+            <b>Teams</b>
+            <div class="pull-right"><a [routerLink]="['/addteam']" class="btn btn-sm btn-primary btn-create">Create New</a></div>                        
+        </div>
+        
+        <div class="card-block p-0">
+            <table class="table table-bordered table-sm m-0">
+                <thead class="">
+                    <tr>
+                        <th></th>
+                        <th class="toCenter">Status</th>
+                        <th class="toCenter">Date</th>
+                        <th class="toCenter">Time</th>
+                        <th class="toRight">Home</th>
+                        <th class="toCenter">Score</th>
+                        <th>Away</th>
+                        <th class="toCenter">Venue</th>                        
+                    </tr>
+                </thead>
+                <tbody>                    
+                    <tr *ngFor='let schedule of schedules'>                        
+                        <td>
+                            <a class="btn btn-sm btn-primary btn-create"  >Score</a>
+                        </td>
+                        <td class="toCenter">{{schedule.Status}}</td>
+                        <td class="toCenter">{{schedule.DateTime | date:'MM/dd/yyyy'}}</td>
+                        <td class="toCenter">{{schedule.DateTime | date:'h:mm a'}}</td>
+                        <td class="toRight"><a [routerLink]="['/viewteam', schedule.HomeTeam.Id]">{{schedule.HomeTeam.TeamName}}</a></td>
+                        <td class="toCenter">1 - 0</td>
+                        <td><a [routerLink]="['/viewteam', schedule.AwayTeam.Id]">{{schedule.AwayTeam.TeamName}}</a></td>
+                        <td class="toCenter">{{schedule.Venue.VenueName}}</td>                 
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer p-0">
+        </div>
+    </div>
+</main>

@@ -44,6 +44,28 @@ class ScheduleController extends Controller
 		}
 	}
 
+	public function update(Request $request,$id){
+		//$objDivision = Division::find($request->Id);
+		$objSchedule = Schedule::find($id);
+
+		$objSchedule -> Status = $request->Status;
+		$objSchedule -> DateTime = $request->DateTime;
+		$objSchedule -> GoalsHomeTeam = $request->GoalsHomeTeam;
+		$objSchedule -> GoalsAwayTeam = $request->GoalsAwayTeam;
+		$objSchedule -> IsHidden = 0;
+
+		$objSchedule -> DivisionId = $request->DivisionId;
+		$objSchedule -> HomeTeamId = $request->HomeTeamId;
+		$objSchedule -> AwayTeamId = $request->AwayTeamId;
+		$objSchedule -> SeasonId = $request->SeasonId;
+		$objSchedule -> VenueId = $request->VenueId;
+
+		$objSchedule -> save();
+		
+		return response()->json($objSchedule);
+	}
+
+
 	public function editScheduleScore(Request $request,$id){
 		//$objDivision = Division::find($request->Id);
 		$objSchedule = Schedule::find($id);

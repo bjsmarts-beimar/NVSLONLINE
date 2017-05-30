@@ -1,0 +1,44 @@
+<div class="main-form main-center">
+
+<h3>{{pageTitle}}</h3>
+
+<form #form="ngForm" (submit)="submitForm(form)" novalidate>    
+    <!-- NAME -->
+    <div class="form-group" [class.has-error]="name.invalid && !name.pristine" >
+        <label for="title" class="control-label">Team Name</label>
+        <input type="text" #name="ngModel" name="name" [(ngModel)]="team.TeamName" class="form-control" placeholder="Team Name" required />
+        <p *ngIf="name.invalid && !name.pristine" class="help-block">Name is required.</p>           
+    </div>
+
+    <!-- DIVISION -->
+    <div class="form-group" >
+        <label for="title" class="control-label">Division</label>
+        <select #name="ngModel" id="ddlDivision" name="ddlDivision" class="form-control" [(ngModel)]="selectedDivision" style="width: 100%">
+            <option *ngFor="let division of divisions" value={{division.Id}}>{{division.DivisionName}}</option>
+        </select>
+    </div>
+
+    <!-- SEASON -->
+    <div class="form-group" >
+        <label for="title" class="control-label">Season</label>
+        <select #name="ngModel" id="ddlSeason" name="ddlSeason" class="form-control" [(ngModel)]="selectedSeason" style="width: 100%">
+            <option *ngFor="let season of seasons" value={{season.Id}}>{{season.SeasonName}}</option>
+        </select>
+    </div>
+
+    
+    <!-- SUBMIT BUTTON -->
+    <div class="form-group">    
+        <input type="submit" class="btn btn-primary" [disabled]="form.invalid" value="Save" />
+        <a class='btn btn-primary' (click)='onBack()' style='width:80px'>
+            Back
+        </a>     
+    </div>
+</form>
+</div>
+model {{model|json}}
+<br>
+Angular {{form.value | json}}
+<br>
+for  is valid {{form.valid}}
+

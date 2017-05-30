@@ -8,11 +8,14 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
 
-import { ISeason, IDivision, IVenue, INews } from '../interfaces/interfaces';
+import { ISeason, IDivision, IVenue, INews, ITeam, IPlayer, ISchedule } from '../interfaces/interfaces';
 import { Season } from '../models/season';
 import { Division } from '../models/division';
 import { Venue } from '../models/venue';
 import { News } from '../models/news';
+import { Team } from '../models/team';
+import { Player } from '../models/player';
+import { Schedule } from '../models/schedule';
 
 import * as global from "../global"; 
 
@@ -20,6 +23,125 @@ import * as global from "../global";
 export class DataService {
 
     constructor(private http: Http) { }
+
+    getSchedules(): Observable<ISchedule[]> {        
+
+        let url = global.url + "api/Schedules";
+        
+        return this.http.get(url)
+                   .map((res: Response) => {
+                        return res.json();
+                    })
+                   .catch(this.handleError);            
+    }
+
+    getPlayers(): Observable<IPlayer[]> {        
+
+        let url = global.url + "api/Players";
+        
+        return this.http.get(url)
+                   .map((res: Response) => {
+                        return res.json();
+                    })
+                   .catch(this.handleError);            
+    }
+
+    getPlayer(id: number): Observable<IPlayer> {
+        return this.getPlayers()
+                   .map((players: IPlayer[]) => players.find(p => p.Id === id));
+    }
+
+    addPlayer(player: Player) : Observable<any> {
+        
+        let url = global.url + "api/Players";
+
+        let body = JSON.stringify(player);
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.post(url, body, options)
+                         .map((res: Response) => {
+                            return res.json();
+                         })
+                         .catch(this.handleError);
+    }
+
+    deletePlayer(id: number) : Observable<any> {
+        
+        let url = global.url + "api/Players/" + id;
+
+        return this.http.delete(url)
+                   .map((res: Response) => {
+                        return res.json();
+                    })
+                   .catch(this.handleError);
+    }
+
+    updatePlayer(player: Player) : Observable<any> {
+        
+        let url = global.url + "api/Players/" + player.Id;
+
+        let body = JSON.stringify(player);
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });        
+
+        return this.http.put(url, body, options)                         
+                        .catch(this.handleError);
+    }
+
+    getTeams(): Observable<ITeam[]> {        
+
+        let url = global.url + "api/Teams";
+        
+        return this.http.get(url)
+                   .map((res: Response) => {
+                        return res.json();
+                    })
+                   .catch(this.handleError);            
+    }
+
+    getTeam(id: number): Observable<ITeam> {
+        return this.getTeams()
+                   .map((teams: ITeam[]) => teams.find(p => p.Id === id));
+    }
+
+    addTeam(team: Team) : Observable<any> {
+        
+        let url = global.url + "api/Teams";
+
+        let body = JSON.stringify(team);
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.post(url, body, options)
+                         .map((res: Response) => {
+                            return res.json();
+                         })
+                         .catch(this.handleError);
+    }
+
+    deleteTeam(id: number) : Observable<any> {
+        
+        let url = global.url + "api/Teams/" + id;
+
+        return this.http.delete(url)
+                   .map((res: Response) => {
+                        return res.json();
+                    })
+                   .catch(this.handleError);
+    }
+
+    updateTeam(team: Team) : Observable<any> {
+        
+        let url = global.url + "api/Teams/" + team.Id;
+
+        let body = JSON.stringify(team);
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });        
+
+        return this.http.put(url, body, options)                         
+                        .catch(this.handleError);
+    }
 
     getSeasons(): Observable<ISeason[]> {        
 

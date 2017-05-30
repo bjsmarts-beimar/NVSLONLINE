@@ -14,7 +14,7 @@ import { DataService } from '../../shared/services/data.service';
 })
 export class AddDivisionComponent implements OnInit {
 
-    public pageTitle: string = 'Add Season';  
+    public pageTitle: string = 'Add Division';  
     public division = new Division(0, '', false);
 
     constructor(private dataService: DataService,

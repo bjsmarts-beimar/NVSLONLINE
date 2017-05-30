@@ -113,7 +113,7 @@ this.editDivision = function (webUrl,objDivision) {
             method: 'GET',
             //withCredentials: true,
             data: 'json',
-            url: webUrl +  'api/seasons/inactive'
+            url: webUrl +  'api/seasons' // 'api/seasons/inactive'
         });
     };
 
@@ -232,7 +232,8 @@ this.editDivision = function (webUrl,objDivision) {
     this.editScore = function (webUrl,objSchedule) {
         return $http({
             method: 'PUT',
-            url: webUrl +  'api/schedules/scheduleScore/' + objSchedule.Id,
+            url: webUrl +  'api/schedules/' + objSchedule.Id,
+            //url: webUrl +  'api/schedules/scheduleScore/' + objSchedule.Id,
             //withCredentials: true,
            data: objSchedule
         }).then(function successCallback(response){

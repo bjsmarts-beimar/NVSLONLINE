@@ -1,0 +1,30 @@
+
+<main class="panel pt-5 no-sidebar">
+
+    <b>Teams</b>
+    
+    <div *ngFor='let division of divisions' class="card mb-5">
+        <div class="card-header">
+          <b>{{division.DivisionName}}</b>         
+        </div>
+        
+        <div class="card-block p-0">
+            <table class="table table-bordered table-sm m-0">
+                <thead class="">
+                    <tr>
+                        <th>Team Name</th>                        
+                    </tr>
+                </thead>
+                <tbody>  
+                    <tr *ngFor='let team of teams | divisionFilter: division.Id' >                        
+                        <td><a [routerLink]="['/vwteam', team.Id]">{{team.TeamName}}</a></td>
+                    </tr>                                      
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card-footer p-0">
+        </div>
+    </div>
+</main>
+

@@ -15,6 +15,7 @@ angular.module('nvslonlineAppApp')
         vm.title = 'Venues';
         vm.openNewVenue = openNewVenue;
         vm.openEditVenue = openEditVenue;
+        vm.openDeleteVenue = openDeleteVenue;
         
         getVenues();
          function getVenues() {
@@ -75,6 +76,29 @@ angular.module('nvslonlineAppApp')
             }, function () {
             });
         }
+
+        function openDeleteVenue(venue) {
+            var options = {};
+            options.venue = venue;
+            options.webUrl = webUrl;
+
+            var modalInstance = $modal.open({
+                templateUrl: 'delete.html',
+                controller: modalInstanceDeleteVenue,
+                //size: size,
+
+                resolve: {
+                    options: function () { //esta es la info enviada al modal si se cargo correctamente. tb se puede info en el scope que abre el modal
+                        return options;
+                    }
+                }
+            });
+            modalInstance.result.then(function (data) {
+               getVenues();
+                //log('Changes Saved');
+            }, function () {
+            });
+        } 
   }]);
 
   var modalInstanceNewVenue = ['$scope', '$modalInstance', 'options', 'datacontext','$filter','toastr',
@@ -97,7 +121,7 @@ angular.module('nvslonlineAppApp')
             $scope.cancel = function () { $modalInstance.dismiss('cancel'); };
         }];
 
-    var modalInstanceEditVenue = ['$scope', '$modalInstance', 'datacontext','common', 'options','$filter', 'toastr',
+  var modalInstanceEditVenue = ['$scope', '$modalInstance', 'datacontext','common', 'options','$filter', 'toastr',
         function ($scope, $modalInstance, datacontext,common, options, $filter, toastr) {
 
         var objVenue = options.venue;
@@ -121,3 +145,18 @@ angular.module('nvslonlineAppApp')
         $scope.cancel = function () { $modalInstance.dismiss('cancel'); };
     }];
 
+   var modalInstanceDeleteVenue = ['$scope', '$modalInstance', 'datacontext', 'options', 
+        function ($scope, $modalInstance, datacontext, options) {
+    
+        var objVenue = options.venue;
+
+        $scope.venueName = objVenue.VenueName;
+        
+        $scope.ok = function () {
+            
+            var dataUpdated = datacontext.deleteVenue(options.webUrl,objVenue);
+            //console.log(updated);
+            $modalInstance.close(dataUpdated);
+        };
+        $scope.cancel = function () { $modalInstance.dismiss('cancel'); };
+    }];

@@ -377,6 +377,30 @@ class Schedule(APIView):
         else:
            return Response(serializer.errors)
 
+    def put(self, request, id=None, format=None):
+        schedule = get_object_or_404(Schedules, pk=id)
+        serializer = self.serializer_class(schedule, data=request.data)# request.POST y request.GET, request.FILES
+        if serializer.is_valid():
+            schedule.Status = request.data.get("Status")
+            #schedule.DateTime = datetime.datetime.strptime(request.data['DateTime'],'%Y-%m-%dT%H:%M:%S.%fZ').date()
+            schedule.DateTime = request.data.get("DateTime")
+            schedule.GoalsHomeTeam = request.data.get("GoalsHomeTeam")
+            schedule.GoalsAwayTeam = request.data.get("GoalsAwayTeam")
+            
+            schedule.SeasonId = Seasons.objects.get(Id = request.data['SeasonId'])
+            schedule.DivisionId = Divisions.objects.get(Id = request.data['DivisionId'])
+            schedule.VenueId = Venues.objects.get(Id = request.data['VenueId'])
+            
+            schedule.HomeTeamId = Teams.objects.get(Id = request.data['HomeTeamId'])
+            schedule.AwayTeamId = Teams.objects.get(Id = request.data['AwayTeamId'])
+            schedule.IsHidden = False
+
+            schedule.save()
+            serializer = self.serializer_class(schedule,many=False)
+            return Response(serializer.data)
+            #return Response(serializer.data)
+        return Response(serializer.errors)
+
     def delete(self, request, id=None, format=None):
         schedule = get_object_or_404(Schedules, pk=id)
         schedule.IsHidden =True

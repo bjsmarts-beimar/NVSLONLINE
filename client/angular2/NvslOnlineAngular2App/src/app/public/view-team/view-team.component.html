@@ -1,0 +1,71 @@
+<main class="panel pt-5 no-sidebar">
+    <h2><b>{{teamName}}</b></h2>
+
+    <div class="card mb-5">
+        <div class="card-header">
+            <b>Schedule</b>            
+        </div>
+        <div class="card-block p-0">
+            <table class="table table-bordered table-sm m-0">
+                <thead class="">
+                    <tr>
+                        <th class="toCenter">Status</th>
+                        <th class="toCenter">Date</th>
+                        <th class="toCenter">Time</th>
+                        <th class="toRight">Home</th>
+                        <th class="toCenter">Score</th>
+                        <th>Away</th>  
+                        <th class="toCenter">Venue</th>                      
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor='let schedule of schedules | gameTeamFilter: teamId'> 
+                      <td class="toCenter">{{schedule.Status}}</td>
+                        <td class="toCenter">{{schedule.DateTime | date:'MM/dd/yyyy'}}</td>
+                        <td class="toCenter">{{schedule.DateTime | date:'h:mm a'}}</td>
+                        <td class="toRight"><span class='link' (click)="routeToLink(schedule.HomeTeam.Id)">{{schedule.HomeTeam.TeamName}}</span></td>                        
+                        <td class="toCenter">1 - 0</td>
+                        <td><span class='link' (click)="routeToLink(schedule.AwayTeam.Id)">{{schedule.AwayTeam.TeamName}}</span></td>                        
+                        <td class="toCenter">{{schedule.Venue.VenueName}}</td>                      
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer p-0">
+        </div>
+    </div>
+
+
+    <div class="card mb-5">
+        <div class="card-header">
+            <b>Players</b>                                    
+        </div>
+        <div class="card-block p-0">
+            <table class="table table-bordered table-sm m-0">
+                <thead class="">
+                    <tr>                        
+                        <th>Player</th>
+                        <th>Goals</th>
+                        <th>Assists</th>
+                        <th>Points</th>
+                        <th>MVP</th>  
+                        <th>Hon. Mention</th>                      
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor='let player of players | playerFilter: teamId'>                      
+                      <td>{{player.FirstName}} {{player.LastName}}</td>
+                      <td>0</td>
+                      <td>0</td>
+                      <td>0</td>
+                      <td>0</td>
+                      <td>0</td>                      
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer p-0">
+        </div>
+    </div>
+    
+</main>

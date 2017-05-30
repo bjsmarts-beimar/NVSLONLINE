@@ -69,7 +69,8 @@ Route::delete("players/{id}", "PlayerController@updateDelete");
 
 Route::get("schedules", "ScheduleController@index");
 Route::post("schedules", "ScheduleController@store");
-Route::put("schedules/scheduleScore/{id}", "ScheduleController@editScheduleScore");
+Route::put("schedules/{id}", "ScheduleController@update");
+//Route::put("schedules/scheduleScore/{id}", "ScheduleController@editScheduleScore");
 Route::delete("schedules/{id}", "ScheduleController@updateDelete");
 
 Route::get("standings", "StandingController@index");

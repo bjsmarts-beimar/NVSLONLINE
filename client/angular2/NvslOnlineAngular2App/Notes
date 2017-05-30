@@ -35,10 +35,40 @@ ng g component contacts\addContact
 ng g component contacts\editContact
 
 ng g pipe shared\pipes\truncate 
+ng g pipe shared\pipes\divisionFilter
 
-ng g compoment team
-ng g component schedule
-ng g component standing
+ng g pipe shared\pipes\playerFilter
+ng g module shared\modules\playerFilter
+
+ng g pipe shared\pipes\gameTeamFilter
+ng g module shared\modules\gameTeamFilter
+
+#ng g compoment team
+ng g module teams
+ng g component teams
+ng g component teams\addTeam
+ng g component teams\editTeam
+ng g component teams\viewTeam
+
+#ng g component schedule
+ng g module schedules
+ng g component schedules
+ng g component schedules\addSchedule
+
+#ng g component standing
+ng g module standings
+ng g component standings
+
+#ng g compoment public
+ng g module public
+ng g component public\teams
+ng g component public\viewTeam
+*ng g compoment public\team
+ng g compoment public\signup
+ng g component public\schedules
+ng g component public\standings
+ng g component public\contacts
+
 ng g component player
 
 ng g interface shared\interfaces\interfaces
@@ -46,6 +76,7 @@ ng g interface shared\interfaces\interfaces
 ng g class shared\models\season
 ng g class shared\models\division
 ng g class shared\models\team
+
 ng g class shared\models\schedule
 ng g class shared\models\standing
 ng g class shared\models\player
@@ -61,4 +92,6 @@ npm install bootswatch --save
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 npm install moment --save
+npm install --save ng2-bs3-modal
+
 
