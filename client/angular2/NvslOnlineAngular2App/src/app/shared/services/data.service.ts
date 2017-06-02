@@ -35,6 +35,21 @@ export class DataService {
                    .catch(this.handleError);            
     }
 
+    addSchedule(schedule: Schedule) : Observable<any> {
+        
+        let url = global.url + "api/Schedules";
+
+        let body = JSON.stringify(schedule);
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.post(url, body, options)
+                         .map((res: Response) => {
+                            return res.json();
+                         })
+                         .catch(this.handleError);
+    }
+
     getPlayers(): Observable<IPlayer[]> {        
 
         let url = global.url + "api/Players";

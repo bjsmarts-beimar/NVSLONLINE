@@ -1,22 +1,22 @@
 <main class="panel pt-5">
 
-  <div class="form-group">      
+  <div class="form-group">   
         <label class="control-label">Season</label>
-        <select #name="ngModel" id="ddlSeason" name="ddlSeason" class="form-control" [(ngModel)]="selectedSeason" (ngModelChange)="onChangeUpdate($event)" style="width: 100%">
+        <select #name="ngModel" id="ddlSeason" name="ddlSeason" class="form-control" [(ngModel)]="selectedSeason" (ngModelChange)="SeasonClicked($event)" style="width: 100%">
             <option *ngFor="let season of seasons" value={{season.Id}}>{{season.SeasonName}}</option>
         </select>              
   </div>
   <div class="form-group">
         <label class="control-label">Division</label>
-        <select #name="ngModel" id="ddlDivision" name="ddlDivision" class="form-control" [(ngModel)]="selectedDivision" (ngModelChange)="onChangeDivisionUpdate($event)" style="width: 100%">
+        <select #name="ngModel" id="ddlDivision" name="ddlDivision" class="form-control" [(ngModel)]="selectedDivision" (ngModelChange)="DivisionClicked($event)" style="width: 100%">
             <option *ngFor="let division of divisions" value={{division.Id}}>{{division.DivisionName}}</option>
         </select>            
   </div>
     
     <div class="card mb-5">
         <div class="card-header">
-            <b>Teams</b>
-            <div class="pull-right"><a [routerLink]="['/addteam']" class="btn btn-sm btn-primary btn-create">Create New</a></div>                        
+            <h2><b>Schedules</b></h2>
+            <div class="pull-right"><a class="btn btn-sm btn-primary btn-create" (click)="OpenModel()">Create New</a></div>                        
         </div>
         
         <div class="card-block p-0">
@@ -53,3 +53,49 @@
         </div>
     </div>
 </main>
+
+<!-- BEGIN MODAL -->
+    <modal #myModal >  
+
+        <modal-header [show-close]="true">
+            <h3>Add New Schedule</h3>
+        </modal-header>
+        <modal-body>
+            <div class="form-group">      
+                    <label class="control-label">Please select a Season</label>
+                    <select #name="ngModel" id="ddlModalSeason" name="ddlModalSeason" class="form-control" [(ngModel)]="selectedModalSeason" (ngModelChange)="ModalSeasonClicked($event)" style="width: 100%">
+                        <option *ngFor="let season of seasons" value={{season.Id}}>{{season.SeasonName}}</option>
+                    </select>              
+            </div>
+            <div class="card mb-5">
+                <div class="card-header">
+                    <b>Schedule Generation Results</b>                    
+                </div>
+                <div class="card-block p-0">
+                    <table class="table table-bordered table-sm m-0">
+                        <thead class="">
+                            <tr>
+                                <th>Division</th>
+                                <th class="toCenter">Team Number</th>
+                                <th class="toCenter">Can be generate</th>                                                        
+                            </tr>
+                        </thead>
+                        <tbody>                    
+                            <tr *ngFor='let result of Results | scheduleSeasonFilter: selectedModalSeason'>                        
+                                <td style="width: 60%;">{{result.DivisionName}}</td>
+                                <td class="toCenter">{{result.TotalCount}}</td>
+                                <td class="toCenter">{{result.IsActive}}</td>                             
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </modal-body>
+        <modal-footer>                                    
+            <button type="button" [disabled]="modalEnableGenBtn" class="btn btn-primary" (click)="Save()">Generate Schedule</button>
+            <button class="btn btn-default" data-dismiss="modal" type="button">Cancel</button>
+        </modal-footer>        
+        
+    </modal>                   
+    <!-- END MODAL -->

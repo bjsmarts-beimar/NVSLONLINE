@@ -46,6 +46,9 @@ ng g module shared\modules\gameTeamFilter
 ng g pipe shared\pipes\teamSeasonDivisionFilter
 ng g module shared\modules\teamSeasonDivisionFilter
 
+ng g pipe shared\pipes\scheduleSeasonFilter
+ng g module shared\modules\scheduleSeasonFilter
+
 
 #ng g compoment team
 ng g module teams
@@ -87,6 +90,8 @@ ng g class shared\models\player
 ng g class shared\models\venue
 ng g class shared\models\news
 ng g class shared\models\contact
+ng g class shared\models\results
+ng g class shared\models\timeschedule
 
 ng g service shared\services\lookup  [season|division|venue|news|contact]
 ng g service shared\services\data
