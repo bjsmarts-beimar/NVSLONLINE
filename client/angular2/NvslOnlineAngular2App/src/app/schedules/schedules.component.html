@@ -34,15 +34,15 @@
                     </tr>
                 </thead>
                 <tbody>                    
-                    <tr *ngFor='let schedule of schedules'>                        
+                    <tr *ngFor='let schedule of schedules | scheduleSeasonDivision : 0 : selectedSeason : selectedDivision'>                        
                         <td>
-                            <a class="btn btn-sm btn-primary btn-create"  >Score</a>
+                            <a class="btn btn-sm btn-primary btn-create" (click)="ScoreOpenModel(schedule.Id)"  >Score</a>
                         </td>
                         <td class="toCenter">{{schedule.Status}}</td>
                         <td class="toCenter">{{schedule.DateTime | date:'MM/dd/yyyy'}}</td>
                         <td class="toCenter">{{schedule.DateTime | date:'h:mm a'}}</td>
                         <td class="toRight"><a [routerLink]="['/viewteam', schedule.HomeTeam.Id]">{{schedule.HomeTeam.TeamName}}</a></td>
-                        <td class="toCenter">1 - 0</td>
+                        <td class="toCenter">{{schedule.GoalsHomeTeam}} - {{schedule.GoalsAwayTeam}}</td>
                         <td><a [routerLink]="['/viewteam', schedule.AwayTeam.Id]">{{schedule.AwayTeam.TeamName}}</a></td>
                         <td class="toCenter">{{schedule.Venue.VenueName}}</td>                 
                     </tr>
@@ -99,3 +99,56 @@
         
     </modal>                   
     <!-- END MODAL -->
+
+    <!-- SCORE MODAL -->
+    <modal #scoreModal >          
+        <modal-header [show-close]="true">
+            <h3>Results</h3>
+        </modal-header>
+        <modal-body>
+            <div class="card mb-5">
+                <div class="card-header">                                
+                </div>
+                <div class="card-block p-0">
+                    {{selectedSchedule.Status}}
+                    <table class="table table-bordered table-sm m-0">
+                        <thead class="">
+                            <tr>
+                                <th class="toCenter">Status</th>
+                                <th class="toCenter">Home</th>
+                                <th class="toCenter">Score</th>
+                                <th class="toCenter">Away</th>
+                                <th class="toCenter">Field</th>                                                        
+                            </tr>
+                        </thead>
+                        <tbody>                    
+                            <tr>                        
+                                <td style="width: 27%;">
+                                    <select #name="ngModel" id="status" name="status" [(ngModel)]="selectedSchedule.Status" class="form-control">
+                                          <option value="Scheduled">Scheduled</option>
+                                          <option value="Played">Played</option>
+                                          <option value="Forfeited">Forfeited</option>
+                                          <option value="Incomplete">Incomplete</option>
+    							          <option value="Postponed">Postponed</option>
+							              <option value="Cancelled">Cancelled</option>
+                                    </select>
+                                </td>
+                                <td class="toCenter">{{selectedHomeTeam}}</td>
+                                <td class="to25Center">
+                                    <input type="text" #name="ngModel" name="GoalsHomeTeam" [(ngModel)]="selectedSchedule.GoalsHomeTeam" class="form-control toScoreTextBox" />
+                                    <input type="text" #name="ngModel" name="GoalsHomeTeam" [(ngModel)]="selectedSchedule.GoalsAwayTeam" class="form-control toScoreTextBox" />
+                                </td>
+                                <td class="toCenter">{{selectedAwayTeam}}</td>   
+                                <td>{{selectedVenue}}</td>                          
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </modal-body>
+        <modal-footer>                                    
+            <button type="button" class="btn btn-primary" (click)="updateStatusScore()">Save</button>
+            <button class="btn btn-default" data-dismiss="modal" type="button">Cancel</button>
+        </modal-footer>                
+    </modal>                   
+    <!-- END SCORE MODAL -->

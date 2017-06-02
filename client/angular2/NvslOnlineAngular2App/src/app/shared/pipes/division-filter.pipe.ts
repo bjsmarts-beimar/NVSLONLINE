@@ -6,11 +6,11 @@ import { ITeam } from '../interfaces/interfaces';
 })
 export class DivisionFilterPipe implements PipeTransform {
 
-  transform(teams: ITeam[], args?: any): any {
+  transform(teams: ITeam[], args1: number, args2: number): any {
 
     if ( teams !== undefined )
     {
-      return teams.filter(team => team.DivisionId === args )
+      return teams.filter(team => team.DivisionId === args1 && team.SeasonId === args2 )
     }        
   }
 }

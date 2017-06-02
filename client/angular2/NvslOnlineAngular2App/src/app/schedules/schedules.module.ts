@@ -7,6 +7,7 @@ import { RouterModule} from '@angular/router';
 import { Ng2Bs3ModalModule } from 'ng2-bs3-modal/ng2-bs3-modal';
 
 import { ScheduleSeasonFilterModule } from '../shared/modules/schedule-season-filter/schedule-season-filter.module';
+import { ScheduleSeasonDivisionModule } from '../shared/modules/schedule-season-division/schedule-season-division.module';
 
 import { SchedulesComponent } from './schedules.component';
 import { AddScheduleComponent } from './add-schedule/add-schedule.component';
@@ -21,7 +22,8 @@ import { AddScheduleComponent } from './add-schedule/add-schedule.component';
       { path: 'addschedule', component: AddScheduleComponent }      
     ]),
     Ng2Bs3ModalModule,
-    ScheduleSeasonFilterModule
+    ScheduleSeasonFilterModule,
+    ScheduleSeasonDivisionModule
   ],
   declarations: [SchedulesComponent, AddScheduleComponent]
 })

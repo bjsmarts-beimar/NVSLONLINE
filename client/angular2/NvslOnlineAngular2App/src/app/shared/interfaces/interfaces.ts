@@ -25,6 +25,8 @@ export interface ISchedule {
     AwayTeamId: number;
     AwayTeam: ITeam;
     IsHidden: boolean;
+    GoalsHomeTeam: number;
+    GoalsAwayTeam: number;
 }
 
 export interface INews {

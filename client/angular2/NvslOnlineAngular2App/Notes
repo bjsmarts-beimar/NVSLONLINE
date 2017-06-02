@@ -46,6 +46,9 @@ ng g module shared\modules\gameTeamFilter
 ng g pipe shared\pipes\teamSeasonDivisionFilter
 ng g module shared\modules\teamSeasonDivisionFilter
 
+ng g pipe shared\pipes\scheduleSeasonDivision
+ng g module shared\modules\scheduleSeasonDivision
+
 ng g pipe shared\pipes\scheduleSeasonFilter
 ng g module shared\modules\scheduleSeasonFilter
 

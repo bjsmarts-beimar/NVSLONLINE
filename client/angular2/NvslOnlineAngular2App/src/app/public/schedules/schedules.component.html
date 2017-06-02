@@ -1,3 +1,68 @@
-<p>
-  public schedules works!
-</p>
+
+
+
+<main class="panel pt-5 no-sidebar">
+    
+    <div class="form-group">
+        <div class="row">            
+            <div class="col-sm-6">
+                <label class="control-label"><h3><b>Season</b></h3></label>                        
+                <select #name="ngModel" id="ddlSeason" name="ddlSeason" class="form-control" [(ngModel)]="selectedSeason" (ngModelChange)="SeasonClicked($event)" style="width: 100%">
+                    <option *ngFor="let season of seasons" value={{season.Id}}>{{season.SeasonName}}</option>
+                </select> 
+            </div>
+            <div class="col-sm-6"></div>
+        </div>                                                   
+    </div>
+
+    <div class="form-group">
+       <div class="row">         
+        <div class="col-sm-6">
+            <label class="control-label"><h3><b>Division</b></h3></label>
+            <select #name="ngModel" id="ddlDivision" name="ddlDivision" class="form-control" [(ngModel)]="selectedDivision" (ngModelChange)="DivisionClicked($event)" style="width: 100%">
+                <option *ngFor="let division of divisions" value={{division.Id}}>{{division.DivisionName}}</option>
+            </select> 
+        </div>
+        <div class="col-sm-6"></div>
+       </div>                   
+    </div>
+
+    <h2><b>Schedules</b></h2>
+    
+    <div *ngFor='let division of divisions' class="card mb-5">
+        <div class="card-header">
+          <b>{{division.DivisionName}}</b>         
+        </div>
+        
+        <div class="card-block p-0">
+            <table class="table table-bordered table-sm m-0">
+                <thead class="">
+                    <tr>
+                        <th class="toCenter">Status</th>
+                        <th class="toCenter">Date</th>
+                        <th class="toCenter">Time</th>
+                        <th class="toRight">Home</th>
+                        <th class="toCenter">Score</th>
+                        <th>Away</th>
+                        <th class="toCenter">Venue</th>                      
+                    </tr>
+                </thead>
+                <tbody> 
+                    <tr *ngFor='let schedule of schedules | scheduleSeasonDivision : division.Id : selectedSeason : selectedDivision'>                        
+                        <td class="toCenter">{{schedule.Status}}</td>
+                        <td class="toCenter">{{schedule.DateTime | date:'MM/dd/yyyy'}}</td>
+                        <td class="toCenter">{{schedule.DateTime | date:'h:mm a'}}</td>
+                        <td class="toRight"><a [routerLink]="['/vwteam', schedule.HomeTeam.Id]">{{schedule.HomeTeam.TeamName}}</a></td>
+                        <td class="toCenter">{{schedule.GoalsHomeTeam}} - {{schedule.GoalsAwayTeam}}</td>
+                        <td><a [routerLink]="['/vwteam', schedule.AwayTeam.Id]">{{schedule.AwayTeam.TeamName}}</a></td>
+                        <td class="toCenter">{{schedule.Venue.VenueName}}</td>                 
+                    </tr>                                    
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card-footer p-0">
+        </div>
+    </div>
+</main>
+

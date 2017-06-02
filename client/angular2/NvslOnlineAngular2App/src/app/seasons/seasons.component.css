@@ -1,3 +1,16 @@
+.toRight {
+    text-align: right;
+}
+
+.toCenter {
+    text-align: center;
+}
+
+.toCheckbox {    
+    width: 15%;
+    display: inherit;
+}
+
 .table {
         border: none;
     }

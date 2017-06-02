@@ -30,6 +30,12 @@ export class SchedulesComponent implements OnInit {
   teams: ITeam[];
   venues: IVenue[];
 
+  public ischedule : ISchedule;
+  public selectedSchedule = new Schedule(0, 0, null, 0, null, 0, null, '', '', 0, null, 0, null, false, 0, 0);
+  public selectedHomeTeam : string;
+  public selectedAwayTeam : string;
+  public selectedVenue : string;
+
   Results = new Array<IResult>();  
   Games = new Array<ISchedule>();
   TimeSchedules = new Array<ITimeSchedule>();
@@ -49,6 +55,9 @@ export class SchedulesComponent implements OnInit {
 
   @ViewChild('myModal')
   modal: ModalComponent;
+
+  @ViewChild('scoreModal')
+  scoreModal: ModalComponent;
 
   constructor(private dataService: DataService,
               private router: Router) 
@@ -155,6 +164,23 @@ export class SchedulesComponent implements OnInit {
     this.modal.open();
   }
 
+  ScoreOpenModel(id: number): void {      
+        this.dataService.getSchedule(id).subscribe(
+            schedule => { 
+                this.ischedule = schedule;                
+                this.scoreModal.open();
+            },
+            error => this.errorMessage = <any>error,
+            () => this.setValues(this.ischedule));          
+  }  
+
+  setValues(schedule: ISchedule) {
+        this.selectedSchedule = schedule;   
+        this.selectedHomeTeam = schedule.HomeTeam.TeamName;     
+        this.selectedAwayTeam = schedule.AwayTeam.TeamName;  
+        this.selectedVenue = schedule.Venue.VenueName;      
+  }
+
   Save(): void {
 
       let process : boolean = false;
@@ -210,13 +236,13 @@ export class SchedulesComponent implements OnInit {
       {
           let g = this.Games[index];
           let currentDate = moment(g.DateTime).format();
-          let game = new Schedule(0, g.SeasonId, null, g.DivisionId, null, g.VenueId, null, g.Status, currentDate, g.HomeTeamId, null, g.AwayTeamId, null, false )
+          let game = new Schedule(0, g.SeasonId, null, g.DivisionId, null, g.VenueId, null, g.Status, currentDate, g.HomeTeamId, null, g.AwayTeamId, null, false, 0, 0);
 
           this.dataService.addSchedule(game)
             .subscribe(
                 data => console.log('success: ', data),
                 err => console.log('error: ', err),
-                () => this.router.navigate(['/news'])
+                () => this.router.navigate(['/schedules'])
             );
       }       
   }
@@ -225,11 +251,7 @@ export class SchedulesComponent implements OnInit {
       
       let nextVenue = this.TimeSchedules[this.currentVenue];
 
-      this.currentVenue += 1;            
-
-    //   if ( this.currentVenue === this.maxVenue ) {
-    //        this.currentVenue = 0;           
-    //   }
+      this.currentVenue += 1;                
 
       return nextVenue;
   }
@@ -240,6 +262,29 @@ export class SchedulesComponent implements OnInit {
 
   DivisionClicked(event: any): void {
 
+  }
+
+  updateStatusScore(): void {    
+
+        this.dataService.updateSchedule(this.selectedSchedule)
+            .subscribe(
+                data => { 
+                    console.log('success: ', data);
+                    this.scoreModal.close();
+                },
+                err => console.log('error: ', err),
+                () => this.reload()
+            );
+  }
+
+   reload(): void {
+        this.dataService.getSchedules()
+            .subscribe(
+              schedules => this.schedules = schedules,               
+              error => this.errorMessage = <any>error
+            );
+        
+        this.router.navigate(['/schedules']);
   }
 
   ModalSeasonClicked(event: any): void {

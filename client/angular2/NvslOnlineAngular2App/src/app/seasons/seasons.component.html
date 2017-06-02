@@ -9,9 +9,10 @@
                 <thead class="">
                     <tr>
                         <th></th>
-                        <th>Season Name</th>
-                        <th>Season Start</th>
-                        <th>Season End</th>
+                        <th class="toCenter">Season Name</th>
+                        <th class="toCenter">Season Start</th>
+                        <th class="toCenter">Season End</th>
+                        <th class="toCenter">Current</th>
                         <!--<th>Created</th>
                         <th>Created By</th>
                         <th>Modified</th>
@@ -24,9 +25,12 @@
                             <a class="btn btn-sm btn-primary btn-create" [routerLink]="['/season', season.Id]" >Edit</a>
                             <a class="btn btn-sm btn-danger" (click)='remove(season.Id)' >Delete</a>
                         </td>
-                        <td>{{season.SeasonName}}</td>
-                        <td>{{season.SeasonStart | date:'MM/dd/yyyy'}}</td>
-                        <td>{{season.SeasonEnd | date:'MM/dd/yyyy'}}</td>
+                        <td class="toCenter">{{season.SeasonName}}</td>
+                        <td class="toCenter">{{season.SeasonStart | date:'MM/dd/yyyy'}}</td>
+                        <td class="toCenter">{{season.SeasonEnd | date:'MM/dd/yyyy'}}</td>
+                        <td class="toCenter">
+                            <input type="checkbox" [checked]="season.Active" (click)="ItemSelected(season.Id, season.Active)" class="form-control toCheckbox" >
+                        </td>
                         <!--<td></td>
                         <td></td>
                         <td></td>

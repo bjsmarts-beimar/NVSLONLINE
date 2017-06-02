@@ -36,6 +36,7 @@ export class ViewTeamComponent implements OnInit {
   @ViewChild('myEditModal')
   editModal: ModalComponent;
   
+  
   constructor(private dataService: DataService,
               private router: Router,
               private route: ActivatedRoute) 
