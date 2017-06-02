@@ -2,7 +2,7 @@ import { ISchedule, ISeason, IDivision, IVenue, ITeam } from '../interfaces/inte
 
 export class Schedule implements ISchedule{    
     
-    constructor (public Id: number, public SeasonId: number, public Season: ISeason, public DivisionId: number, public Division: IDivision, public VenueId: number, public Venue: IVenue, public Status: string, public DateTime: string, public HomeTeamId: number, public HomeTeam: ITeam, public AwayTeamId: number, public AwayTeam: ITeam, public IsHidden: boolean) {
+    constructor (public Id: number, public SeasonId: number, public Season: ISeason, public DivisionId: number, public Division: IDivision, public VenueId: number, public Venue: IVenue, public Status: string, public DateTime: string, public HomeTeamId: number, public HomeTeam: ITeam, public AwayTeamId: number, public AwayTeam: ITeam, public IsHidden: boolean, public GoalsHomeTeam: number, public GoalsAwayTeam: number) {
         this.Id = Id;            
         this.SeasonId = SeasonId;
         this.Season = Season;
@@ -17,6 +17,8 @@ export class Schedule implements ISchedule{
         this.AwayTeamId = AwayTeamId;
         this.AwayTeam = AwayTeam    
         this.IsHidden = IsHidden;
+        this.GoalsHomeTeam = GoalsHomeTeam;
+        this.GoalsAwayTeam = GoalsAwayTeam;
     } 
 }
 

@@ -25,7 +25,13 @@ import { PublicModule } from './public/public.module';
 
 //Services
 import { DataService } from './shared/services/data.service';
+<<<<<<< HEAD
 //import { DivisionScheduleFilterPipe } from './shared/pipes/division-schedule-filter.pipe';
+=======
+//import { ScheduleSeasonDivisionPipe } from './shared/pipes/schedule-season-division.pipe';
+//import { ScheduleSeasonFilterPipe } from './shared/pipes/schedule-season-filter.pipe';
+//import { TeamSeasonDivisionFilterPipe } from './shared/pipes/team-season-division-filter.pipe';
+>>>>>>> 19fe844a6ff6e67bb3f1b277e60f6869480ebd27
 //import { GameTeamFilterPipe } from './shared/pipes/game-team-filter.pipe';
 
 @NgModule({
@@ -33,7 +39,13 @@ import { DataService } from './shared/services/data.service';
     AppComponent,
     DashboardComponent,
     HomeComponent,
+<<<<<<< HEAD
     //DivisionScheduleFilterPipe,
+=======
+    //ScheduleSeasonDivisionPipe,
+    //ScheduleSeasonFilterPipe,
+    //TeamSeasonDivisionFilterPipe,
+>>>>>>> 19fe844a6ff6e67bb3f1b277e60f6869480ebd27
     //GameTeamFilterPipe,
   ],
   imports: [

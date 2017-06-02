@@ -6,6 +6,24 @@
     text-align: center;
 }
 
+.to25Center {
+    width: 23%;    
+    text-align: center;
+}
+
+.toScoreTextBox {
+    width: 40%; 
+    display: inline;
+}
+
+.toRight {
+    text-align: right;
+}
+
+.toCenter {
+    text-align: center;
+}
+
 .table {
         border: none;
     }

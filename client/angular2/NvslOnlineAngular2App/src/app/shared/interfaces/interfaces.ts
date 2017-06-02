@@ -7,7 +7,7 @@ export interface ITeam {
     DivisionId : number;
     Division : IDivision;
     SeasonId : number;
-    Season: ISeason;
+    Season: ISeason;    
 }
 
 export interface ISchedule {
@@ -25,6 +25,8 @@ export interface ISchedule {
     AwayTeamId: number;
     AwayTeam: ITeam;
     IsHidden: boolean;
+    GoalsHomeTeam: number;
+    GoalsAwayTeam: number;
 }
 
 export interface INews {
@@ -63,6 +65,23 @@ export interface IPlayer {
     IsHidden: boolean;
     TeamId: number;    
 }
+
+export interface IResult {
+    DivisionId: number;
+    DivisionName: string;
+    TotalCount: number;
+    IsActive: boolean;
+    SeasonId: number;
+    SeasonStartDate: string;
+    Teams: ITeam[];
+}
+
+export interface ITimeSchedule {    
+    venue: IVenue
+    day: string;    
+    time: number;    
+}
+
 
 
 

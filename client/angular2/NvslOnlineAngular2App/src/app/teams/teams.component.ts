@@ -6,6 +6,8 @@ import { Season } from '../shared/models/season';
 import { Division } from '../shared/models/division';
 import { Team } from '../shared/models/team';
 
+import { TeamSeasonDivisionFilterPipe } from '../shared/pipes/team-season-division-filter.pipe';
+
 import { DataService } from '../shared/services/data.service';
 
 @Component({
@@ -74,12 +76,12 @@ export class TeamsComponent implements OnInit {
         this.router.navigate(['/teams']);
   }
 
-  onChangeUpdate(event: any): void { 
-
+  SeasonClicked(event: any): void { 
+     this.reload();
   }
 
-  onChangeDivisionUpdate(event: any): void {
-
+  DivisionClicked(event: any): void {
+    this.reload();
   }
 
 }
