@@ -1,10 +1,12 @@
 'use strict';
 
-//Puerto activo para python-django
-//angular.module('nvslonlineAppApp').value("webUrl", "http://localhost/nvslonlineApi/")
-angular.module('nvslonlineAppApp').value("webUrl", "http://localhost:8000/")
+//ASP.NET
+angular.module('nvslonlineAppApp').value("webUrl", "http://localhost/nvslonlineApi/")
 
-//Puerto activo para php-laravel
+//PYTHON-DJANGO
+//angular.module('nvslonlineAppApp').value("webUrl", "http://localhost:8000/")
+
+//PHP-LAVAREL
 //angular.module('nvslonlineAppApp').value("webUrl", "http://localhost:8080/")
 
 angular.module('nvslonlineAppApp').value("debug", true)
