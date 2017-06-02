@@ -25,20 +25,12 @@ import { PublicModule } from './public/public.module';
 
 //Services
 import { DataService } from './shared/services/data.service';
-//import { ScheduleSeasonDivisionPipe } from './shared/pipes/schedule-season-division.pipe';
-//import { ScheduleSeasonFilterPipe } from './shared/pipes/schedule-season-filter.pipe';
-//import { TeamSeasonDivisionFilterPipe } from './shared/pipes/team-season-division-filter.pipe';
-//import { GameTeamFilterPipe } from './shared/pipes/game-team-filter.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
     HomeComponent,
-    //ScheduleSeasonDivisionPipe,
-    //ScheduleSeasonFilterPipe,
-    //TeamSeasonDivisionFilterPipe,
-    //GameTeamFilterPipe,
   ],
   imports: [
     BrowserModule,
