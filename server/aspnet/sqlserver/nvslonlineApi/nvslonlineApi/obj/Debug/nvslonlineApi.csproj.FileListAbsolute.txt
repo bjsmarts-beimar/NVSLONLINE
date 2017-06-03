@@ -118,9 +118,7 @@ C:\Dev\Vitas\Projects\NVSLONLINE\server\aspnet\sqlserver\nvslonlineApi\nvslonlin
 C:\Dev\Vitas\Projects\NVSLONLINE\server\aspnet\sqlserver\nvslonlineApi\nvslonlineApi\bin\System.Web.WebPages.Razor.xml
 C:\Dev\Vitas\Projects\NVSLONLINE\server\aspnet\sqlserver\nvslonlineApi\nvslonlineApi\bin\Antlr3.Runtime.pdb
 C:\Dev\Vitas\Projects\NVSLONLINE\server\aspnet\sqlserver\nvslonlineApi\nvslonlineApi\obj\Debug\nvslonlineApi.csprojResolveAssemblyReference.cache
-C:\Dev\Vitas\Projects\NVSLONLINE\server\aspnet\sqlserver\nvslonlineApi\nvslonlineApi\obj\Debug\nvslonlineApi.Migrations.Initial.resources
-C:\Dev\Vitas\Projects\NVSLONLINE\server\aspnet\sqlserver\nvslonlineApi\nvslonlineApi\obj\Debug\nvslonlineApi.Migrations.Initial1.resources
-C:\Dev\Vitas\Projects\NVSLONLINE\server\aspnet\sqlserver\nvslonlineApi\nvslonlineApi\obj\Debug\nvslonlineApi.csproj.GenerateResource.Cache
 C:\Dev\Vitas\Projects\NVSLONLINE\server\aspnet\sqlserver\nvslonlineApi\nvslonlineApi\obj\Debug\nvslonlineApi.dll
 C:\Dev\Vitas\Projects\NVSLONLINE\server\aspnet\sqlserver\nvslonlineApi\nvslonlineApi\obj\Debug\nvslonlineApi.pdb
-C:\Dev\Vitas\Projects\NVSLONLINE\server\aspnet\sqlserver\nvslonlineApi\nvslonlineApi\obj\Debug\nvslonlineApi.Migrations.NewMigration.resources
+C:\Dev\Vitas\Projects\NVSLONLINE\server\aspnet\sqlserver\nvslonlineApi\nvslonlineApi\obj\Debug\nvslonlineApi.Migrations.Initial.resources
+C:\Dev\Vitas\Projects\NVSLONLINE\server\aspnet\sqlserver\nvslonlineApi\nvslonlineApi\obj\Debug\nvslonlineApi.csproj.GenerateResource.Cache

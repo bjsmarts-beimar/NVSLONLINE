@@ -11,6 +11,7 @@ export class DivisionFilterPipe implements PipeTransform {
     if ( teams !== undefined )
     {
       return teams.filter(team => team.DivisionId === args1 && team.SeasonId === args2 )
-    }        
+    }
+            
   }
 }

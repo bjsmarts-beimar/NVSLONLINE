@@ -1,12 +1,3 @@
-
-<!--{{selectedSeason}}
-<div class="form-group">      
-        <label class="control-label">Season</label>
-        <select #name="ngModel" id="ddlSeason" name="ddlSeason" class="form-control" [(ngModel)]="selectedSeason" (ngModelChange)="SeasonClicked($event)" style="width: 100%">
-            <option *ngFor="let season of seasons" value={{season.Id}}>{{season.SeasonName}}</option>
-        </select>                      
-</div>-->
-
 <main class="panel pt-5 no-sidebar">
 
     <h2><b>Teams</b></h2>
@@ -17,6 +8,7 @@
         </div>
         
         <div class="card-block p-0">
+            
             <table class="table table-bordered table-sm m-0">
                 <thead class="">
                     <tr>
@@ -35,4 +27,3 @@
         </div>
     </div>
 </main>
-

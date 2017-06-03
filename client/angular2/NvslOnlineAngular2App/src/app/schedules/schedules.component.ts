@@ -205,7 +205,7 @@ export class SchedulesComponent implements OnInit {
                                                     
                           let ts = this.GetNextVenue();                          
 
-                          let game = new Schedule(0, 0, null, 0, null, 0, null, 'Scheduled', null, 0, null, 0, null, false);
+                          let game = new Schedule(0, 0, null, 0, null, 0, null, 'Scheduled', null, 0, null, 0, null, false, 0, 0);
 
                           game.HomeTeamId = teams[x].Id;
                           game.AwayTeamId = teams[y].Id;
@@ -242,9 +242,17 @@ export class SchedulesComponent implements OnInit {
             .subscribe(
                 data => console.log('success: ', data),
                 err => console.log('error: ', err),
-                () => this.router.navigate(['/schedules'])
+                () => this.reloading(index, this.Games.length - 1)
             );
       }       
+      
+  }
+
+  reloading(start: number, end: number) : void {
+        if ( start === end ) {
+            this.modal.close();
+            this.reload();
+        }
   }
 
   GetNextVenue(): Timeschedule {

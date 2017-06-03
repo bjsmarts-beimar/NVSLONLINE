@@ -16,6 +16,19 @@ namespace nvslonlineApi.Migrations
 
         protected override void Seed(nvslonlineApi.Models.NVSLOnlineDataContext context)
         {
+            //  This method will be called after migrating to the latest version.
+
+            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
+            //  to avoid creating duplicate seed data. E.g.
+            //
+            //    context.People.AddOrUpdate(
+            //      p => p.FullName,
+            //      new Person { FullName = "Andrew Peters" },
+            //      new Person { FullName = "Brice Lambson" },
+            //      new Person { FullName = "Rowan Miller" }
+            //    );
+            //
+
             var Divisiones = new List<Division>
             {
                 new Division
@@ -35,49 +48,13 @@ namespace nvslonlineApi.Migrations
                     Id = 3,
                     DivisionName = "First",
                     IsHidden = false
-                },
-               new Division
-                {
-                    Id = 4,
-                    DivisionName = "Second",
-                    IsHidden = false
-                },
+                },               
                 new Division
-                {
-                    Id = 5,
-                    DivisionName = "Third",
-                    IsHidden = false
-                },
-                 new Division
                 {
                     Id = 6,
                     DivisionName = "Masters",
                     IsHidden = false
-                },
-                 new Division
-                {
-                    Id = 7,
-                    DivisionName = "Summer",
-                    IsHidden = false
-                },
-                 new Division
-                {
-                    Id = 8,
-                    DivisionName = "Winter",
-                    IsHidden = false
-                },
-                 new Division
-                {
-                    Id = 9,
-                    DivisionName = "Saturday Coed",
-                    IsHidden = false
-                },
-                 new Division
-                {
-                    Id = 10,
-                    DivisionName = "Thursday Coed",
-                    IsHidden = false
-                },
+                },                
             };
             Divisiones.ForEach(s => context.Divisions.Add(s));
             context.SaveChanges();

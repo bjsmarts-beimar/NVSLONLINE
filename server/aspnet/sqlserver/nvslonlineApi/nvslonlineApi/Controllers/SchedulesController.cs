@@ -67,7 +67,8 @@ namespace nvslonlineApi.Controllers
                 return BadRequest();
             }
 
-            db.Entry(schedule).State = EntityState.Modified;
+            db.Entry(schedule).State = EntityState.Modified; 
+            
 
             try
             {
