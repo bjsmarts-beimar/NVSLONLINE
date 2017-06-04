@@ -29,39 +29,48 @@
 
     <h2><b>Schedules</b></h2>
     
-    <div *ngFor='let division of divisions' class="card mb-5">
-        <div class="card-header">
-          <b>{{division.DivisionName}}</b>         
-        </div>
-        
-        <div class="card-block p-0">
-            <table class="table table-bordered table-sm m-0">
-                <thead class="">
-                    <tr>
-                        <th class="toCenter">Status</th>
-                        <th class="toCenter">Date</th>
-                        <th class="toCenter">Time</th>
-                        <th class="toRight">Home</th>
-                        <th class="toCenter">Score</th>
-                        <th>Away</th>
-                        <th class="toCenter">Venue</th>                      
-                    </tr>
-                </thead>
-                <tbody> 
-                    <tr *ngFor='let schedule of schedules | scheduleSeasonDivision : division.Id : selectedSeason : selectedDivision'>                        
-                        <td class="toCenter">{{schedule.Status}}</td>
-                        <td class="toCenter">{{schedule.DateTime | date:'MM/dd/yyyy'}}</td>
-                        <td class="toCenter">{{schedule.DateTime | date:'h:mm a'}}</td>
-                        <td class="toRight"><a [routerLink]="['/vwteam', schedule.HomeTeam.Id]">{{schedule.HomeTeam.TeamName}}</a></td>
-                        <td class="toCenter">{{schedule.GoalsHomeTeam}} - {{schedule.GoalsAwayTeam}}</td>
-                        <td><a [routerLink]="['/vwteam', schedule.AwayTeam.Id]">{{schedule.AwayTeam.TeamName}}</a></td>
-                        <td class="toCenter">{{schedule.Venue.VenueName}}</td>                 
-                    </tr>                                    
-                </tbody>
-            </table>
-        </div>
+    <div *ngFor='let division of divisions'>
 
-        <div class="card-footer p-0">
+        <div *ngIf="(schedules | scheduleSeasonDivision : division.Id : selectedSeason : selectedDivision)?.length > 0">
+        
+            <div class="card mb-5">
+
+                <div class="card-header">
+                <b>{{division.DivisionName}}</b>         
+                </div>
+                
+                <div class="card-block p-0">
+                    <table class="table table-bordered table-sm m-0">
+                        <thead class="">
+                            <tr>
+                                <th class="toCenter">Status</th>
+                                <th class="toCenter">Date</th>
+                                <th class="toCenter">Time</th>
+                                <th class="toRight">Home</th>
+                                <th class="toCenter">Score</th>
+                                <th>Away</th>
+                                <th class="toCenter">Venue</th>                      
+                            </tr>
+                        </thead>
+                        <tbody> 
+                            <tr *ngFor='let schedule of schedules | scheduleSeasonDivision : division.Id : selectedSeason : selectedDivision'>                        
+                                <td class="toCenter">{{schedule.Status}}</td>
+                                <td class="toCenter">{{schedule.DateTime | date:'MM/dd/yyyy'}}</td>
+                                <td class="toCenter">{{schedule.DateTime | date:'h:mm a'}}</td>
+                                <td class="toRight"><a [routerLink]="['/vwteam', schedule.HomeTeam.Id]">{{schedule.HomeTeam.TeamName}}</a></td>
+                                <td class="toCenter">{{schedule.GoalsHomeTeam}} - {{schedule.GoalsAwayTeam}}</td>
+                                <td><a [routerLink]="['/vwteam', schedule.AwayTeam.Id]">{{schedule.AwayTeam.TeamName}}</a></td>
+                                <td class="toCenter">{{schedule.Venue.VenueName}}</td>                 
+                            </tr>                                    
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card-footer p-0">
+                </div>
+
+            </div>
+
         </div>
     </div>
 </main>
