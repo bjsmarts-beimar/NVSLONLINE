@@ -1,3 +1,60 @@
-<p>
-  public standings works!
-</p>
+<main class="panel pt-5 no-sidebar">    
+
+    <div class="form-group">
+       <div class="row">         
+        <div class="col-sm-6">
+            <label class="control-label"><h3><b>Division</b></h3></label>
+            <select #name="ngModel" id="ddlDivision" name="ddlDivision" class="form-control" [(ngModel)]="selectedDivision" (ngModelChange)="DivisionClicked($event)" style="width: 100%">
+                <option *ngFor="let division of divisions" value={{division.Id}}>{{division.DivisionName}}</option>
+            </select> 
+        </div>
+        <div class="col-sm-6"></div>
+       </div>                   
+    </div>
+
+    <h2><b>Standings</b></h2>
+
+    <div *ngFor='let division of divisions'>
+        <div *ngIf="(Stat | statisticsFilter: division.Id : selectedDivision)?.length > 0">
+            <div class="card mb-5">
+
+                <div class="card-header">
+                <b>{{division.DivisionName}}</b>                        
+                </div>                	
+
+                <div class="card-block p-0">
+                    <table class="table table-bordered table-sm m-0">
+                        <thead class="">
+                            <tr>
+                                <th class="toCenter">Team</th>
+                                <th class="toCenter">Wins</th>
+                                <th class="toCenter">Losses</th>
+                                <th class="toCenter">Ties</th>
+                                <th class="toCenter">Points</th>
+                                <th class="toCenter">Goals For</th>
+                                <th class="toCenter">Goals Against</th>
+                                <th class="toCenter">Differential</th>                      
+                            </tr>
+                        </thead>
+                        <tbody> 
+                            <tr *ngFor='let s of Stat | statisticsFilter: division.Id : selectedDivision '>
+                                <td style="width: 30%">{{s.TeamName}}</td>
+                                <td class="toCenter">{{s.Wins}}</td>   
+                                <td class="toCenter">{{s.Loses}}</td> 
+                                <td class="toCenter">{{s.Ties}}</td>     
+                                <td class="toCenter">{{s.Points}}</td>   
+                                <td class="toCenter"></td>
+                                <td class="toCenter"></td>
+                                <td class="toCenter"></td>                                                      
+                            </tr>                                    
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card-footer p-0">
+                </div>
+
+            </div>
+        </div>
+    </div>
+</main>

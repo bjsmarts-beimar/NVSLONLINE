@@ -5,6 +5,7 @@ import { RouterModule} from '@angular/router';
 
 import { PlayerFilterModule } from '../shared/modules/player-filter/player-filter.module';
 import { GameTeamFilterModule } from '../shared/modules/game-team-filter/game-team-filter.module';
+import { StatisticsFilterModule } from '../shared/modules/statistics-filter/statistics-filter.module';
 import { ScheduleSeasonDivisionModule } from '../shared/modules/schedule-season-division/schedule-season-division.module';
 
 import { TeamsComponent } from './teams/teams.component';
@@ -23,6 +24,7 @@ import { ViewTeamComponent } from './view-team/view-team.component';
     FormsModule,
     RouterModule,
     PlayerFilterModule,
+    StatisticsFilterModule,
     GameTeamFilterModule,
     ScheduleSeasonDivisionModule,
     RouterModule.forChild([

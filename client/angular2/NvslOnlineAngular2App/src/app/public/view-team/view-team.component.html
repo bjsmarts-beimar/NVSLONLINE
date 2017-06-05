@@ -24,7 +24,7 @@
                         <td class="toCenter">{{schedule.DateTime | date:'MM/dd/yyyy'}}</td>
                         <td class="toCenter">{{schedule.DateTime | date:'h:mm a'}}</td>
                         <td class="toRight"><span class='link' (click)="routeToLink(schedule.HomeTeam.Id)">{{schedule.HomeTeam.TeamName}}</span></td>                        
-                        <td class="toCenter">1 - 0</td>
+                        <td class="toCenter">{{schedule.GoalsHomeTeam}} - {{schedule.GoalsAwayTeam}}</td>
                         <td><span class='link' (click)="routeToLink(schedule.AwayTeam.Id)">{{schedule.AwayTeam.TeamName}}</span></td>                        
                         <td class="toCenter">{{schedule.Venue.VenueName}}</td>                      
                     </tr>

@@ -76,6 +76,17 @@ export interface IResult {
     Teams: ITeam[];
 }
 
+export interface IStatistics {
+    TeamName: string;
+    DivisionId: number;  
+    SeasonId: number;
+    Wins: number;
+    Loses: number;
+    Ties: number;  
+    Points: number;
+}
+
+
 export interface ITimeSchedule {    
     venue: IVenue
     day: string;    

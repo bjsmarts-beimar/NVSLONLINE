@@ -25,12 +25,14 @@ import { PublicModule } from './public/public.module';
 
 //Services
 import { DataService } from './shared/services/data.service';
+//import { StatisticsFilterPipe } from './shared/pipes/statistics-filter.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
     HomeComponent,
+    //StatisticsFilterPipe,
   ],
   imports: [
     BrowserModule,
