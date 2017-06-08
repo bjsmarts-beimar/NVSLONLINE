@@ -131,6 +131,19 @@ body {
     background-position: 10px 20px;
 }
 
+.titleNvslonline{
+  font-size: 24px;
+  margin-left:25px;
+  margin-top: 15px;
+}
+@media only screen and (max-width:500px){
+    .titleNvslonline{
+      font-size:13px;
+      margin-left:25px;
+      margin-top: 5px;
+  }
+}
+
 .table {
         border: none;
     }
