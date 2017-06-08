@@ -24,6 +24,15 @@ angular.module('nvslonlineAppApp')
       {Id: 4,subject:"Website Ideas and Suggestions"}
    ];
 
+   var stateSchedule = [
+      {state:"Scheduled"},
+      {state:"Played"},
+      {state:"Forfeited"},
+      {state:"Incomplete"},
+      {state:"Postponed"},
+      {state:"Cancelled"}
+   ];
+
    var pagination = {
      currentPage : 1, //pagina inicial
      itemsPerPage : 10,//cantidad de records por pagina
@@ -53,12 +62,14 @@ angular.module('nvslonlineAppApp')
       setLoginAccess : function(user, access){
         loginAccess.user = user;
         loginAccess.access = access;
-      $timeout(function(){
-          $rootScope.$broadcast("update");
-        },0)
+        $timeout(function(){
+            $rootScope.$broadcast("update");
+          },0)
       },
+
       loginAccess: loginAccess,
       requestSubject: requestSubject,
+      stateSchedule: stateSchedule,
       pagination: pagination,
       error_message:error_message
     };

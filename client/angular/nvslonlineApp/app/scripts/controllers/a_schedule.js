@@ -291,16 +291,17 @@ angular.module('nvslonlineAppApp')
            $scope.cancel = function () { $modalInstance.dismiss('cancel'); };
        }];
 
-   var modalInstanceEditScore = ['$scope', '$modalInstance', 'datacontext', 'options', 
-       function ($scope, $modalInstance, datacontext, options) {
+   var modalInstanceEditScore = ['$scope', '$modalInstance', 'datacontext', 'options', 'parameters',
+       function ($scope, $modalInstance, datacontext, options, parameters) {
 
         var objSchedule = options.schedule;
         $scope.objSchedule = objSchedule;
         $scope.goalsHomeTeam = objSchedule.GoalsHomeTeam;
         $scope.goalsAwayTeam = objSchedule.GoalsAwayTeam;
+        $scope.stateSchedule = parameters.stateSchedule;
 
         $scope.ok = function () {
-            objSchedule.Status = "Played";
+            objSchedule.Status = this.objSchedule.Status;
             
             objSchedule.GoalsHomeTeam = this.goalsHomeTeam;
             objSchedule.GoalsAwayTeam = this.goalsAwayTeam;
