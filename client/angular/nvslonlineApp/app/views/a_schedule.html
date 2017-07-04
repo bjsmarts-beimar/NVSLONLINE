@@ -244,7 +244,15 @@
                                         <tbody>
                                         <tr>
                                             
-                                            <td style="text-align: left">{{objSchedule.Status}}</td>
+                                            <td style="text-align: left"><!--{{objSchedule.Status}}-->
+                                            
+                                               
+                                            <select ng-model="objSchedule.Status">
+                                            <option ng-repeat="x in stateSchedule">{{x.state}}</option>
+                                            </select>
+
+
+                                            </td>
                                             <td style="text-align: left">{{objSchedule.HomeTeam.TeamName}}</td>
                                             <td style="text-align: left"><!--{{objSchedule.Score}}-->
                                                 <table style="width: 100%;">

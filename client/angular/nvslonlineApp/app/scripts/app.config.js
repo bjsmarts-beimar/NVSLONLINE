@@ -1,13 +1,13 @@
 'use strict';
 
 //ASP.NET
-angular.module('nvslonlineAppApp').value("webUrl", "http://localhost/nvslonlineApi/")
+//angular.module('nvslonlineAppApp').value("webUrl", "http://localhost/nvslonlineApi/")
 
 //PYTHON-DJANGO
-//angular.module('nvslonlineAppApp').value("webUrl", "http://localhost:8000/")
+angular.module('nvslonlineAppApp').value("webUrl", "http://localhost:8000/")
 
 //PHP-LAVAREL
-//angular.module('nvslonlineAppApp').value("webUrl", "http://localhost:8080/")
+//angular.module('nvslonlineAppApp').value("webUrl", "http://localhost:9000/")
 
 angular.module('nvslonlineAppApp').value("debug", true)
 
