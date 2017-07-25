@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, NavLink, Switch } from "react-router-dom";
+import { Route, NavLink, Switch, Router } from "react-router-dom";
 
 import './Layout.css';
 
@@ -26,6 +26,7 @@ import Fields from './Fields/Fields.js';
 import iContacts from './Contacts/Contacts.js';
 import News from './News/News.js';
 import addNews from './News/addNews.js';
+import editNews from './News/editNews.js';
 
 export default class Layout extends React.Component {
   render() {
@@ -54,6 +55,7 @@ export default class Layout extends React.Component {
           <Route path='/icontacts' component={iContacts}/>
           <Route path='/news' component={News}/>
           <Route path='/addnews' component={addNews}/>
+          <Route path='/editnews/:id' component={editNews}/>
         </Switch>        
         <Footer />
       </div>

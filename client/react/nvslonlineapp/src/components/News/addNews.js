@@ -1,41 +1,57 @@
 import React from 'react';
-import { Link, Route } from "react-router-dom";
+import { Link, Route, Router, Redirect } from "react-router-dom";
 import SideBar from '../SideBar.js';
 import './News.css';
 import api from '../../api/api.js';
 
 export default class addNews extends React.Component {
 
-  HandleSave(e) {
-    e.preventDefault();
-    
-    //console.log('component state', JSON.stringify(this.state.SingleNews));
-    //console.log(this.refs); 
-    //console.log(this.refs.name.value);  
-    //console.log(this.refs.description.value); 
+  constructor() 
+  {
+      super();    
 
-    if (!this.showFormErrors()) {      
-      console.log('form is invalid: do not submit');
-    } 
-    else {
-      
-      let OnlyNews = {
-        'title': this.state.name,
-        'description': this.state.description
+      this.HandleSave = this.HandleSave.bind(this);
+      this.handleChange = this.handleChange.bind(this);
+
+      this.state = {
+        SingleNews: [],
+        pageTitle: 'Add News',
+        title: '',
+        description: '',
+        redirect: false,
+        created: ''
       }
+  }
 
-      let SingleNews = this.state.SingleNews;
+  HandleSave(e) {
 
-      SingleNews.push(OnlyNews);
+      e.preventDefault();
+      
+      //console.log('component state', JSON.stringify(this.state.SingleNews));
+      //console.log(this.refs); 
+      //console.log(this.refs.name.value);  
+      //console.log(this.refs.description.value); 
 
-      this.setState({
-        SingleNews: SingleNews
-      });
+      if (!this.showFormErrors()) {      
+        console.log('form is invalid: do not submit');
+      } 
+      else {
+              
+          let OnlyNews = {
+            'title': this.state.title,
+            'description': this.state.description,
+            'created': new Date()
+          }
 
-      api.addSingleNews(OnlyNews).then((response) => {
-          console.log('success');          
-	    });
-    }
+          api.addSingleNews(OnlyNews)
+              .then((response) => {
+                console.log('success');    
+                this.setState({ redirect: true });                
+              })
+              .catch((error) => {
+                console.log('error');
+              });                
+      }
   }
 
   showFormErrors() {
@@ -77,7 +93,7 @@ export default class addNews extends React.Component {
   }
 
   showInputError(refName) {
-    
+        
     if (refName)
     {      
       const validity = this.refs[refName].validity;
@@ -85,35 +101,22 @@ export default class addNews extends React.Component {
       const error = document.getElementById(`${refName}Error`);
       
       if ( !validity.valid ) {
-          if( validity.valueMissing ) {
-              error.textContent = `${label} is a required field`; 
-              this.refs[refName].style = "border: 1px solid red;";
-          }        
-          return false;
+           if( validity.valueMissing ) {  
+               document.getElementById(`${refName}Label`).style = "color: red";             
+               error.textContent = `${label} is a required field`; 
+               this.refs[refName].style = "border: 1px solid red;";
+           }        
+           return false;
       }     
       else {
-            error.textContent = '';
-            this.refs[refName].style = "border: 1px solid #dce4ec;";
+             document.getElementById(`${refName}Label`).style = "color: #2c3e50"; 
+             error.textContent = '';
+             this.refs[refName].style = "border: 1px solid #dce4ec;";             
       } 
     }
 
     return true;
-  }
-
-  constructor() 
-  {
-    super();
-
-    this.HandleSave = this.HandleSave.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-
-    this.state = {
-      SingleNews: [],
-      title: 'Add News',
-      name: '',
-      description: ''
-    }
-  }
+  }  
 
   render() {
 
@@ -126,20 +129,23 @@ export default class addNews extends React.Component {
           </div>
           <div className="col-md-10">
             <div className="main-form main-center">
-              <h3>{this.state.title}</h3>
+              <h3>{this.state.pageTitle}</h3>
+              
+              {this.state.redirect ? <Redirect to="/news" />:
+              
               <form noValidate>    
                   {/*NAME*/}
                   <div className="form-group" >
-                      <label id="nameLabel" className="control-label">Title</label>
+                      <label id="titleLabel" className="control-label">Title</label>
                       <input className="form-control"
                           type="text" 
-                          ref="name" 
-                          name="name" 
-                          value={ this.state.name }
+                          ref="title" 
+                          name="title" 
+                          value={ this.state.title }
                           onChange={ this.handleChange }
                           placeholder="Enter Title" 
                           required />
-                       <div className="has-error" style={{color: 'red'}} id="nameError" />      
+                       <div className="has-error" style={{color: 'red'}} id="titleError" />      
                       
                   </div>
 
@@ -164,6 +170,7 @@ export default class addNews extends React.Component {
                     <Link to="/news" className="btn btn-sm btn-danger btn-create" style={{width: 100}} >Cancel</Link>
                   </div>
               </form>    
+              }
 
             </div>
           </div>

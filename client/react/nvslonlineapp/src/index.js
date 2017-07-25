@@ -9,14 +9,17 @@
 
 import React from "react";
 import ReactDOM from "react-dom";
-import { Route, Switch, HashRouter } from "react-router-dom";
+import { Route, Switch, HashRouter, BrowserRouter, Router } from "react-router-dom";
+import createBrowserHistory from 'history/createBrowserHistory'
 
 import App from './App';
+
+const history = createBrowserHistory();
 
 const app = document.getElementById('root');
 
 ReactDOM.render((
-  <HashRouter>
+  <Router history={history}>
     <Route path='/' component={App}/>
-  </HashRouter>),
+  </Router>),
 app);

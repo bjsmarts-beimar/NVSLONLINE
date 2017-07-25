@@ -9,20 +9,53 @@ import api from '../../api/api.js';
 
 export default class News extends React.Component {
 
+  
+
   constructor()
   {
       super();
+
+      this.handleClick = this.handleClick.bind(this);
+      this.reload = this.reload.bind(this);
+
       this.state = {
         news: []
       }
-  }
+  } 
 
-  componentWillMount() {
-      api.getNews().then((response) => {
+  handleClick(e) {
+    
+      let result = window.confirm('Are you sure want to delete this item?');
+
+      if ( result ) {
+
+          let NewsId = e.target.name;
+
+          api.deleteSinglenNews(NewsId)
+            .then((response) => {
+                console.log('success');
+                this.reload();
+                        
+            });
+
+      }
+
+  } 
+
+  reload() {
+
+    api.getNews().then((response) => {
+          console.log(response);
+
           this.setState({
 			      news: response
 		      })
 	    });
+
+  }
+
+  componentWillMount() {
+      this.reload();
   }
 
   render() {    
@@ -40,7 +73,7 @@ export default class News extends React.Component {
                 <div className="card-header">
                     <b>News</b>
                     <div className="pull-right">
-                      <Link to="/addnews" className="btn btn-sm btn-primary btn-create" >Create New</Link>
+                      <Link to="/addnews" className="btn btn-sm btn-primary btn-create" >Create New</Link>                      
                     </div>            
                 </div>
                 <div className="card-block p-0">                  
@@ -58,14 +91,15 @@ export default class News extends React.Component {
                       {this.state.news.map(function(row, i) {
                         return (
                           <tr key={i}>
-                            <td><Link to="/" className="btn btn-sm btn-primary btn-create" >Edit</Link></td>
-                            <td><Link to="/" className="btn btn-sm btn-danger" >Delete</Link></td>
+                            <td><Link to={"/editnews/" + row.Id} className="btn btn-sm btn-primary btn-create" >Edit</Link></td>
+                            {/*<td><Link to="/" className="btn btn-sm btn-danger" >Delete</Link></td>*/}
+                            <td><button className="btn btn-sm btn-danger" name={row.Id} onClick={this.handleClick} >Delete</button></td>
                             <td key={row.title}>{row.title}</td>
                             <td key={row.description}>{row.description}</td>
                             <td key={row.created}>{row.created}</td>
                           </tr>
                         );
-                      })}                                                           
+                      }.bind(this))}                                                           
                     </tbody>
                   </table>
                 </div>                
