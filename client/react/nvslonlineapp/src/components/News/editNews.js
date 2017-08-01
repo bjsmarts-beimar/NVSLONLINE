@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, Route, Router, Redirect } from "react-router-dom";
 import SideBar from '../SideBar.js';
 import './News.css';
-import api from '../../api/api.js';
+import newsAPI from '../../api/newsAPI.js';
 
 export default class editNews extends React.Component {
 
@@ -21,8 +21,8 @@ export default class editNews extends React.Component {
 
         let NewsId = props.match.params.id;
 
-        api.getSinglenNews(NewsId).then((response) => {
-            console.log(response);
+        newsAPI.getSinglenNews(NewsId).then((response) => {
+            console.log('response: ', response);
             this.setState({
 			        SingleNews: response,
               title: response.title,
@@ -32,9 +32,7 @@ export default class editNews extends React.Component {
 
         
         this.HandleSave = this.HandleSave.bind(this);
-        this.handleChange = this.handleChange.bind(this);
-
-        
+        this.handleChange = this.handleChange.bind(this);        
     }
 
     HandleSave(e) {
@@ -53,7 +51,7 @@ export default class editNews extends React.Component {
               'modified': new Date()
             }
 
-            api.updateSingleNews(OnlyNews)
+            newsAPI.updateSingleNews(OnlyNews)
               .then((response) => {
                   console.log('success');    
                   this.setState({ redirect: true });                

@@ -22,11 +22,18 @@ import iStandings from './Standings/iStandings.js';
 import ISettings from './Settings/iSettings.js';
 import Seasons from './Seasons/Seasons.js';
 import Divisions from './Divisions/Divisions.js';
-import Fields from './Fields/Fields.js';
 import iContacts from './Contacts/Contacts.js';
+
+import fields from './Fields/fields.js';
+import addField from './Fields/addField.js';
+import editField from './Fields/editField.js';
+
 import News from './News/News.js';
 import addNews from './News/addNews.js';
 import editNews from './News/editNews.js';
+
+import routesNews from './News/routesNews.js';
+import fieldsRoutes from './Fields/fieldsRoutes.js';
 
 export default class Layout extends React.Component {
   render() {
@@ -51,11 +58,13 @@ export default class Layout extends React.Component {
           <Route path='/isettings' component={ISettings}/>
           <Route path='/seasons' component={Seasons}/>
           <Route path='/divisions' component={Divisions}/>
-          <Route path='/fields' component={Fields}/>
-          <Route path='/icontacts' component={iContacts}/>
-          <Route path='/news' component={News}/>
+          <Route path='/icontacts' component={iContacts}/>                    
+          <Route path='/fields' component={fields} />
+          <Route path='/addField' component={addField}/>
+          <Route path='/editField/:id' component={editField}/>
+          <Route path='/news' component={News} />
           <Route path='/addnews' component={addNews}/>
-          <Route path='/editnews/:id' component={editNews}/>
+          <Route path='/editnews/:id' component={editNews}/>                                        
         </Switch>        
         <Footer />
       </div>

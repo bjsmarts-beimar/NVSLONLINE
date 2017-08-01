@@ -4,12 +4,9 @@ import {Button} from 'react-bootstrap';
 
 import SideBar from '../SideBar.js';
 import './News.css';
-import api from '../../api/api.js';
-
+import newsAPI from '../../api/newsAPI.js';
 
 export default class News extends React.Component {
-
-  
 
   constructor()
   {
@@ -31,7 +28,7 @@ export default class News extends React.Component {
 
           let NewsId = e.target.name;
 
-          api.deleteSinglenNews(NewsId)
+          newsAPI.deleteSinglenNews(NewsId)
             .then((response) => {
                 console.log('success');
                 this.reload();
@@ -44,7 +41,7 @@ export default class News extends React.Component {
 
   reload() {
 
-    api.getNews().then((response) => {
+    newsAPI.getNews().then((response) => {
           console.log(response);
 
           this.setState({
@@ -92,7 +89,6 @@ export default class News extends React.Component {
                         return (
                           <tr key={i}>
                             <td><Link to={"/editnews/" + row.Id} className="btn btn-sm btn-primary btn-create" >Edit</Link></td>
-                            {/*<td><Link to="/" className="btn btn-sm btn-danger" >Delete</Link></td>*/}
                             <td><button className="btn btn-sm btn-danger" name={row.Id} onClick={this.handleClick} >Delete</button></td>
                             <td key={row.title}>{row.title}</td>
                             <td key={row.description}>{row.description}</td>

@@ -1,49 +1,46 @@
-var api = {
+const WEB_API_URL = "http://localhost/nvslonlineApi/";
 
-	getNews() {
-		var url = 'http://localhost/nvslonlineApi/api/news';
+var fieldsAPI = {
+
+    getFields() {
+		var url = WEB_API_URL + 'api/Venues';
 		return fetch(url).then((response) => response.json());
 	},
 
-	getSinglenNews(Id) {
-	 	var url = 'http://localhost/nvslonlineApi/api/news/' + Id;
+	getSingleField(Id) {
+	 	var url = WEB_API_URL + 'api/Venues/' + Id;
 		return fetch(url).then((response) => response.json());
 	},
 
-	addSingleNews(SingleNews) {
+	addSingleField(newField) {
 		
-		var url = 'http://localhost/nvslonlineApi/api/news';
+		var url = WEB_API_URL + 'api/Venues';
 		var request = {
 			method: 'POST',
 			headers: ({ 'Content-Type': 'application/json' }),
-			body: JSON.stringify(SingleNews)
+			body: JSON.stringify(newField)
 		}
 		
 		return fetch(url, request).then((response) => response.json());
 	},
 
-	updateSingleNews(SingleNews) {
+	updateSingleField(singleField) {
 		
-		var url = 'http://localhost/nvslonlineApi/api/news/' + SingleNews.id;
-
-		console.log('url', url);
-		console.log('object', SingleNews);
-
+		var url = WEB_API_URL + 'api/Venues/' + singleField.id;
+		
 		var request = {
 			method: 'PUT',
 			headers: ({ 'Content-Type': 'application/json' }),
-			body: JSON.stringify(SingleNews)
+			body: JSON.stringify(singleField)
 		}
 		
 		return fetch(url, request).then((response) => response);
 	},
 
-	deleteSinglenNews(Id) {
+	deleteSingleField(Id) {
 
-	 	var url = 'http://localhost/nvslonlineApi/api/news/' + Id;
-
-		console.log('url: ', url);
-
+	 	var url = WEB_API_URL + '/api/Venues/' + Id;
+		
 		var request = {
 			method: 'DELETE',
 			headers: ({ 'Content-Type': 'application/json' })			
@@ -54,4 +51,4 @@ var api = {
 
 };
 
-module.exports = api;
+module.exports = fieldsAPI;

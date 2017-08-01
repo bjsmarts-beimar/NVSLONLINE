@@ -1,11 +1,10 @@
 import React from 'react';
 import { Link, Route, Router, Redirect } from "react-router-dom";
 import SideBar from '../SideBar.js';
-import './News.css';
-// import api from '../../api/api.js';
-import newsAPI from '../../api/newsAPI.js';
 
-export default class addNews extends React.Component {
+import api from '../../api/fieldsAPI.js';
+
+export default class addField extends React.Component {
 
   constructor() 
   {
@@ -13,46 +12,39 @@ export default class addNews extends React.Component {
 
       this.HandleSave = this.HandleSave.bind(this);
       this.handleChange = this.handleChange.bind(this);
-
+  
       this.state = {
-        SingleNews: [],
-        pageTitle: 'Add News',
+        singleField: [],
+        pageTitle: 'Add Field',
         title: '',
-        description: '',
         redirect: false,
         created: ''
       }
   }
-  
 
   HandleSave(e) {
 
       e.preventDefault();
-      
-      //console.log('component state', JSON.stringify(this.state.SingleNews));
-      //console.log(this.refs); 
-      //console.log(this.refs.name.value);  
-      //console.log(this.refs.description.value); 
 
       if (!this.showFormErrors()) {      
-        console.log('form is invalid: do not submit');
+          console.log('form is invalid: do not submit');
       } 
       else {
-              
-          let OnlyNews = {
-            'title': this.state.title,
-            'description': this.state.description,
+          console.log('form is valid. submit!');
+
+          let field = {
+            'VenueName': this.state.title,
             'created': new Date()
           }
 
-          newsAPI.addSingleNews(OnlyNews)
+          api.addSingleField(field)
               .then((response) => {
                 console.log('success');    
                 this.setState({ redirect: true });                
               })
               .catch((error) => {
                 console.log('error');
-              });                
+              });
       }
   }
 
@@ -72,30 +64,11 @@ export default class addNews extends React.Component {
         }
       });
 
-      const textarea = document.querySelector('textarea');
-
-      const IsAreaTextValid = this.showInputError(textarea.name);
-
-      if (!IsAreaTextValid) {
-        isFormValid = false;
-      }
-          
       return isFormValid;
-  }  
-
-  handleChange(e) {
-
-      e.target.classList.add('active');
-      
-      this.setState({
-        [e.target.name]: e.target.value,               
-      });
-      
-      this.showInputError(e.target.name);
   }
 
   showInputError(refName) {
-        
+
     if (refName)
     {      
       const validity = this.refs[refName].validity;
@@ -120,10 +93,20 @@ export default class addNews extends React.Component {
     return true;
   }  
 
-  render() {
+  handleChange(e) {
 
-    return (   
-    
+      e.target.classList.add('active');
+      
+      this.setState({
+        [e.target.name]: e.target.value,               
+      });
+      
+      this.showInputError(e.target.name);
+  }
+
+  render() {
+  
+    return (
       <div>        
         <div className="container-fluid">
           <div className="col-md-2 sidebar">
@@ -132,11 +115,11 @@ export default class addNews extends React.Component {
           <div className="col-md-10">
             <div className="main-form main-center">
               <h3>{this.state.pageTitle}</h3>
-              
-              {this.state.redirect ? <Redirect to="/news" />:
-              
-              <form noValidate>    
-                  {/*NAME*/}
+
+              {this.state.redirect ? <Redirect to="/fields" />:
+
+               <form noValidate> 
+                 {/*NAME*/}
                   <div className="form-group" >
                       <label id="titleLabel" className="control-label">Title</label>
                       <input className="form-control"
@@ -151,34 +134,20 @@ export default class addNews extends React.Component {
                       
                   </div>
 
-                  {/*DESCRIPTION*/}
-                  {<div className="form-group" >
-                      <label id="descriptionLabel" className="control-label">Description</label>
-                      <textarea className="form-control" 
-                        ref="description" 
-                        name="description" 
-                        value={ this.state.description }
-                        onChange={ this.handleChange }
-                        rows="10" 
-                        placeholder="Enter Description" 
-                        required >
-                      </textarea>
-                      <div className="has-error" style={{color: 'red'}} id="descriptionError" />           
-                  </div>}
-            
                   {/*SUBMIT BUTTON*/}
                   <div className="btn-block text-right">    
                     <input type="submit" className="btn btn-primary" style={{width: 100}} onClick={this.HandleSave} value="Save" />
-                    <Link to="/news" className="btn btn-sm btn-danger btn-create" style={{width: 100}} >Cancel</Link>
+                    <Link to="/fields" className="btn btn-sm btn-danger btn-create" style={{width: 100}} >Cancel</Link>
                   </div>
-              </form>    
+
+               </form>  
               }
 
             </div>
           </div>
         </div>
-      </div>   
-      
+      </div>
     );
+  
   }
 }
