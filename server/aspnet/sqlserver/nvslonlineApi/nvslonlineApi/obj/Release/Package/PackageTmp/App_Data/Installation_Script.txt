@@ -1,0 +1,180 @@
+﻿USE [NVSLOnline]
+GO
+/****** Object:  Table [dbo].[Contacts]    Script Date: 8/13/2017 8:52:29 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Contacts](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[yourName] [nvarchar](max) NULL,
+	[email] [nvarchar](max) NULL,
+	[message] [nvarchar](max) NULL,
+	[IsHidden] [bit] NOT NULL,
+	[requestSubject] [int] NOT NULL,
+	[created] [datetime] NULL,
+	[modifiedBy] [nvarchar](max) NULL,
+	[modifiedByfullName] [nvarchar](max) NULL,
+	[modified] [datetime] NULL,
+ CONSTRAINT [PK_dbo.Contacts] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[Divisions]    Script Date: 8/13/2017 8:52:29 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Divisions](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[DivisionName] [nvarchar](max) NULL,
+	[IsHidden] [bit] NOT NULL,
+ CONSTRAINT [PK_dbo.Divisions] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[News]    Script Date: 8/13/2017 8:52:29 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[News](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[title] [nvarchar](max) NULL,
+	[description] [nvarchar](max) NULL,
+	[IsHidden] [bit] NOT NULL,
+	[created] [datetime] NULL,
+	[modifiedBy] [nvarchar](max) NULL,
+	[modifiedByfullName] [nvarchar](max) NULL,
+	[modified] [datetime] NULL,
+ CONSTRAINT [PK_dbo.News] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[Players]    Script Date: 8/13/2017 8:52:29 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Players](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[FirstName] [nvarchar](max) NULL,
+	[LastName] [nvarchar](max) NULL,
+	[IsHidden] [bit] NOT NULL,
+	[TeamId] [int] NULL,
+ CONSTRAINT [PK_dbo.Players] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[Schedules]    Script Date: 8/13/2017 8:52:29 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Schedules](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[SeasonId] [int] NULL,
+	[DivisionId] [int] NULL,
+	[VenueId] [int] NULL,
+	[Status] [nvarchar](max) NULL,
+	[DateTime] [datetime] NOT NULL,
+	[HomeTeamId] [int] NULL,
+	[GoalsHomeTeam] [int] NULL,
+	[AwayTeamId] [int] NULL,
+	[GoalsAwayTeam] [int] NULL,
+	[IsHidden] [bit] NOT NULL,
+ CONSTRAINT [PK_dbo.Schedules] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[Seasons]    Script Date: 8/13/2017 8:52:29 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Seasons](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[SeasonName] [nvarchar](max) NULL,
+	[Active] [bit] NOT NULL,
+	[IsHidden] [bit] NOT NULL,
+	[SeasonStart] [datetime] NULL,
+	[SeasonEnd] [datetime] NULL,
+ CONSTRAINT [PK_dbo.Seasons] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[Standings]    Script Date: 8/13/2017 8:52:29 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Standings](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Wins] [int] NOT NULL,
+	[Losses] [int] NOT NULL,
+	[Ties] [int] NOT NULL,
+	[Points] [int] NOT NULL,
+	[GoalsFor] [int] NOT NULL,
+	[GoalsAgainst] [int] NOT NULL,
+	[IsHidden] [bit] NOT NULL,
+	[Divisions_Id] [int] NULL,
+	[Teams_Id] [int] NULL,
+ CONSTRAINT [PK_dbo.Standings] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[Teams]    Script Date: 8/13/2017 8:52:29 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Teams](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[TeamName] [nvarchar](max) NULL,
+	[IsHidden] [bit] NOT NULL,
+	[DivisionId] [int] NULL,
+	[SeasonId] [int] NULL,
+ CONSTRAINT [PK_dbo.Teams] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[Venues]    Script Date: 8/13/2017 8:52:29 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Venues](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[VenueName] [nvarchar](max) NULL,
+	[IsHidden] [bit] NOT NULL,
+ CONSTRAINT [PK_dbo.Venues] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
